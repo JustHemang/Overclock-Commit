@@ -33,7 +33,7 @@
 
 ## 📖 About the Project
 
-**Commit** reimagines the Indian Railways ticketing experience with a fast, modern, and visually stunning interface. Search trains between stations using real-time data from the **RailRadar API**, book tickets end-to-end with seat selection and simulated payment, check live PNR status, and follow your train's journey station-by-station — all wrapped in a smooth, GSAP-animated UI with dark mode and Hindi/English support.
+**Commit** reimagines the Indian Railways ticketing experience with a fast, modern, and visually stunning interface. Search trains between stations using real-time data, book tickets end-to-end with seat selection and simulated payment, check live PNR status, and follow your train's journey station-by-station — all wrapped in a smooth, GSAP-animated UI with dark mode and Hindi/English support.
 
 > Built by **Team Commit** at *[Overclock Delhi 2026](https://overclockdelhi.com/)*
 
@@ -46,7 +46,7 @@
 <td width="50%" valign="top">
 
 ### 🔍 Train Search
-Search trains between any two Indian railway stations using real, live schedule data powered by the RailRadar API.
+Search trains between any two Indian railway stations using real, live schedule data.
 
 ### 🎫 Ticket Booking
 Full booking flow — passenger details, seat selection, and a simulated payment step with PDF ticket download.
@@ -86,7 +86,6 @@ GSAP-powered transitions, a cinematic train animation on the homepage, page reve
 |:---:|:---:|
 | **Frontend** | Vanilla HTML / CSS / JavaScript + GSAP |
 | **Backend** | Node.js + Express |
-| **Train Data API** | [RailRadar API](https://railradar.in) |
 | **Deployment** | Render (Free Tier) |
 
 </div>
