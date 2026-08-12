@@ -1072,3 +1072,19 @@ body {
         display: flex !important;
     }
 }
+/* Page Transition */
+body {
+    animation: fadeInPage 0.4s ease-out forwards;
+    opacity: 0;
+}
+@keyframes fadeInPage {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+body.fade-out {
+    animation: fadeOutPage 0.3s ease-in forwards;
+}
+@keyframes fadeOutPage {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}

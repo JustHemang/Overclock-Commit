@@ -705,3 +705,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   animatePageIn();
 });
+// Global Page Transition Interceptor
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (link && link.href && !link.href.startsWith('javascript') && link.target !== '_blank' && link.hostname === window.location.hostname) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+            window.location.href = link.href;
+        }, 300);
+    }
+});
