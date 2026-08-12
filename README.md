@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:1C273C,100:EA6B40&height=220&section=header&text=🚂%20COMMIT&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Search%20•%20Book%20•%20Track%20•%20Manage&descAlignY=55&descSize=20" alt="header banner"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:1C273C,100:EA6B40&height=220&section=header&text=COMMIT/IRCTC&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Search%20•%20Book%20•%20Track%20•%20Manage&descAlignY=55&descSize=20" alt="header banner"/>
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=EA6B40&center=true&vCenter=true&width=650&lines=Search+trains+in+real-time;Track+your+journey+live;Book%2C+manage%2C+and+check+PNR+status;Built+by+Team+Commit" alt="Typing SVG" />
 
