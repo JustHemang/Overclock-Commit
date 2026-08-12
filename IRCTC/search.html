@@ -169,7 +169,8 @@ function bookTrain(trainNum) {
   };
   localStorage.setItem('irctc_selected_train', JSON.stringify(normalizedTrain));
   localStorage.setItem('irctc_selected_class', selectedClass);
-  window.location.href = `checkout.html?date=${searchDate}`;
+  localStorage.setItem('irctc_booking_date', searchDate);
+  window.location.href = 'checkout.html';
 }
   </script>
 </body>

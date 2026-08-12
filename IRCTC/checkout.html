@@ -159,8 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
   currentClass = localStorage.getItem('irctc_selected_class') || '2A';
   selectedSeats = JSON.parse(localStorage.getItem('irctc_selected_seats') || '[]');
   passengerCount = parseInt(localStorage.getItem('irctc_passenger_count') || '1');
-  const params = new URLSearchParams(window.location.search);
-  bookingDate = params.get('date') || getTomorrowDate();
+  bookingDate = localStorage.getItem('irctc_booking_date') || getTomorrowDate();
   if (!trainData) { window.location.href = '/'; return; }
   currentTrain = JSON.parse(trainData);
   const user = getCurrentUser();
@@ -307,4 +306,5 @@ async function processPayment() {
   </script>
 </body>
 </html>
+
 
