@@ -851,13 +851,15 @@ body {
     background: transparent !important;
     font-family: 'Inter', sans-serif !important;
     box-shadow: none !important;
-    padding: 0 !important;
-    height: auto !important;
+    padding: 5px 0 !important;
+    min-height: 30px !important;
+    line-height: 1.2 !important;
 }
 
 .page-card .input-group input::placeholder {
     color: #cbd5e1 !important;
     font-weight: 500 !important;
+    font-size: 18px !important;
 }
 
 /* FIX TRACKING, PNR, BOOKINGS CARDS */
@@ -1118,4 +1120,30 @@ body.fade-out {
 .remember-me input { cursor: pointer; width: 16px; height: 16px; }
 .forgot-pwd { color: var(--primary-orange); font-weight: 600; text-decoration: none; }
 .forgot-pwd:hover { text-decoration: underline; }
+
+
+/* ROBUST TOAST CONTAINER */
+.toast-container {
+    position: fixed !important;
+    bottom: 30px !important;
+    top: auto !important;
+    right: 30px !important;
+    z-index: 9999999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+.toast {
+    background-color: var(--dark-blue) !important;
+    color: var(--pure-white) !important;
+    padding: 15px 25px !important;
+    border-radius: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    border: none !important;
+}
+.toast.error { border-left: 5px solid var(--primary-orange) !important; }
+.toast.success { border-left: 5px solid #22c55e !important; }
 
