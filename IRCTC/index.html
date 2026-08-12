@@ -265,25 +265,138 @@ function searchTrains() {
   }, 600);
 }
 
-// Train fly-by animation
-let trainTl = gsap.timeline({delay: 1.5}); 
-trainTl.to("#animated-train", {
-    left: "150vw", 
-    duration: 1.2, 
-    ease: "power2.inOut",
+// === TRACK-LAYING + TRAIN FLY-BY + WIND EFFECT ===
+(function() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  // Create track container
+  const trackContainer = document.createElement('div');
+  trackContainer.id = 'track-container';
+  trackContainer.style.cssText = 'position:absolute; top:85px; left:0; width:300vw; height:60px; z-index:9998; pointer-events:none; overflow:visible;';
+  hero.style.overflow = 'hidden';
+  hero.appendChild(trackContainer);
+
+  // Create wind particle container
+  const windContainer = document.createElement('div');
+  windContainer.id = 'wind-container';
+  windContainer.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; z-index:9997; pointer-events:none; overflow:hidden;';
+  hero.appendChild(windContainer);
+
+  // Generate railroad track ties (SVG sleepers)
+  const numTies = 120;
+  for (let i = 0; i < numTies; i++) {
+    const tie = document.createElement('div');
+    tie.className = 'rail-tie';
+    tie.style.cssText = `
+      position:absolute;
+      left:${i * 25}px;
+      top:15px;
+      width:8px;
+      height:30px;
+      background:#5c3d2e;
+      border-radius:2px;
+      opacity:0;
+      transform:scaleY(0);
+    `;
+    trackContainer.appendChild(tie);
+  }
+
+  // Add two rail lines
+  for (let r = 0; r < 2; r++) {
+    const rail = document.createElement('div');
+    rail.className = 'rail-line';
+    rail.style.cssText = `
+      position:absolute;
+      left:0;
+      top:${r === 0 ? 18 : 40}px;
+      width:100%;
+      height:3px;
+      background:linear-gradient(90deg, #888 0%, #aaa 50%, #888 100%);
+      transform-origin:left;
+      transform:scaleX(0);
+      box-shadow:0 1px 3px rgba(0,0,0,0.3);
+    `;
+    trackContainer.appendChild(rail);
+  }
+
+  // Animate: 1) Tracks lay → 2) Train flies → 3) Wind trails
+  const masterTl = gsap.timeline({ delay: 0.8 });
+
+  // Phase 1: Rapidly lay tracks (ties pop in one by one, super fast)
+  masterTl.to('.rail-tie', {
+    opacity: 1,
+    scaleY: 1,
+    duration: 0.03,
+    stagger: 0.015,
+    ease: 'back.out(2)',
+  });
+
+  // Rail lines extend
+  masterTl.to('.rail-line', {
+    scaleX: 1,
+    duration: 0.6,
+    ease: 'power2.out',
+  }, '-=0.8');
+
+  // Phase 2: Train zooms across
+  masterTl.to('#animated-train', {
+    left: '150vw',
+    duration: 1.0,
+    ease: 'power3.inOut',
     onUpdate: function() {
-        if (this.progress() > 0.45 && document.querySelector('.hero-title').innerText === "COMMIT") {
-            document.querySelector('.hero-title').innerText = "IRCTC";
+      if (this.progress() > 0.4) {
+        const title = document.querySelector('.hero-title');
+        if (title && title.innerText === 'COMMIT') {
+          title.innerText = 'IRCTC';
+          gsap.fromTo(title, { scale: 1.1, opacity: 0.7 }, { scale: 1, opacity: 1, duration: 0.4 });
         }
+      }
     },
     onComplete: function() {
-        let trainEl = document.getElementById('animated-train');
-        if (trainEl) trainEl.style.display = 'none';
+      const trainEl = document.getElementById('animated-train');
+      if (trainEl) trainEl.style.display = 'none';
+
+      // Phase 3: Wind/speed effect after train passes
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        const yPos = 40 + Math.random() * 80;
+        const width = 40 + Math.random() * 120;
+        const delay = Math.random() * 0.3;
+        particle.style.cssText = `
+          position:absolute;
+          right:-${width}px;
+          top:${yPos}px;
+          width:${width}px;
+          height:${1 + Math.random() * 2}px;
+          background:linear-gradient(90deg, rgba(247,245,237,0.8), transparent);
+          border-radius:4px;
+          opacity:0;
+        `;
+        windContainer.appendChild(particle);
+
+        gsap.to(particle, {
+          right: '110%',
+          opacity: 0.6,
+          duration: 0.4 + Math.random() * 0.3,
+          delay: delay,
+          ease: 'power2.out',
+          onComplete: () => {
+            gsap.to(particle, { opacity: 0, duration: 0.3, onComplete: () => particle.remove() });
+          }
+        });
+      }
+
+      // Fade out tracks after a moment
+      gsap.to('#track-container', { opacity: 0, duration: 0.8, delay: 0.5, onComplete: () => trackContainer.remove() });
+      gsap.to('#wind-container', { opacity: 0, duration: 1, delay: 1.2, onComplete: () => windContainer.remove() });
     }
-});
-  
+  }, '-=0.2');
+})();
+
 // Scroll Animations
-gsap.utils.toArray('.page-card, .search-container, .qa-tile, .bento-cell, .stat-card, .info-card, .train-card').forEach(elem => {
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.page-card, .search-container, .qa-tile, .bento-cell, .stat-card, .info-card, .train-card, .subtitle-pill, .search-section').forEach(elem => {
     gsap.fromTo(elem, 
         { y: 50, opacity: 0 },
         { 
