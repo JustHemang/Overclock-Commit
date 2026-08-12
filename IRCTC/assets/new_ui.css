@@ -757,7 +757,7 @@ body {
 .page-card {
     color: var(--text-dark) !important;
 }
-.page-card h1, .page-card h2, .page-card h3, .page-card h4, .page-card h5, .page-card h6 {
+.page-card h1:not(.page-title), .page-card h2, .page-card h3, .page-card h4, .page-card h5, .page-card h6 {
     color: var(--dark-blue) !important;
     font-family: 'Inter', sans-serif !important;
 }
@@ -952,3 +952,34 @@ body {
 /* REMOVE BLUE BAR FROM SECONDARY PAGES */
 .page-hero, .bookings-hero, .auth-hero, .pnr-hero { background: transparent !important; }
 .page-hero::after, .bookings-hero::after, .auth-hero::after, .pnr-hero::after { display: none !important; }
+
+/* BOOKINGS PAGE - white card for content */
+.bookings-hero h1 {
+    font-family: 'Brigends Expanded', sans-serif !important;
+    font-size: 80px !important;
+    color: var(--off-white) !important;
+    text-shadow: 2px 4px 12px rgba(0,0,0,0.3) !important;
+    letter-spacing: 2px !important;
+}
+.bookings-page-body {
+    background: var(--pure-white) !important;
+    border-radius: 40px !important;
+    padding: 50px 60px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25) !important;
+    max-width: 900px !important;
+    margin: 30px auto !important;
+}
+.bookings-tabs .filter-btn {
+    background: rgba(28,39,60,0.08) !important;
+    color: var(--dark-blue) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 25px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+}
+.bookings-tabs .filter-btn.active {
+    background: var(--dark-blue) !important;
+    color: #fff !important;
+    border-color: var(--dark-blue) !important;
+}
+

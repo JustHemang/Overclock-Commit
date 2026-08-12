@@ -265,18 +265,64 @@ function searchTrains() {
   }, 600);
 }
 
-// === TRAIN FLY-BY + WIND EFFECT ===
+// === TRAIN FLY-BY + SPEED LINES ===
 (function() {
   const hero = document.querySelector('.hero');
   if (!hero) return;
 
-  // Train flies across
+  // Wind container — fixed to viewport
+  const windContainer = document.createElement('div');
+  windContainer.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99998; pointer-events:none; overflow:hidden;';
+  document.body.appendChild(windContainer);
+
+  let spawnInterval = null;
+
+  function spawnSpeedLines() {
+    const trainEl = document.getElementById('animated-train');
+    if (!trainEl) return;
+    const trainRect = trainEl.getBoundingClientRect();
+    const trainLeft = trainRect.left;
+
+    // Spawn 3 streaks per frame behind the train
+    for (let i = 0; i < 3; i++) {
+      const line = document.createElement('div');
+      const yPos = trainRect.top + Math.random() * trainRect.height;
+      const width = 60 + Math.random() * 180;
+      const height = 1.5 + Math.random() * 3;
+      line.style.cssText = `
+        position:fixed;
+        left:${trainLeft - 20}px;
+        top:${yPos}px;
+        width:${width}px;
+        height:${height}px;
+        background:linear-gradient(270deg, rgba(255,255,255,0.9) 0%, rgba(234,107,64,0.5) 30%, transparent 100%);
+        border-radius:10px;
+        filter:blur(0.5px);
+        pointer-events:none;
+      `;
+      windContainer.appendChild(line);
+
+      // Streak flies left (behind the train)
+      gsap.to(line, {
+        x: -(400 + Math.random() * 300),
+        opacity: 0,
+        duration: 0.3 + Math.random() * 0.2,
+        ease: 'power1.out',
+        onComplete: () => line.remove()
+      });
+    }
+  }
+
   const masterTl = gsap.timeline({ delay: 1.2 });
 
   masterTl.to('#animated-train', {
     left: '150vw',
     duration: 1.0,
     ease: 'power3.inOut',
+    onStart: function() {
+      // Start spawning speed lines as train moves
+      spawnInterval = setInterval(spawnSpeedLines, 40);
+    },
     onUpdate: function() {
       if (this.progress() > 0.4) {
         const title = document.querySelector('.hero-title');
@@ -287,42 +333,11 @@ function searchTrains() {
       }
     },
     onComplete: function() {
+      clearInterval(spawnInterval);
       const trainEl = document.getElementById('animated-train');
       if (trainEl) trainEl.style.display = 'none';
-
-      // Wind streaks — attached to BODY so they cover the whole viewport
-      const windContainer = document.createElement('div');
-      windContainer.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99999; pointer-events:none; overflow:hidden;';
-      document.body.appendChild(windContainer);
-
-      for (let i = 0; i < 40; i++) {
-        const particle = document.createElement('div');
-        const yPos = Math.random() * 100;
-        const width = 80 + Math.random() * 200;
-        const height = 2 + Math.random() * 4;
-        const delay = Math.random() * 0.4;
-        particle.style.cssText = `
-          position:absolute;
-          left:100vw;
-          top:${yPos}vh;
-          width:${width}px;
-          height:${height}px;
-          background:linear-gradient(90deg, rgba(247,245,237,0.9) 0%, rgba(234,107,64,0.4) 40%, transparent 100%);
-          border-radius:10px;
-          filter:blur(1px);
-        `;
-        windContainer.appendChild(particle);
-
-        gsap.to(particle, {
-          left: '-300px',
-          duration: 0.5 + Math.random() * 0.4,
-          delay: delay,
-          ease: 'power2.in',
-        });
-      }
-
-      // Clean up after animation
-      gsap.to(windContainer, { opacity: 0, duration: 0.5, delay: 1.2, onComplete: () => windContainer.remove() });
+      // Clean up remaining particles
+      gsap.to(windContainer, { opacity: 0, duration: 0.6, delay: 0.5, onComplete: () => windContainer.remove() });
     }
   });
 })();
