@@ -695,6 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderHeader();
   renderFooter();
   updateAuthUI();
+  applyLanguage();
 
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.form-group')) {
