@@ -29,7 +29,6 @@
 }
 
 body {
-    zoom: 0.75;
     font-family: 'Inter', sans-serif;
     background-color: var(--off-white);
     background-image: var(--bg-pattern);
@@ -222,8 +221,9 @@ body {
     transform: translateY(-1px);
 }
 
-/* Hero Section */
+/* Hero Section - only the home hero gets zoomed down */
 .hero {
+    zoom: 0.75;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -677,7 +677,6 @@ body {
     margin-bottom: 60px;
 }
 .page-card {
-    zoom: 1.75; /* Increased zoom to make elements significantly larger than 1.0 */
     background-color: var(--pure-white) !important;
     width: 100%;
     max-width: 1200px;
@@ -688,10 +687,27 @@ body {
 }
 .page-title {
     font-family: 'Brigends Expanded', sans-serif !important;
-    font-size: 48px !important;
-    color: var(--dark-blue) !important;
+    font-size: 80px !important;
+    color: var(--off-white) !important;
     margin-bottom: 20px !important;
     text-transform: uppercase;
+    text-shadow: 2px 4px 12px rgba(0,0,0,0.3) !important;
+    letter-spacing: 2px !important;
+}
+
+/* Override PNR page inline styles */
+.pnr-hero h1 {
+    font-family: 'Brigends Expanded', sans-serif !important;
+    font-size: 80px !important;
+    color: var(--off-white) !important;
+    text-shadow: 2px 4px 12px rgba(0,0,0,0.3) !important;
+    letter-spacing: 2px !important;
+}
+.pnr-hero {
+    background: transparent !important;
+}
+.pnr-hero::after {
+    display: none !important;
 }
 .page-subtitle {
     font-family: 'Mileast', serif !important;
@@ -934,4 +950,5 @@ body {
 
 
 /* REMOVE BLUE BAR FROM SECONDARY PAGES */
-.page-hero, .bookings-hero, .auth-hero { background: transparent !important; }
+.page-hero, .bookings-hero, .auth-hero, .pnr-hero { background: transparent !important; }
+.page-hero::after, .bookings-hero::after, .auth-hero::after, .pnr-hero::after { display: none !important; }
