@@ -271,12 +271,12 @@ body {
 .search-container {
     background-color: var(--off-white);
     width: 100%;
-    max-width: 1200px; /* Increased from 1000px */
-    border-radius: 40px; /* Slightly larger radius */
-    padding: 80px 80px 60px 80px; /* Increased padding */
+    max-width: 900px;
+    border-radius: 30px;
+    padding: 60px 50px 40px 50px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.25);
     position: relative;
-    margin-top: 30px; /* Adjust for larger tabs */
+    margin-top: 25px;
 }
 
 .search-tabs {
