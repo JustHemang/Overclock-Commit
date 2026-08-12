@@ -723,7 +723,7 @@ function injectYouTubeMusic() {
     
     const playerDiv = document.createElement('div');
     playerDiv.id = 'yt-music-player';
-    playerDiv.style.display = 'none';
+    playerDiv.style.cssText = 'position: absolute; top: -9999px; left: -9999px; opacity: 0; width: 10px; height: 10px; pointer-events: none;';
     document.body.appendChild(playerDiv);
 
     const btn = document.createElement('button');
@@ -744,8 +744,8 @@ function injectYouTubeMusic() {
 
     window.onYouTubeIframeAPIReady = function() {
         window.ytMusicPlayer = new YT.Player('yt-music-player', {
-            height: '0',
-            width: '0',
+            height: '10',
+            width: '10',
             videoId: 'Ef0tk0q-ITo',
             playerVars: {
                 'autoplay': musicState ? 0 : 1, 
