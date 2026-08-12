@@ -268,7 +268,7 @@
       background: var(--primary);
       color: #fff;
     }
-    /* Empty State */
+    
     .empty-state {
       text-align: center;
       padding: 48px 20px;
@@ -297,7 +297,7 @@
     .empty-state .btn-search {
       display: inline-flex;
     }
-    /* Loading skeleton */
+    
     .skeleton-card {
       background: var(--bg-card);
       border-radius: var(--radius-lg);
@@ -321,7 +321,7 @@
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
-    /* Modals */
+    
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -893,7 +893,7 @@ function renderBookingCard(b) {
 function findBooking(id) {
   return allBookings.find(b => b.id === id);
 }
-/* ==================== CANCEL ==================== */
+
 function openCancelModal(id) {
   const b = findBooking(id);
   if (!b) return;
@@ -1028,7 +1028,7 @@ function applyLocalCancel(b, selected, total) {
   closeModal('cancelModal');
   loadBookings();
 }
-/* ==================== POSTPONE ==================== */
+
 function openPostponeModal(id) {
   const b = findBooking(id);
   if (!b) return;
@@ -1082,7 +1082,7 @@ async function confirmPostpone() {
     btn.innerHTML = '<i class="fas fa-check"></i> Confirm Reschedule';
   }
 }
-/* ==================== EDIT ==================== */
+
 function openEditModal(id) {
   const b = findBooking(id);
   if (!b) return;
@@ -1183,13 +1183,13 @@ async function confirmEdit() {
     await loadBookings();
   }
 }
-/* ==================== DOWNLOAD TICKET ==================== */
+
 function downloadTicket(id) {
   const b = findBooking(id);
   if (!b) return;
   openTicketWindow(b);
 }
-/* ==================== MODAL HELPERS ==================== */
+
 function openModal(id) {
   document.getElementById(id).classList.add('active');
   document.body.style.overflow = 'hidden';

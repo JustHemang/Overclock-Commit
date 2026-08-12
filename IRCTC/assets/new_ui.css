@@ -37,31 +37,31 @@ body {
     background-attachment: scroll;
     min-height: 100vh;
     color: var(--text-dark);
-    overflow-x: clip; /* Prevent horizontal scrollbars from flying elements */
+    overflow-x: clip; 
 }
 
 .page-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: 0; /* Removing padding because header is attached to top */
+    padding-top: 0; 
     background: rgba(0, 0, 0, 0.1); 
 }
 
-/* Navigation Bar */
+
 .navbar {
     display: flex;
-    justify-content: space-between; /* Pushes logo left, nav pill right */
+    justify-content: space-between; 
     align-items: flex-start;
     position: relative;
-    padding-left: 100px; /* Restored left alignment */
-    padding-right: 100px; /* Right alignment */
-    padding-top: 30px; /* Push down slightly from top */
+    padding-left: 100px; 
+    padding-right: 100px; 
+    padding-top: 30px; 
 }
 
 .nav-left {
     z-index: 10;
-    margin-top: 0; /* Align with the top */
+    margin-top: 0; 
 }
 
 .logo-circle {
@@ -95,7 +95,7 @@ body {
 .logo-r {
     font-weight: 900;
     font-size: 32px;
-    color: #0b1a58; /* Very dark blue for logo */
+    color: #0b1a58; 
     z-index: 2;
 }
 
@@ -103,7 +103,7 @@ body {
     position: absolute;
     width: 44px;
     height: 44px;
-    border: 4px solid #1c32a0; /* Blue ring */
+    border: 4px solid #1c32a0; 
     border-radius: 50%;
     border-top-color: transparent;
     border-right-color: transparent;
@@ -122,8 +122,8 @@ body {
 
 .nav-right-container {
     background-color: var(--pure-white);
-    padding: 15px 40px; /* Clean pill padding */
-    border-radius: 35px; /* Fully rounded pill */
+    padding: 15px 40px; 
+    border-radius: 35px; 
     display: flex;
     align-items: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -145,7 +145,7 @@ body {
     text-decoration: none;
     color: var(--text-muted);
     font-weight: 600;
-    font-size: 16px; /* increased */
+    font-size: 16px; 
     display: flex;
     align-items: center;
     gap: 10px;
@@ -161,7 +161,7 @@ body {
 
 .nav-link.active {
     color: var(--text-dark);
-    background-color: #f5f5f5; /* Light grey pill */
+    background-color: #f5f5f5; 
 }
 
 .active-indicator {
@@ -202,7 +202,7 @@ body {
 }
 
 .login-btn {
-    background-color: #21293c; /* dark blue */
+    background-color: #21293c; 
     color: var(--pure-white);
     border: none;
     padding: 12px 28px;
@@ -221,25 +221,25 @@ body {
     transform: translateY(-1px);
 }
 
-/* Hero Section - only the home hero gets zoomed down */
+
 .hero {
     zoom: 0.75;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    margin-top: 60px; /* Restored space */
-    margin-bottom: 60px; /* Restored space */
-    padding-left: 100px; /* Restored perfect left alignment */
+    margin-top: 60px; 
+    margin-bottom: 60px; 
+    padding-left: 100px; 
 }
 
 .hero-title {
     font-family: 'Brigends Expanded', sans-serif !important;
-    font-size: 300px; /* Matches hero-logo height */
+    font-size: 300px; 
     color: var(--off-white);
     line-height: 1;
     letter-spacing: 1px;
-    margin-bottom: 10px; /* Spacing between the two */
+    margin-bottom: 10px; 
     text-shadow: 2px 4px 12px rgba(0,0,0,0.3);
 }
 
@@ -266,28 +266,28 @@ body {
 
 .subtitle-pill {
     background-color: var(--off-white);
-    padding: 16px 40px; /* Increased padding slightly for larger text */
+    padding: 16px 40px; 
     border-radius: 100px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    /* Aligned exactly with IRCTC title */
+    
 }
 
 .subtitle-pill h2 {
     font-family: 'Mileast', serif;
-    font-size: 36px; /* Increased back up */
-    font-weight: 400; /* Mileast might not have 700 */
+    font-size: 36px; 
+    font-weight: 400; 
     color: var(--dark-blue);
     margin: 0;
     letter-spacing: 0.5px;
 }
 
-/* Search Container */
+
 .search-section {
     display: flex;
     justify-content: flex-start;
     padding-left: 100px;
-    margin-top: 60px; /* Move it lower */
-    margin-bottom: 10px; /* Reduce gap to footer */
+    margin-top: 60px; 
+    margin-bottom: 10px; 
 }
 
 .search-container {
@@ -391,15 +391,15 @@ body {
     font-weight: 500;
 }
 
-/* Row 2 specific */
+
 .search-bottom {
     display: flex;
-    gap: 30px; /* Increased gap */
+    gap: 30px; 
 }
 
 .search-bottom .input-group {
     flex: 1;
-    max-width: 380px; /* Increased width */
+    max-width: 380px; 
 }
 
 .search-btn {
@@ -408,7 +408,7 @@ body {
     color: var(--pure-white);
     border: none;
     border-radius: 15px;
-    font-size: 26px; /* Increased font size */
+    font-size: 26px; 
     font-weight: 800;
     display: flex;
     justify-content: center;
@@ -491,7 +491,7 @@ body {
     transform: rotate(45deg);
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 1000px) {
     .hero-title {
         font-size: 100px;
@@ -529,15 +529,15 @@ body {
     }
 }
 
-/* Footer styles */
+
 .footer {
-    margin-top: 40px; /* Reduced spacing */
+    margin-top: 40px; 
     background-color: var(--pure-white);
     border-radius: 20px;
     padding: 40px 60px 20px 60px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     margin-bottom: 40px;
-    margin-left: 100px; /* Restored perfect left alignment */
+    margin-left: 100px; 
     margin-right: 100px;
 }
 
@@ -555,11 +555,11 @@ body {
     gap: 12px;
 }
 
-/* Input Grid */
+
 .search-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px; /* Increased gap */
+    gap: 30px; 
     margin-bottom: 30px;
 }
 
@@ -610,7 +610,7 @@ body {
     gap: 8px;
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 16px; /* Made bigger */
+    font-size: 16px; 
     font-weight: 600;
     transition: color 0.2s ease;
 }
@@ -643,9 +643,9 @@ body {
     text-align: center;
 }
 
-/* === IRCTC INTEGRATION FIXES === */
 
-/* Fix White Bar on Top */
+
+
 .header {
     background: transparent !important;
     border-bottom: none !important;
@@ -654,14 +654,14 @@ body {
     box-shadow: none !important;
 }
 
-/* Fix Blue Background on Hero Animation */
+
 .hero {
     background: transparent !important;
     padding: 0 !important;
     min-height: auto !important;
 }
 
-/* Fix Booking Area Inputs */
+
 .search-form .input-content input, 
 .search-form .input-content select {
     background: transparent !important;
@@ -686,7 +686,7 @@ body {
     margin-bottom: 5px !important;
 }
 
-/* Fix Footer Background and Box Shadow */
+
 .footer {
     background-color: var(--pure-white) !important;
     border-radius: 20px !important;
@@ -710,7 +710,7 @@ body {
 }
 
 
-/* UI REWRITE GENERIC CLASSES */
+
 .page-container-new {
     display: flex;
     justify-content: center;
@@ -735,14 +735,14 @@ body {
     text-shadow: 2px 4px 12px rgba(0,0,0,0.3) !important;
     letter-spacing: 2px !important;
 }
-/* When page-title is inside a white card, use dark color */
+
 .page-card .page-title {
     color: var(--dark-blue) !important;
     text-shadow: none !important;
     font-size: 48px !important;
 }
 
-/* Override PNR page inline styles */
+
 .pnr-hero h1 {
     font-family: 'Brigends Expanded', sans-serif !important;
     font-size: 80px !important;
@@ -771,7 +771,7 @@ body {
 }
 
 
-/* FIXES FOR HERO AND DROPDOWN */
+
 .input-group {
     overflow: visible !important;
 }
@@ -780,12 +780,12 @@ body {
     border-bottom-left-radius: 15px;
 }
 
-/* Fix Hero Blue Bar */
+
 .hero::after, .hero-grid-overlay, .hero-glow {
     display: none !important;
 }
 
-/* Fix Dropdown styling for New UI */
+
 .suggestions-dropdown {
     background: var(--pure-white) !important;
     color: var(--dark-blue) !important;
@@ -800,7 +800,7 @@ body {
 .suggestion-item:hover, .suggestion-item.highlighted { background: #f5f5f5 !important; }
 
 
-/* FIX TEXT VISIBILITY IN PAGE CARDS */
+
 .page-card {
     color: var(--text-dark) !important;
 }
@@ -815,7 +815,7 @@ body {
     color: var(--text-muted) !important;
 }
 
-/* ADD BG BOXES FOR INPUTS IN SECONDARY PAGES */
+
 .page-card input[type="text"], 
 .page-card input[type="email"], 
 .page-card input[type="password"], 
@@ -840,12 +840,12 @@ body {
     box-shadow: none !important;
 }
 .page-card .input-wrapper svg {
-    display: none !important; /* Hide old tiny icons since inputs are now big boxes */
+    display: none !important; 
 }
 
-/* FIX HOME PAGE LEFT SPACING */
+
 .hero {
-    padding-left: 150px !important; /* increased spacing on left */
+    padding-left: 150px !important; 
 }
 .hero-title {
     margin-left: 20px !important;
@@ -853,7 +853,7 @@ body {
 
 
 
-/* FIX INPUT GROUPS ON SECONDARY PAGES */
+
 .page-card .input-group {
     display: block !important;
     background-color: var(--pure-white) !important;
@@ -896,7 +896,7 @@ body {
     font-size: 18px !important;
 }
 
-/* FIX TRACKING, PNR, BOOKINGS CARDS */
+
 .tracking-card, .pnr-result-card, .booking-card {
     background: var(--pure-white) !important;
     border: 1px solid var(--border-color) !important;
@@ -974,11 +974,11 @@ body {
 
 
 
-/* REMOVE BLUE BAR FROM SECONDARY PAGES */
+
 .page-hero, .bookings-hero, .auth-hero, .pnr-hero { background: transparent !important; }
 .page-hero::after, .bookings-hero::after, .auth-hero::after, .pnr-hero::after { display: none !important; }
 
-/* BOOKINGS PAGE - white card for content */
+
 .bookings-hero h1 {
     font-family: 'Brigends Expanded', sans-serif !important;
     font-size: 80px !important;
@@ -1008,11 +1008,9 @@ body {
     border-color: var(--dark-blue) !important;
 }
 
-/* =========================================================
-   MOBILE RESPONSIVENESS
-========================================================= */
+
 @media (max-width: 768px) {
-    /* Hero Section */
+    
     .hero {
         padding-left: 20px !important;
         padding-right: 20px !important;
@@ -1034,7 +1032,7 @@ body {
         font-size: 40px !important;
     }
     
-    /* Search Box */
+    
     .search-container {
         padding: 30px 20px 20px 20px !important;
         border-radius: 20px !important;
@@ -1062,7 +1060,7 @@ body {
         margin-bottom: 10px;
     }
     
-    /* Secondary Pages */
+    
     .bookings-page-body, .page-card {
         padding: 30px 20px !important;
         border-radius: 20px !important;
@@ -1072,22 +1070,22 @@ body {
         font-size: 40px !important;
     }
     
-    /* General Grid Layouts */
+    
     .features-grid, .qa-grid, .stats-grid, .bento-grid {
         grid-template-columns: 1fr !important;
     }
     
-    /* Header Nav */
+    
     .nav-right-container {
-        display: none !important; /* Hide desktop nav on mobile if needed, or rely on hamburger */
+        display: none !important; 
     }
     
-    /* Show hamburger menu icon if it's there, or just keep it simple */
+    
     .mobile-menu-btn {
         display: flex !important;
     }
 }
-/* Page Transition */
+
 body {
     animation: fadeInPage 0.4s ease-out forwards;
     opacity: 0;
@@ -1105,7 +1103,7 @@ body.fade-out {
 }
 
 
-/* FIX CHECKOUT INPUTS */
+
 #checkoutPane .input-wrapper {
     background: var(--bg-input) !important;
     border: 1.5px solid var(--border) !important;
@@ -1127,7 +1125,7 @@ body.fade-out {
 }
 
 
-/* FIX LOGIN TABS */
+
 .auth-tabs {
     display: flex; gap: 0; margin-bottom: 18px; background: var(--bg-alt);
     border-radius: var(--radius-sm); padding: 3px;
@@ -1139,7 +1137,7 @@ body.fade-out {
 .auth-tab.active { background: var(--pure-white); color: var(--ink); box-shadow: var(--shadow-sm); }
 
 
-/* BETTER LOGIN TABS */
+
 .auth-tabs {
     display: flex; gap: 10px; margin-bottom: 30px; background: #f0f2f5;
     border-radius: 12px; padding: 5px; width: 100%; justify-content: space-between;
@@ -1149,7 +1147,7 @@ body.fade-out {
     color: var(--text-muted); background: transparent; transition: var(--transition); border: none; cursor: pointer; text-align: center;
 }
 .auth-tab.active { background: var(--pure-white); color: var(--dark-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-/* BETTER FORM OPTIONS */
+
 .form-options {
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-size: 14px;
 }
@@ -1159,7 +1157,7 @@ body.fade-out {
 .forgot-pwd:hover { text-decoration: underline; }
 
 
-/* ROBUST TOAST CONTAINER */
+
 .toast-container {
     position: fixed !important;
     top: 30px !important;

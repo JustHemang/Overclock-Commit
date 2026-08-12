@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   animatePageIn();
 });
-// Global Page Transition Interceptor
+
 document.addEventListener('click', (e) => {
     const link = e.target.closest('a');
     if (link && link.href && !link.href.startsWith('javascript') && link.target !== '_blank' && link.hostname === window.location.hostname) {
@@ -717,7 +717,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// === BACKGROUND MUSIC ===
+
 function injectYouTubeMusic() {
     const musicState = localStorage.getItem('irctc_music_muted') === 'true';
     
@@ -725,7 +725,7 @@ function injectYouTubeMusic() {
     audio.loop = true;
     audio.volume = 0.1;
     
-    // Start from middle
+    
     audio.addEventListener('loadedmetadata', () => {
         if (audio.duration && isFinite(audio.duration)) {
             audio.currentTime = audio.duration / 2;

@@ -93,7 +93,7 @@ async function doLogin() {
   const btn = document.getElementById('loginBtn');
   btn.disabled = true; btn.textContent = 'Signing in...';
 
-  // Real Backend Login
+  
   try {
     const result = await apiFetch('/api/auth/login', {
       method: 'POST',
@@ -135,7 +135,7 @@ async function doRegister() {
   const btn = document.getElementById('regBtn');
   btn.disabled = true; btn.textContent = 'Creating account...';
 
-  // Real Backend Registration
+  
   try {
     const result = await apiFetch('/api/auth/register', {
       method: 'POST',

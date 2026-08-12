@@ -695,7 +695,7 @@ app.get('/api/status', (req, res) => {
 const RECAPTCHA_SECRET = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 
 async function verifyRecaptcha(token) {
-  // Bypass reCAPTCHA for local development / testing
+  
   return true;
 }
 

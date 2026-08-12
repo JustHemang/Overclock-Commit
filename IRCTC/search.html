@@ -64,7 +64,7 @@
         <div class="payment-option" onclick="selectPayment('netbanking')"><span>Net Banking</span></div>
       </div>
       
-      <!-- Payment Details Containers -->
+      
       <div id="upiDetail" style="margin-bottom:15px;">
         <div class="input-wrapper"><i class="fas fa-at"></i><input type="text" placeholder="Enter UPI ID (e.g. user@upi)"></div>
       </div>
@@ -167,7 +167,7 @@ let searchTo = '';
 let searchDate = '';
 let allResults = [];
 
-// Checkout specific globals
+
 let currentTrain = null;
 let currentClass = '2A';
 let selectedSeats = [];
@@ -284,7 +284,7 @@ function bookTrain(trainNum) {
     if (!randomSeats.includes(s)) randomSeats.push(s);
   }
   
-  // Set up globals for checkout
+  
   currentTrain = {
     number: train.number,
     name: train.name,
@@ -300,17 +300,17 @@ function bookTrain(trainNum) {
   selectedSeats = randomSeats;
   bookingDate = searchDate;
   
-  // SPA Transition
+  
   document.getElementById('searchContent').style.display = 'none';
   document.getElementById('resultsTitle').style.display = 'none';
   document.getElementById('resultsDate').style.display = 'none';
   const checkoutPane = document.getElementById('checkoutPane');
   checkoutPane.style.display = 'block';
   
-  // Animate in
+  
   gsap.from(checkoutPane, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" });
   
-  // Initialize checkout UI
+  
   const user = getCurrentUser();
   if (user) {
     const mobileInput = document.getElementById('mobileNumber');
@@ -323,7 +323,7 @@ function bookTrain(trainNum) {
   document.getElementById('confirmationSection').style.display = 'none';
 }
 
-// === CHECKOUT FUNCTIONS ===
+
 function getTotalFare() {
   if (!currentTrain || !currentTrain.classes || !currentTrain.classes[currentClass]) {
     return 450 * passengerCount;
