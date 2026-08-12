@@ -860,30 +860,6 @@ body {
     font-weight: 500 !important;
 }
 
-/* FIX CHECKOUT PASSENGER FIELDS */
-.page-card .passenger-fields .input-wrapper {
-    display: block !important;
-    background-color: var(--pure-white) !important;
-    border-radius: 15px !important;
-    border: 1px solid var(--border-color) !important;
-    padding: 15px 20px !important;
-    margin-bottom: 15px !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important;
-    width: 100% !important;
-}
-
-.page-card .passenger-fields .input-wrapper input,
-.page-card .passenger-fields .input-wrapper select {
-    width: 100% !important;
-    border: none !important;
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: var(--dark-blue) !important;
-    outline: none !important;
-    background: transparent !important;
-    font-family: 'Inter', sans-serif !important;
-    margin-top: 5px !important;
-}
 /* FIX TRACKING, PNR, BOOKINGS CARDS */
 .tracking-card, .pnr-result-card, .booking-card {
     background: var(--pure-white) !important;
@@ -1088,3 +1064,4 @@ body.fade-out {
     0% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-10px); }
 }
+
