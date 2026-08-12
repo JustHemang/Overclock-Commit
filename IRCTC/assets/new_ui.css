@@ -264,8 +264,9 @@ body {
 .search-section {
     display: flex;
     justify-content: flex-start;
-    padding-left: 100px; /* Restored perfect left alignment */
-    margin-bottom: 60px; /* Space before footer */
+    padding-left: 100px;
+    margin-top: 60px; /* Move it lower */
+    margin-bottom: 10px; /* Reduce gap to footer */
 }
 
 .search-container {
@@ -288,14 +289,14 @@ body {
 
 .search-tab {
     background-color: var(--pure-white);
-    padding: 14px 30px;
+    padding: 10px 20px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     display: flex;
     align-items: center;
     gap: 8px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 12px;
     color: var(--dark-blue);
     box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
 }
@@ -345,7 +346,7 @@ body {
 
 .input-content label {
     display: block;
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -356,7 +357,7 @@ body {
 .input-content input, .input-content select {
     width: 100%;
     border: none;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--dark-blue);
     outline: none;
