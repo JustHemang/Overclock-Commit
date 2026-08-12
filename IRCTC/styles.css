@@ -67,7 +67,7 @@ body {
   background: var(--bg-alt);
   color: var(--text-body);
   line-height: 1.65;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 a { text-decoration: none; color: inherit; }
@@ -1489,3 +1489,4 @@ input, select { font-family: var(--font); }
 [data-theme="dark"] .toggle-label input[type="checkbox"] { background: rgba(100,100,160,0.3); }
 [data-theme="dark"] .toggle-label input[type="checkbox"]:checked { background: var(--ink); }
 [data-theme="dark"] .booking-tabs { background: rgba(10,10,30,0.5); }
+

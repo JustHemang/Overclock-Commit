@@ -37,7 +37,7 @@ body {
     background-attachment: scroll;
     min-height: 100vh;
     color: var(--text-dark);
-    overflow-x: hidden; /* Prevent horizontal scrollbars from flying elements */
+    overflow-x: clip; /* Prevent horizontal scrollbars from flying elements */
 }
 
 .page-container {
@@ -1146,5 +1146,6 @@ body.fade-out {
 }
 .toast.error { border-left: 5px solid var(--primary-orange) !important; }
 .toast.success { border-left: 5px solid #22c55e !important; }
+
 
 

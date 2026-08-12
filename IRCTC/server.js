@@ -747,13 +747,8 @@ app.post('/api/auth/login', async (req, res) => {
 
   const db = readDB();
   let user = Object.values(db.users || {}).find(u => u.username === username);
-  if (!user) {
-    // Ephemeral storage fallback for hackathon!
-    const id = Date.now().toString(36);
-    user = { id, username, password, name: username, phone: '1234567890', email: username + '@example.com', createdAt: Date.now() };
-    if (!db.users) db.users = {};
-    db.users[id] = user;
-  } else if (user.password !== password) {
+  
+  if (!user || user.password !== password) {
     return res.status(401).json({ success: false, error: 'Invalid username or password' });
   }
 
