@@ -42,7 +42,7 @@
     <!-- Hero Section -->
     <section class="hero" style="position: relative; margin-top: 60px; margin-bottom: 60px; padding-left: 100px;">
         <img id="animated-train" src="assets/train_overlay.png" alt="Fast Train" style="position: absolute; top: 90px; left: 150vw; transform: translateY(-50%); width: 1400px; z-index: 9999; pointer-events: none; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));">
-        <h1 class="hero-title" style="font-family: 'Brigends Expanded', sans-serif; font-size: 180px; color: var(--off-white); line-height: 1; margin-bottom: 10px; text-shadow: 2px 4px 12px rgba(0,0,0,0.3);">COMMIT</h1>
+        <h1 class="hero-title" style="font-family: 'Brigends Expanded', sans-serif; font-size: 180px; color: var(--off-white); line-height: 1; margin-bottom: 10px; text-shadow: 0px 8px 30px rgba(0,0,0,0.8);">COMMIT</h1>
         <div class="subtitle-pill" style="background-color: var(--off-white); padding: 16px 40px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
             <h2 style="font-family: 'Mileast', serif; font-size: 36px; font-weight: 400; color: var(--dark-blue); margin: 0; letter-spacing: 0.5px;">Indian Railway Catering and Tourism Corporation</h2>
         </div>
@@ -342,7 +342,7 @@ window.runTrainAnimation = function() {
           title.innerText = 'IRCTC';
           gsap.fromTo(title, 
             { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 }, 
-            { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 0 0px rgba(234,107,64,0)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
+            { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 8px 30px rgba(0,0,0,0.8)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
           );
         }
       }

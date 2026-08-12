@@ -96,22 +96,25 @@ async function doLogin() {
   if (!recaptchaToken) { showToast('Please complete the reCAPTCHA', 'error'); return; }
   const btn = document.getElementById('loginBtn');
   btn.disabled = true; btn.textContent = 'Signing in...';
-  const res = await fetch('/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password, recaptchaToken })
-  });
-  const result = await res.json();
-  btn.disabled = false; btn.textContent = 'Sign In';
-  if (!result.success) {
-    showToast(result.error || 'Login failed', 'error');
-    grecaptcha.reset(loginWidgetId);
-    return;
-  }
-  localStorage.setItem('irctc_current_user', JSON.stringify(result.user));
-  localStorage.setItem('irctc_token', result.token);
-  showToast('Login successful!', 'success');
-  setTimeout(() => window.location.href = '/', 800);
+
+  // Mock Backend Login
+  setTimeout(() => {
+    btn.disabled = false; btn.textContent = 'Sign In';
+    let users = [];
+    try { users = JSON.parse(localStorage.getItem('irctc_users')) || []; } catch(e){}
+    const user = users.find(u => u.username === username && u.password === password);
+    
+    if (!user) {
+      showToast('Invalid username or password', 'error');
+      grecaptcha.reset(loginWidgetId);
+      return;
+    }
+
+    localStorage.setItem('irctc_current_user', JSON.stringify({ name: user.name, username: user.username, email: user.email, phone: user.phone }));
+    localStorage.setItem('irctc_token', 'mock_jwt_token_' + Date.now());
+    showToast('Login successful!', 'success');
+    setTimeout(() => window.location.href = 'index.html', 800);
+  }, 500);
 }
 async function doRegister() {
   const name = document.getElementById('regName').value.trim();
@@ -128,22 +131,28 @@ async function doRegister() {
   if (!recaptchaToken) { showToast('Please complete the reCAPTCHA', 'error'); return; }
   const btn = document.getElementById('regBtn');
   btn.disabled = true; btn.textContent = 'Creating account...';
-  const res = await fetch('/api/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, phone, email, username, password, recaptchaToken })
-  });
-  const result = await res.json();
-  btn.disabled = false; btn.textContent = 'Create Account';
-  if (!result.success) {
-    showToast(result.error || 'Registration failed', 'error');
-    grecaptcha.reset(regWidgetId);
-    return;
-  }
-  localStorage.setItem('irctc_current_user', JSON.stringify(result.user));
-  localStorage.setItem('irctc_token', result.token);
-  showToast('Account created!', 'success');
-  setTimeout(() => window.location.href = '/', 800);
+
+  // Mock Backend Registration
+  setTimeout(() => {
+    btn.disabled = false; btn.textContent = 'Create Account';
+    let users = [];
+    try { users = JSON.parse(localStorage.getItem('irctc_users')) || []; } catch(e){}
+    
+    if (users.some(u => u.username === username)) {
+      showToast('Username already exists', 'error');
+      grecaptcha.reset(regWidgetId);
+      return;
+    }
+
+    const newUser = { name, phone, email, username, password };
+    users.push(newUser);
+    localStorage.setItem('irctc_users', JSON.stringify(users));
+
+    localStorage.setItem('irctc_current_user', JSON.stringify({ name, username, email, phone }));
+    localStorage.setItem('irctc_token', 'mock_jwt_token_' + Date.now());
+    showToast('Account created!', 'success');
+    setTimeout(() => window.location.href = 'index.html', 800);
+  }, 500);
 }
   </script>
 </body>
