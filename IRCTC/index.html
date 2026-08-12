@@ -56,7 +56,7 @@
   <header class="header" id="mainHeader"></header>
   <div class="mobile-nav" id="mobileNav"></div>
   <main class="main">
-    <!-- Hero Section -->
+    
     <section class="hero" style="position: relative; margin-top: 60px; margin-bottom: 60px; padding-left: 100px;">
       <img id="animated-train" src="assets/train_overlay.png" alt="Fast Train"
         style="position: absolute; top: 90px; left: 150vw; transform: translateY(-50%); width: 1400px; z-index: 9999; pointer-events: none; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));">
@@ -71,7 +71,7 @@
       </div>
     </section>
 
-    <!-- Search Container -->
+    
     <div class="search-section">
       <div class="search-container">
 
@@ -297,7 +297,6 @@
       }, 600);
     }
 
-    // === TRAIN FLY-BY + SPEED LINES ===
     window.runTrainAnimation = function () {
       const hero = document.querySelector('.hero');
       const trainEl = document.getElementById('animated-train');
@@ -306,11 +305,10 @@
       if (window.innerWidth <= 768) {
         trainEl.style.display = 'none';
         const title = document.querySelector('.hero-title');
-        if (title && title.innerText === 'COMMIT') title.innerHTML = 'I&thinsp;RCTC';
+        if (title && title.innerText.trim() === 'COMMIT') title.innerHTML = 'I&thinsp;RCTC';
         return;
       }
 
-      // Wind container — fixed to viewport
       const windContainer = document.createElement('div');
       windContainer.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99998; pointer-events:none; overflow:hidden;';
       document.body.appendChild(windContainer);
@@ -323,7 +321,6 @@
         const trainRect = trainEl.getBoundingClientRect();
         const trainLeft = trainRect.left;
 
-        // Spawn 4 streaks per frame behind the train
         for (let i = 0; i < 4; i++) {
           const line = document.createElement('div');
           const yPos = trainRect.top + (Math.random() * trainRect.height * 0.8) + (trainRect.height * 0.1);
@@ -343,7 +340,6 @@
       `;
           windContainer.appendChild(line);
 
-          // Streak flies right (trailing behind the left-moving train)
           gsap.to(line, {
             x: 500 + Math.random() * 500,
             scaleX: 2,
@@ -357,18 +353,17 @@
 
       const masterTl = gsap.timeline({ delay: 0.3 });
 
-      // 1. Train Movement (Moving RIGHT to LEFT)
       masterTl.to('#animated-train', {
         left: '-150vw',
         duration: 1.4,
         ease: 'power3.inOut',
         onStart: function () {
-          spawnInterval = setInterval(spawnSpeedLines, 20); // More particles, faster
+          spawnInterval = setInterval(spawnSpeedLines, 20);
         },
         onUpdate: function () {
           if (this.progress() > 0.45 && this.progress() < 0.5) {
             const title = document.querySelector('.hero-title');
-            if (title && title.innerText === 'COMMIT') {
+            if (title && title.innerText.trim() === 'COMMIT') {
               title.innerHTML = 'I&thinsp;RCTC';
               gsap.fromTo(title,
                 { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 },
@@ -385,7 +380,6 @@
         }
       }, "start");
 
-      // 2. Train Stretch & Blur (peaks in the middle)
       masterTl.to('#animated-train', {
         scaleX: 1.4,
         skewX: -12,
@@ -402,7 +396,6 @@
         ease: 'power2.out'
       }, "start+=0.7");
 
-      // 3. Screen Shake / Rumble
       masterTl.to('.hero', {
         y: 8,
         x: -4,
@@ -413,7 +406,6 @@
       }, "start+=0.4");
     };
 
-    // Scroll Animations
     gsap.registerPlugin(ScrollTrigger);
     gsap.utils.toArray('.page-card, .search-container, .qa-tile, .bento-cell, .stat-card, .info-card, .train-card, .subtitle-pill, .search-section').forEach(elem => {
       gsap.fromTo(elem,
