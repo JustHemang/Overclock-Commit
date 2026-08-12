@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,16 @@
   <title>IRCTC - Train Travel, Simplified</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="assets/new_ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
+
 <body class="home-page">
   <div class="welcome-overlay hidden" id="welcomeOverlay">
     <div class="welcome-modal">
@@ -25,11 +29,24 @@
       <p class="welcome-sub">कृपया अपनी पसंदीदा भाषा का चयन करें<br>Please select your preferred language.</p>
       <div class="welcome-langs">
         <button class="welcome-lang-btn" onclick="selectLang('en')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
           English
         </button>
         <button class="welcome-lang-btn" onclick="selectLang('hi')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m5 8 6 6" />
+            <path d="m4 14 6-6 2-3" />
+            <path d="M2 5h12" />
+            <path d="M7 2h1" />
+            <path d="m22 22-5-10-5 10" />
+            <path d="M14 18h6" />
+          </svg>
           हिन्दी
         </button>
       </div>
@@ -41,86 +58,99 @@
   <main class="main">
     <!-- Hero Section -->
     <section class="hero" style="position: relative; margin-top: 60px; margin-bottom: 60px; padding-left: 100px;">
-        <img id="animated-train" src="assets/train_overlay.png" alt="Fast Train" style="position: absolute; top: 90px; left: 150vw; transform: translateY(-50%); width: 1400px; z-index: 9999; pointer-events: none; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));">
-        <h1 class="hero-title" style="font-family: 'Brigends Expanded', sans-serif; font-size: 180px; color: var(--off-white); line-height: 1; margin-bottom: 10px; text-shadow: 0px 8px 30px rgba(0,0,0,0.8);">COMMIT</h1>
-        <div class="subtitle-pill" style="background-color: var(--off-white); padding: 16px 40px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-            <h2 style="font-family: 'Mileast', serif; font-size: 36px; font-weight: 400; color: var(--dark-blue); margin: 0; letter-spacing: 0.5px;">Indian Railway Catering and Tourism Corporation</h2>
-        </div>
+      <img id="animated-train" src="assets/train_overlay.png" alt="Fast Train"
+        style="position: absolute; top: 90px; left: 150vw; transform: translateY(-50%); width: 1400px; z-index: 9999; pointer-events: none; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));">
+      <h1 class="hero-title"
+        style="font-family: 'Brigends Expanded', sans-serif; font-size: 180px; color: var(--off-white); line-height: 1; margin-bottom: 10px; text-shadow: 0px 8px 30px rgba(0,0,0,0.8);">
+        COMMIT</h1>
+      <div class="subtitle-pill"
+        style="background-color: var(--off-white); padding: 16px 40px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <h2
+          style="font-family: 'Mileast', serif; font-size: 36px; font-weight: 400; color: var(--dark-blue); margin: 0; letter-spacing: 0.5px;">
+          Indian Railway Catering and Tourism Corporation</h2>
+      </div>
     </section>
 
     <!-- Search Container -->
     <div class="search-section">
-        <div class="search-container">
+      <div class="search-container">
 
 
-            <form id="trainBookingForm" onsubmit="event.preventDefault(); searchTrains();" style="width: 100%;">
-                <div class="search-form" style="display: flex; gap: 20px; margin-bottom: 20px;">
-                    <div class="input-group">
-                        <div class="input-icon dark-bg" style="background-color: var(--dark-blue); color: white;">
-                            <i class="fa-solid fa-crosshairs"></i>
-                        </div>
-                        <div class="input-content" style="position:relative;">
-                            <label data-i18n="from">FROM</label>
-                            <input type="hidden" id="fromStationCode" value="">
-                            <input type="text" id="fromStation" data-i18n="stationOrCity" placeholder="Station or city" autocomplete="off" oninput="document.getElementById('fromStationCode').value=''; showStationSuggestions(this, 'from')" onkeydown="handleStationKeydown(this, 'from', event)">
-                            <div id="fromSuggestions" class="suggestions-dropdown"></div>
-                        </div>
-                    </div>
+        <form id="trainBookingForm" onsubmit="event.preventDefault(); searchTrains();" style="width: 100%;">
+          <div class="search-form" style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <div class="input-group">
+              <div class="input-icon dark-bg" style="background-color: var(--dark-blue); color: white;">
+                <i class="fa-solid fa-crosshairs"></i>
+              </div>
+              <div class="input-content" style="position:relative;">
+                <label data-i18n="from">FROM</label>
+                <input type="hidden" id="fromStationCode" value="">
+                <input type="text" id="fromStation" data-i18n="stationOrCity" placeholder="Station or city"
+                  autocomplete="off"
+                  oninput="document.getElementById('fromStationCode').value=''; showStationSuggestions(this, 'from')"
+                  onkeydown="handleStationKeydown(this, 'from', event)">
+                <div id="fromSuggestions" class="suggestions-dropdown"></div>
+              </div>
+            </div>
 
-                    <div class="input-group">
-                        <div class="input-icon orange-bg" style="background-color: var(--primary-orange); color: white;">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <div class="input-content orange-bg" style="position:relative;">
-                            <label style="color: rgba(255,255,255,0.8)" data-i18n="to">TO</label>
-                            <input type="hidden" id="toStationCode" value="">
-                            <input type="text" id="toStation" data-i18n="stationOrCity" placeholder="Station or city" autocomplete="off" oninput="document.getElementById('toStationCode').value=''; showStationSuggestions(this, 'to')" onkeydown="handleStationKeydown(this, 'to', event)" style="color: white;">
-                            <div id="toSuggestions" class="suggestions-dropdown"></div>
-                        </div>
-                    </div>
+            <div class="input-group">
+              <div class="input-icon orange-bg" style="background-color: var(--primary-orange); color: white;">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="input-content orange-bg" style="position:relative;">
+                <label style="color: rgba(255,255,255,0.8)" data-i18n="to">TO</label>
+                <input type="hidden" id="toStationCode" value="">
+                <input type="text" id="toStation" data-i18n="stationOrCity" placeholder="Station or city"
+                  autocomplete="off"
+                  oninput="document.getElementById('toStationCode').value=''; showStationSuggestions(this, 'to')"
+                  onkeydown="handleStationKeydown(this, 'to', event)" style="color: white;">
+                <div id="toSuggestions" class="suggestions-dropdown"></div>
+              </div>
+            </div>
 
-                    <div class="input-group">
-                        <div class="input-icon dark-bg" style="background-color: var(--dark-blue); color: white;">
-                            <i class="fa-regular fa-floppy-disk"></i>
-                        </div>
-                        <div class="input-content">
-                            <label data-i18n="departure">DEPARTURE</label>
-                            <input type="date" id="departDate" value="2026-08-13">
-                        </div>
-                    </div>
-                </div>
+            <div class="input-group">
+              <div class="input-icon dark-bg" style="background-color: var(--dark-blue); color: white;">
+                <i class="fa-regular fa-floppy-disk"></i>
+              </div>
+              <div class="input-content">
+                <label data-i18n="departure">DEPARTURE</label>
+                <input type="date" id="departDate" value="2026-08-13">
+              </div>
+            </div>
+          </div>
 
-                <div class="search-form row-2" style="display: flex; gap: 30px; align-items: center; margin-bottom: 0;">
-                    <div class="input-group quota-group" style="flex: 1; max-width: 300px;">
-                        <div class="input-icon dark-bg" style="background-color: var(--dark-blue); color: white;">
-                            <i class="fa-solid fa-user-group"></i>
-                        </div>
-                        <div class="input-content">
-                            <label data-i18n="quota">QUOTA</label>
-                            <select id="quota">
-                                <option value="GN" data-i18n-opt="general">General</option>
-                                <option value="TQ" data-i18n-opt="tatkal">Tatkal</option>
-                                <option value="LD" data-i18n-opt="ladies">Ladies</option>
-                            </select>
-                        </div>
-                    </div>
+          <div class="search-form row-2" style="display: flex; gap: 30px; align-items: center; margin-bottom: 0;">
+            <div class="input-group quota-group" style="flex: 1; max-width: 300px;">
+              <div class="input-icon dark-bg" style="background-color: var(--dark-blue); color: white;">
+                <i class="fa-solid fa-user-group"></i>
+              </div>
+              <div class="input-content">
+                <label data-i18n="quota">QUOTA</label>
+                <select id="quota">
+                  <option value="GN" data-i18n-opt="general">General</option>
+                  <option value="TQ" data-i18n-opt="tatkal">Tatkal</option>
+                  <option value="LD" data-i18n-opt="ladies">Ladies</option>
+                </select>
+              </div>
+            </div>
 
-                    <div class="search-options" style="flex: 0 0 auto; margin-right: 20px;">
-                        <label class="checkbox-container">
-                            <input type="checkbox" id="oneWay" checked>
-                            <span class="checkmark"></span>
-                            <span data-i18n="oneWay">One Way</span>
-                        </label>
-                    </div>
+            <div class="search-options" style="flex: 0 0 auto; margin-right: 20px;">
+              <label class="checkbox-container">
+                <input type="checkbox" id="oneWay" checked>
+                <span class="checkmark"></span>
+                <span data-i18n="oneWay">One Way</span>
+              </label>
+            </div>
 
-                    <button type="submit" class="search-btn" style="flex: 3; height: 60px; background-color: var(--primary-orange); border-radius: 15px; color: white; font-weight: bold; font-size: 18px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fa-solid fa-magnifying-glass"></i> <span data-i18n="searchTrains">Search Trains</span>
-                    </button>
-                </div>
-            </form>
-        </div>
+            <button type="submit" class="search-btn"
+              style="flex: 3; height: 60px; background-color: var(--primary-orange); border-radius: 15px; color: white; font-weight: bold; font-size: 18px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+              <i class="fa-solid fa-magnifying-glass"></i> <span data-i18n="searchTrains">Search Trains</span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-    
+
   </main>
   <footer class="footer" id="mainFooter"></footer>
   <div class="toast-container" id="toastContainer"></div>
@@ -128,178 +158,178 @@
   <script src="common.js"></script>
   <script src="api.js"></script>
   <script>
-(function(){
-  const headlines = [
-    ['TRAVEL ACROSS','INDIA BY RAIL'],
-    ['13,000+','TRAINS LIVE'],
-    ['IRCTC','RAILWAYS']
-  ];
-  let hi = 0, ci = 0, deleting = false;
-  function flapUpdate(){
-    const el1 = document.getElementById('flap-1');
-    const el2 = document.getElementById('flap-2');
-    if(!el1 || !el2) return;
-    const [h1, h2] = headlines[hi];
-    const text = deleting ? h1.substring(0, ci) : h1.substring(0, ci + 1);
-    el1.querySelector('.flap-char-inner').textContent = text || '\u00A0';
-    el2.querySelector('.flap-char-inner').textContent = h2;
-  }
-  function flapTick(){
-    const [h1] = headlines[hi];
-    if(!deleting){
-      ci++;
-      if(ci > h1.length){
-        setTimeout(flapTick, 3200);
-        deleting = true;
+    (function () {
+      const headlines = [
+        ['TRAVEL ACROSS', 'INDIA BY RAIL'],
+        ['13,000+', 'TRAINS LIVE'],
+        ['IRCTC', 'RAILWAYS']
+      ];
+      let hi = 0, ci = 0, deleting = false;
+      function flapUpdate() {
+        const el1 = document.getElementById('flap-1');
+        const el2 = document.getElementById('flap-2');
+        if (!el1 || !el2) return;
+        const [h1, h2] = headlines[hi];
+        const text = deleting ? h1.substring(0, ci) : h1.substring(0, ci + 1);
+        el1.querySelector('.flap-char-inner').textContent = text || '\u00A0';
+        el2.querySelector('.flap-char-inner').textContent = h2;
+      }
+      function flapTick() {
+        const [h1] = headlines[hi];
+        if (!deleting) {
+          ci++;
+          if (ci > h1.length) {
+            setTimeout(flapTick, 3200);
+            deleting = true;
+            return;
+          }
+        } else {
+          ci--;
+          if (ci < 0) {
+            deleting = false;
+            ci = 0;
+            hi = (hi + 1) % headlines.length;
+            setTimeout(flapTick, 450);
+            return;
+          }
+        }
+        flapUpdate();
+        setTimeout(flapTick, deleting ? 85 : 180);
+      }
+      setTimeout(flapTick, 1200);
+    })();
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!sessionStorage.getItem('welcomeShown')) {
+        document.getElementById('welcomeOverlay').classList.remove('hidden');
+      } else {
+        document.getElementById('welcomeOverlay').classList.add('hidden');
+        if (typeof window.runTrainAnimation === 'function') {
+          window.runTrainAnimation();
+        }
+      }
+      const departDate = document.getElementById('departDate');
+      if (departDate) { departDate.value = getTomorrowDate(); departDate.min = getTodayDate(); }
+      applyLanguage();
+      if (typeof gsap !== 'undefined') {
+        gsap.from('.eyebrow', { opacity: 0, y: 16, duration: 0.4, delay: 0.1 });
+        gsap.from('#flap-1', { opacity: 0, y: 20, duration: 0.5, delay: 0.2 });
+        gsap.from('#flap-2', { opacity: 0, y: 20, duration: 0.5, delay: 0.35 });
+        gsap.from('.hero-text .sub', { opacity: 0, y: 12, duration: 0.3, delay: 0.45 });
+        gsap.from('.hero-visual', { opacity: 0, x: 40, duration: 0.6, delay: 0.2 });
+        gsap.from('.search-card-wrap', { opacity: 0, y: 32, duration: 0.5, delay: 0.5 });
+        gsap.from('.qa-tile', { opacity: 0, y: 16, duration: 0.3, stagger: 0.05, delay: 0.6 });
+        gsap.from('.trains-section', { opacity: 0, y: 24, duration: 0.4, delay: 0.8 });
+      }
+    });
+    function swapStations() {
+      const from = document.getElementById('fromStation');
+      const to = document.getElementById('toStation');
+      const fromCode = document.getElementById('fromStationCode');
+      const toCode = document.getElementById('toStationCode');
+      [from.value, to.value] = [to.value, from.value];
+      [fromCode.value, toCode.value] = [toCode.value, fromCode.value];
+    }
+    function toggleReturn() {
+      const isOneWay = document.getElementById('oneWay').checked;
+      const rg = document.getElementById('returnGroup');
+      rg.style.display = isOneWay ? 'none' : 'block';
+      if (!isOneWay) {
+        const rd = document.getElementById('returnDate');
+        const dd = document.getElementById('departDate').value;
+        rd.min = dd || getTodayDate();
+        if (!rd.value && dd) {
+          const next = new Date(dd + 'T00:00:00');
+          next.setDate(next.getDate() + 7);
+          rd.value = next.toISOString().split('T')[0];
+        }
+      }
+    }
+    function searchTrains() {
+      const fromVal = document.getElementById('fromStation').value.trim();
+      const toVal = document.getElementById('toStation').value.trim();
+      const fromCode = document.getElementById('fromStationCode').value.trim();
+      const toCode = document.getElementById('toStationCode').value.trim();
+      const dateVal = document.getElementById('departDate').value;
+      const quotaVal = document.getElementById('quota').value;
+      if (!fromVal || !fromCode) { showToast('Please select a departure station from the dropdown', 'error'); document.getElementById('fromStation').focus(); return; }
+      if (!toVal || !toCode) { showToast('Please select a destination station from the dropdown', 'error'); document.getElementById('toStation').focus(); return; }
+      if (fromCode === toCode) { showToast('Departure and destination cannot be the same', 'error'); return; }
+      if (!dateVal) { showToast('Please select a travel date', 'error'); return; }
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const depDate = new Date(dateVal + 'T00:00:00');
+      if (depDate < today) { showToast('Departure date cannot be in the past', 'error'); return; }
+      const maxDate = new Date();
+      maxDate.setDate(maxDate.getDate() + 60);
+      if (depDate > maxDate) { showToast('Bookings can only be made up to 60 days in advance', 'error'); return; }
+      if (quotaVal === 'TQ' || quotaVal === 'PT') {
+        const now = new Date();
+        const h = now.getHours(), m = now.getMinutes();
+        const minsSinceMidnight = h * 60 + m;
+        const tatkalOpen = 10 * 60;
+
+        const todayStr = new Date().toISOString().split('T')[0];
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+        if (dateVal !== todayStr && dateVal !== tomorrowStr) {
+          showToast('Tatkal booking is only available for today or tomorrow\'s date', 'error');
+          return;
+        }
+
+        if (dateVal === tomorrowStr && minsSinceMidnight < tatkalOpen) {
+          showToast('Tatkal booking for tomorrow opens at 10:00 AM today.', 'error');
+          return;
+        }
+      }
+      if (!document.getElementById('oneWay').checked) {
+        const retDate = document.getElementById('returnDate').value;
+        if (retDate && retDate <= dateVal) { showToast('Return date must be after the departure date', 'error'); return; }
+      }
+      showLoading('Searching trains...');
+      setTimeout(() => {
+        hideLoading();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = `search.html?from=${fromCode}&to=${toCode}&date=${dateVal}`;
+        }, 300);
+      }, 600);
+    }
+
+    // === TRAIN FLY-BY + SPEED LINES ===
+    window.runTrainAnimation = function () {
+      const hero = document.querySelector('.hero');
+      const trainEl = document.getElementById('animated-train');
+      if (!hero || !trainEl) return;
+
+      if (window.innerWidth <= 768) {
+        trainEl.style.display = 'none';
+        const title = document.querySelector('.hero-title');
+        if (title && title.innerText === 'COMMIT') title.innerHTML = 'I&thinsp;RCTC';
         return;
       }
-    } else {
-      ci--;
-      if(ci < 0){
-        deleting = false;
-        ci = 0;
-        hi = (hi + 1) % headlines.length;
-        setTimeout(flapTick, 450);
-        return;
-      }
-    }
-    flapUpdate();
-    setTimeout(flapTick, deleting ? 85 : 180);
-  }
-  setTimeout(flapTick, 1200);
-})();
-document.addEventListener('DOMContentLoaded', () => {
-  if (!sessionStorage.getItem('welcomeShown')) {
-    document.getElementById('welcomeOverlay').classList.remove('hidden');
-  } else {
-    document.getElementById('welcomeOverlay').classList.add('hidden');
-    if (typeof window.runTrainAnimation === 'function') {
-      window.runTrainAnimation();
-    }
-  }
-  const departDate = document.getElementById('departDate');
-  if (departDate) { departDate.value = getTomorrowDate(); departDate.min = getTodayDate(); }
-  applyLanguage();
-  if (typeof gsap !== 'undefined') {
-    gsap.from('.eyebrow', { opacity: 0, y: 16, duration: 0.4, delay: 0.1 });
-    gsap.from('#flap-1', { opacity: 0, y: 20, duration: 0.5, delay: 0.2 });
-    gsap.from('#flap-2', { opacity: 0, y: 20, duration: 0.5, delay: 0.35 });
-    gsap.from('.hero-text .sub', { opacity: 0, y: 12, duration: 0.3, delay: 0.45 });
-    gsap.from('.hero-visual', { opacity: 0, x: 40, duration: 0.6, delay: 0.2 });
-    gsap.from('.search-card-wrap', { opacity: 0, y: 32, duration: 0.5, delay: 0.5 });
-    gsap.from('.qa-tile', { opacity: 0, y: 16, duration: 0.3, stagger: 0.05, delay: 0.6 });
-    gsap.from('.trains-section', { opacity: 0, y: 24, duration: 0.4, delay: 0.8 });
-  }
-});
-function swapStations() {
-  const from = document.getElementById('fromStation');
-  const to = document.getElementById('toStation');
-  const fromCode = document.getElementById('fromStationCode');
-  const toCode = document.getElementById('toStationCode');
-  [from.value, to.value] = [to.value, from.value];
-  [fromCode.value, toCode.value] = [toCode.value, fromCode.value];
-}
-function toggleReturn() {
-  const isOneWay = document.getElementById('oneWay').checked;
-  const rg = document.getElementById('returnGroup');
-  rg.style.display = isOneWay ? 'none' : 'block';
-  if (!isOneWay) {
-    const rd = document.getElementById('returnDate');
-    const dd = document.getElementById('departDate').value;
-    rd.min = dd || getTodayDate();
-    if (!rd.value && dd) {
-      const next = new Date(dd + 'T00:00:00');
-      next.setDate(next.getDate() + 7);
-      rd.value = next.toISOString().split('T')[0];
-    }
-  }
-}
-function searchTrains() {
-  const fromVal = document.getElementById('fromStation').value.trim();
-  const toVal = document.getElementById('toStation').value.trim();
-  const fromCode = document.getElementById('fromStationCode').value.trim();
-  const toCode = document.getElementById('toStationCode').value.trim();
-  const dateVal = document.getElementById('departDate').value;
-  const quotaVal = document.getElementById('quota').value;
-  if (!fromVal || !fromCode) { showToast('Please select a departure station from the dropdown', 'error'); document.getElementById('fromStation').focus(); return; }
-  if (!toVal || !toCode) { showToast('Please select a destination station from the dropdown', 'error'); document.getElementById('toStation').focus(); return; }
-  if (fromCode === toCode) { showToast('Departure and destination cannot be the same', 'error'); return; }
-  if (!dateVal) { showToast('Please select a travel date', 'error'); return; }
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const depDate = new Date(dateVal + 'T00:00:00');
-  if (depDate < today) { showToast('Departure date cannot be in the past', 'error'); return; }
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 60);
-  if (depDate > maxDate) { showToast('Bookings can only be made up to 60 days in advance', 'error'); return; }
-  if (quotaVal === 'TQ' || quotaVal === 'PT') {
-    const now = new Date();
-    const h = now.getHours(), m = now.getMinutes();
-    const minsSinceMidnight = h * 60 + m;
-    const tatkalOpen = 10 * 60;
-    
-    const todayStr = new Date().toISOString().split('T')[0];
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const tomorrowStr = tomorrow.toISOString().split('T')[0];
-    
-    if (dateVal !== todayStr && dateVal !== tomorrowStr) {
-      showToast('Tatkal booking is only available for today or tomorrow\'s date', 'error');
-      return;
-    }
-    
-    if (dateVal === tomorrowStr && minsSinceMidnight < tatkalOpen) {
-      showToast('Tatkal booking for tomorrow opens at 10:00 AM today.', 'error');
-      return;
-    }
-  }
-  if (!document.getElementById('oneWay').checked) {
-    const retDate = document.getElementById('returnDate').value;
-    if (retDate && retDate <= dateVal) { showToast('Return date must be after the departure date', 'error'); return; }
-  }
-  showLoading('Searching trains...');
-  setTimeout(() => {
-    hideLoading();
-    document.body.classList.add('fade-out');
-    setTimeout(() => {
-      window.location.href = `search.html?from=${fromCode}&to=${toCode}&date=${dateVal}`;
-    }, 300);
-  }, 600);
-}
 
-// === TRAIN FLY-BY + SPEED LINES ===
-window.runTrainAnimation = function() {
-  const hero = document.querySelector('.hero');
-  const trainEl = document.getElementById('animated-train');
-  if (!hero || !trainEl) return;
-  
-  if (window.innerWidth <= 768) {
-    trainEl.style.display = 'none';
-    const title = document.querySelector('.hero-title');
-    if (title && title.innerText === 'COMMIT') title.innerText = 'IRCTC';
-    return;
-  }
+      // Wind container — fixed to viewport
+      const windContainer = document.createElement('div');
+      windContainer.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99998; pointer-events:none; overflow:hidden;';
+      document.body.appendChild(windContainer);
 
-  // Wind container — fixed to viewport
-  const windContainer = document.createElement('div');
-  windContainer.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99998; pointer-events:none; overflow:hidden;';
-  document.body.appendChild(windContainer);
+      let spawnInterval = null;
 
-  let spawnInterval = null;
+      function spawnSpeedLines() {
+        const trainEl = document.getElementById('animated-train');
+        if (!trainEl) return;
+        const trainRect = trainEl.getBoundingClientRect();
+        const trainLeft = trainRect.left;
 
-  function spawnSpeedLines() {
-    const trainEl = document.getElementById('animated-train');
-    if (!trainEl) return;
-    const trainRect = trainEl.getBoundingClientRect();
-    const trainLeft = trainRect.left;
-
-    // Spawn 4 streaks per frame behind the train
-    for (let i = 0; i < 4; i++) {
-      const line = document.createElement('div');
-      const yPos = trainRect.top + (Math.random() * trainRect.height * 0.8) + (trainRect.height * 0.1);
-      const width = 100 + Math.random() * 250;
-      const height = 2 + Math.random() * 4;
-      line.style.cssText = `
+        // Spawn 4 streaks per frame behind the train
+        for (let i = 0; i < 4; i++) {
+          const line = document.createElement('div');
+          const yPos = trainRect.top + (Math.random() * trainRect.height * 0.8) + (trainRect.height * 0.1);
+          const width = 100 + Math.random() * 250;
+          const height = 2 + Math.random() * 4;
+          line.style.cssText = `
         position:fixed;
         left:${trainRect.right + 20}px;
         top:${yPos}px;
@@ -311,97 +341,97 @@ window.runTrainAnimation = function() {
         pointer-events:none;
         z-index:99998;
       `;
-      windContainer.appendChild(line);
+          windContainer.appendChild(line);
 
-      // Streak flies right (trailing behind the left-moving train)
-      gsap.to(line, {
-        x: 500 + Math.random() * 500,
-        scaleX: 2,
-        opacity: 0,
-        duration: 0.2 + Math.random() * 0.2,
-        ease: 'power2.out',
-        onComplete: () => line.remove()
-      });
-    }
-  }
-
-  const masterTl = gsap.timeline({ delay: 0.3 });
-
-  // 1. Train Movement (Moving RIGHT to LEFT)
-  masterTl.to('#animated-train', {
-    left: '-150vw',
-    duration: 1.4,
-    ease: 'power3.inOut',
-    onStart: function() {
-      spawnInterval = setInterval(spawnSpeedLines, 20); // More particles, faster
-    },
-    onUpdate: function() {
-      if (this.progress() > 0.45 && this.progress() < 0.5) {
-        const title = document.querySelector('.hero-title');
-        if (title && title.innerText === 'COMMIT') {
-          title.innerText = 'IRCTC';
-          gsap.fromTo(title, 
-            { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 }, 
-            { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 8px 30px rgba(0,0,0,0.8)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
-          );
+          // Streak flies right (trailing behind the left-moving train)
+          gsap.to(line, {
+            x: 500 + Math.random() * 500,
+            scaleX: 2,
+            opacity: 0,
+            duration: 0.2 + Math.random() * 0.2,
+            ease: 'power2.out',
+            onComplete: () => line.remove()
+          });
         }
       }
-    },
-    onComplete: function() {
-      clearInterval(spawnInterval);
-      const trainEl = document.getElementById('animated-train');
-      if (trainEl) trainEl.style.display = 'none';
-      gsap.to(windContainer, { opacity: 0, duration: 0.8, onComplete: () => windContainer.remove() });
-    }
-  }, "start");
 
-  // 2. Train Stretch & Blur (peaks in the middle)
-  masterTl.to('#animated-train', {
-    scaleX: 1.4,
-    skewX: -12,
-    filter: 'blur(4px) drop-shadow(0 20px 40px rgba(234,107,64,0.6)) brightness(1.3)',
-    duration: 0.7,
-    ease: 'power2.in'
-  }, "start");
-  
-  masterTl.to('#animated-train', {
-    scaleX: 1,
-    skewX: 0,
-    filter: 'blur(0px) drop-shadow(0 20px 30px rgba(0,0,0,0.5)) brightness(1)',
-    duration: 0.7,
-    ease: 'power2.out'
-  }, "start+=0.7");
+      const masterTl = gsap.timeline({ delay: 0.3 });
 
-  // 3. Screen Shake / Rumble
-  masterTl.to('.hero', {
-    y: 8,
-    x: -4,
-    yoyo: true,
-    repeat: 15,
-    duration: 0.04,
-    ease: 'none'
-  }, "start+=0.4");
-};
-
-// Scroll Animations
-gsap.registerPlugin(ScrollTrigger);
-gsap.utils.toArray('.page-card, .search-container, .qa-tile, .bento-cell, .stat-card, .info-card, .train-card, .subtitle-pill, .search-section').forEach(elem => {
-    gsap.fromTo(elem, 
-        { y: 50, opacity: 0 },
-        { 
-            y: 0, 
-            opacity: 1, 
-            duration: 0.8, 
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: elem,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse'
+      // 1. Train Movement (Moving RIGHT to LEFT)
+      masterTl.to('#animated-train', {
+        left: '-150vw',
+        duration: 1.4,
+        ease: 'power3.inOut',
+        onStart: function () {
+          spawnInterval = setInterval(spawnSpeedLines, 20); // More particles, faster
+        },
+        onUpdate: function () {
+          if (this.progress() > 0.45 && this.progress() < 0.5) {
+            const title = document.querySelector('.hero-title');
+            if (title && title.innerText === 'COMMIT') {
+              title.innerHTML = 'I&thinsp;RCTC';
+              gsap.fromTo(title,
+                { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 },
+                { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 8px 30px rgba(0,0,0,0.8)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
+              );
             }
+          }
+        },
+        onComplete: function () {
+          clearInterval(spawnInterval);
+          const trainEl = document.getElementById('animated-train');
+          if (trainEl) trainEl.style.display = 'none';
+          gsap.to(windContainer, { opacity: 0, duration: 0.8, onComplete: () => windContainer.remove() });
         }
-    );
-});
-</script>
-</body>
-</html>
+      }, "start");
 
+      // 2. Train Stretch & Blur (peaks in the middle)
+      masterTl.to('#animated-train', {
+        scaleX: 1.4,
+        skewX: -12,
+        filter: 'blur(4px) drop-shadow(0 20px 40px rgba(234,107,64,0.6)) brightness(1.3)',
+        duration: 0.7,
+        ease: 'power2.in'
+      }, "start");
+
+      masterTl.to('#animated-train', {
+        scaleX: 1,
+        skewX: 0,
+        filter: 'blur(0px) drop-shadow(0 20px 30px rgba(0,0,0,0.5)) brightness(1)',
+        duration: 0.7,
+        ease: 'power2.out'
+      }, "start+=0.7");
+
+      // 3. Screen Shake / Rumble
+      masterTl.to('.hero', {
+        y: 8,
+        x: -4,
+        yoyo: true,
+        repeat: 15,
+        duration: 0.04,
+        ease: 'none'
+      }, "start+=0.4");
+    };
+
+    // Scroll Animations
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.page-card, .search-container, .qa-tile, .bento-cell, .stat-card, .info-card, .train-card, .subtitle-pill, .search-section').forEach(elem => {
+      gsap.fromTo(elem,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: elem,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+  </script>
+</body>
+
+</html>
