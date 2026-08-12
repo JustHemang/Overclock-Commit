@@ -18,6 +18,7 @@
   <main class="main">
     <div class="page-container-new">
       <div class="page-card">
+        <div id="searchContent">
         <a href="/" class="back-btn" style="color:var(--dark-blue); font-weight:bold; text-decoration:none; margin-bottom: 20px; display:inline-block; font-size: 16px;"><i class="fas fa-arrow-left"></i> Back to Home</a>
         <h1 class="page-title" id="resultsTitle">Search Results</h1>
         <p class="page-subtitle" id="resultsDate"></p>
@@ -34,6 +35,125 @@
 
         <div class="results-list" id="resultsList" style="display: flex; flex-direction: column; gap: 15px;"></div>
       </div>
+        <div id="checkoutPane" style="display:none;">
+<div class="checkout-container" id="checkoutContent" style="box-shadow: none; border: none; background: transparent; text-align: left; margin-top: 30px;">
+<div class="progress-bar" style="display:flex; justify-content:center; gap:10px; margin-bottom:20px;">
+  <div class="progress-step active" style="padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);">1. Details</div>
+  <div class="progress-step" style="padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);">2. Payment</div>
+  <div class="progress-step" style="padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);">3. Done</div>
+</div>
+
+<div id="passengerSection">
+  <div class="bento-grid" style="grid-template-columns: 1.5fr 1fr; align-items: start; text-align: left;">
+    
+    <div class="bento-cell" style="padding: 25px;">
+      <h3 style="margin-bottom:15px; font-size:16px;">Passenger Details</h3>
+      <div id="passengerForms"></div>
+      
+      <h3 style="margin-top:25px; margin-bottom:15px; font-size:16px;">Contact Details</h3>
+      <div class="input-wrapper" style="max-width:300px;">
+        <i class="fas fa-phone"></i>
+        <input type="text" id="mobileNumber" placeholder="Mobile Number" required>
+      </div>
+      
+      <h3 style="margin-top:25px; margin-bottom:15px; font-size:16px;">Payment Method</h3>
+      <div class="payment-options">
+        <div class="payment-option active" onclick="selectPayment('upi')"><span>UPI</span></div>
+        <div class="payment-option" onclick="selectPayment('card')"><span>Card</span></div>
+        <div class="payment-option" onclick="selectPayment('wallet')"><span>Wallet</span></div>
+        <div class="payment-option" onclick="selectPayment('netbanking')"><span>Net Banking</span></div>
+      </div>
+      
+      <!-- Payment Details Containers -->
+      <div id="upiDetail" style="margin-bottom:15px;">
+        <div class="input-wrapper"><i class="fas fa-at"></i><input type="text" placeholder="Enter UPI ID (e.g. user@upi)"></div>
+      </div>
+      <div id="cardDetail" style="display:none; margin-bottom:15px;">
+        <div class="input-wrapper" style="margin-bottom:8px;"><i class="fas fa-credit-card"></i><input type="text" placeholder="Card Number" oninput="formatCardNumber(this)" maxlength="19"></div>
+        <div style="display:flex; gap:10px;">
+          <div class="input-wrapper"><i class="fas fa-calendar"></i><input type="text" placeholder="MM/YY" oninput="formatExpiry(this)" maxlength="5"></div>
+          <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" placeholder="CVV" maxlength="3"></div>
+        </div>
+      </div>
+      <div id="walletDetail" style="display:none; margin-bottom:15px;">
+        <p style="font-size:12px; color:var(--text-secondary);">Select wallet securely on the next screen.</p>
+      </div>
+      <div id="netbankingDetail" style="display:none; margin-bottom:15px;">
+        <p style="font-size:12px; color:var(--text-secondary);">Select your bank securely on the next screen.</p>
+      </div>
+      
+      <button class="btn-pay btn-primary" onclick="processPayment()" style="width:100%; margin-top:20px; font-size: 16px;">
+        <i class="fas fa-lock"></i> Pay <span id="checkoutTotal"></span>
+      </button>
+    </div>
+    
+    <div class="bento-cell" style="background:var(--card-bg-alt); padding: 25px;">
+      <h3 style="margin-bottom:15px; font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">Journey Summary</h3>
+      <div style="margin-bottom:20px;">
+        <div style="font-weight:700; color:var(--ink); font-size:16px;" id="summaryTrainName"></div>
+        <div style="color:var(--text-secondary); font-size:13px; margin-top:4px;">Class: <strong id="summaryClass"></strong> | Date: <strong id="summaryDate"></strong></div>
+      </div>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; background:rgba(0,0,0,0.03); padding:15px; border-radius:12px;">
+        <div style="text-align:left;">
+          <div style="font-size:20px; font-weight:800;" id="summaryFromTime"></div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:4px;" id="summaryFrom"></div>
+        </div>
+        <div style="text-align:center; font-size:11px; color:var(--text-muted);">
+          <div><i class="fas fa-long-arrow-alt-right" style="color:var(--primary); font-size:18px;"></i></div>
+          <div id="summaryDuration"></div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:20px; font-weight:800;" id="summaryToTime"></div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:4px;" id="summaryTo"></div>
+        </div>
+      </div>
+      
+      <h3 style="margin-bottom:12px; font-size:14px; border-bottom:1px solid var(--border); padding-bottom:8px;">Fare Breakdown</h3>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+        <span style="color:var(--text-secondary);">Base Fare</span><span id="summaryBaseFare"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+        <span style="color:var(--text-secondary);">Reservation Chg</span><span id="summaryReserve"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+        <span style="color:var(--text-secondary);">GST</span><span id="summaryGst"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:13px;">
+        <span style="color:var(--text-secondary);">Catering</span><span id="summaryCatering"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-weight:900; font-size:18px; border-top:1px dashed var(--border); padding-top:15px; color:var(--ink);">
+        <span>Total Fare</span><span id="summaryTotal"></span>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div id="confirmationSection" style="display:none; text-align:center; padding: 40px 20px;">
+  <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--success); color: white; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px; box-shadow: 0 10px 20px rgba(0, 190, 120, 0.2);">
+    <i class="fas fa-check"></i>
+  </div>
+  <h2 style="font-size: 28px; margin-bottom: 10px;">Booking Confirmed!</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 30px;">Your tickets have been successfully booked.</p>
+  
+  <div style="background: var(--card-bg-alt); max-width: 450px; margin: 0 auto 30px; padding: 25px; border-radius: 12px; border: 1px solid var(--border); text-align: left;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <p style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">PNR Number</p>
+      <div id="pnrNumber" style="font-size: 32px; font-weight: 900; color: var(--ink); letter-spacing: 2px;"></div>
+    </div>
+    <div id="bookingSummary"></div>
+  </div>
+  
+  <button onclick="window.location.href='bookings.html'" class="btn-primary" style="padding: 12px 30px; font-size:16px;">
+    <i class="fas fa-ticket-alt"></i> View My Bookings
+  </button>
+</div>
+</div>
+        </div></div>
+    </div>
+  </main>
+        </div></div>
     </div>
   </main>
   <footer class="footer" id="mainFooter"></footer>
@@ -46,6 +166,15 @@ let searchFrom = '';
 let searchTo = '';
 let searchDate = '';
 let allResults = [];
+
+// Checkout specific globals
+let currentTrain = null;
+let currentClass = '2A';
+let selectedSeats = [];
+let passengerCount = 1;
+let lastBooking = null;
+let bookingDate = '';
+
 document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
   searchFrom = params.get('from') || 'NDLS';
@@ -148,15 +277,15 @@ function bookTrain(trainNum) {
   const selectedClass = selectedClassEl ? selectedClassEl.querySelector('.cls-name').textContent : Object.keys(train.classes || {})[0] || 'SL';
   const classInfo = train.classes?.[selectedClass] || {};
   const totalSeats = classInfo.total || classInfo.seats || 72;
-  const passengerCount = 1;
+  passengerCount = 1;
   const randomSeats = [];
   while (randomSeats.length < passengerCount) {
     const s = Math.floor(Math.random() * totalSeats) + 1;
     if (!randomSeats.includes(s)) randomSeats.push(s);
   }
-  localStorage.setItem('irctc_selected_seats', JSON.stringify(randomSeats));
-  localStorage.setItem('irctc_passenger_count', passengerCount);
-  const normalizedTrain = {
+  
+  // Set up globals for checkout
+  currentTrain = {
     number: train.number,
     name: train.name,
     from: train.from || searchFrom,
@@ -167,10 +296,167 @@ function bookTrain(trainNum) {
     type: train.type,
     classes: train.classes
   };
-  localStorage.setItem('irctc_selected_train', JSON.stringify(normalizedTrain));
-  localStorage.setItem('irctc_selected_class', selectedClass);
-  localStorage.setItem('irctc_booking_date', searchDate);
-  window.location.href = 'checkout.html';
+  currentClass = selectedClass;
+  selectedSeats = randomSeats;
+  bookingDate = searchDate;
+  
+  // SPA Transition
+  document.getElementById('searchContent').style.display = 'none';
+  document.getElementById('resultsTitle').style.display = 'none';
+  document.getElementById('resultsDate').style.display = 'none';
+  const checkoutPane = document.getElementById('checkoutPane');
+  checkoutPane.style.display = 'block';
+  
+  // Animate in
+  gsap.from(checkoutPane, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" });
+  
+  // Initialize checkout UI
+  const user = getCurrentUser();
+  if (user) {
+    const mobileInput = document.getElementById('mobileNumber');
+    if (mobileInput) mobileInput.value = user.phone || '';
+  }
+  renderPassengerForms();
+  updateSummary();
+  document.getElementById('checkoutTotal').textContent = formatCurrency(getTotalFare());
+  document.getElementById('passengerSection').style.display = 'block';
+  document.getElementById('confirmationSection').style.display = 'none';
+}
+
+// === CHECKOUT FUNCTIONS ===
+function getTotalFare() {
+  if (!currentTrain || !currentTrain.classes || !currentTrain.classes[currentClass]) {
+    return 450 * passengerCount;
+  }
+  const base = currentTrain.classes[currentClass].fare * passengerCount;
+  const reservation = 40 * passengerCount;
+  const gst = Math.round(base * 0.05);
+  const food = 155 * passengerCount;
+  return base + reservation + gst + food;
+}
+
+function updateSummary() {
+  if (!currentTrain) return;
+  document.getElementById('summaryFrom').textContent = currentTrain.from || '-';
+  document.getElementById('summaryTo').textContent = currentTrain.to || '-';
+  document.getElementById('summaryFromTime').textContent = currentTrain.depart || '-';
+  document.getElementById('summaryToTime').textContent = currentTrain.arrive || '-';
+  document.getElementById('summaryDuration').textContent = currentTrain.duration || '--:--';
+  document.getElementById('summaryTrainName').textContent = `${currentTrain.name || 'Train'} (${currentTrain.number || ''})`;
+  document.getElementById('summaryClass').textContent = currentClass;
+  document.getElementById('summaryDate').textContent = formatDate(bookingDate);
+  const classInfo = currentTrain.classes?.[currentClass] || { fare: 450 };
+  const base = classInfo.fare * passengerCount;
+  const res = 40 * passengerCount;
+  const gst = Math.round(base * 0.05);
+  const food = 155 * passengerCount;
+  document.getElementById('summaryBaseFare').textContent = formatCurrency(base);
+  document.getElementById('summaryReserve').textContent = formatCurrency(res);
+  document.getElementById('summaryGst').textContent = formatCurrency(gst);
+  document.getElementById('summaryCatering').textContent = formatCurrency(food);
+  document.getElementById('summaryTotal').textContent = formatCurrency(base + res + gst + food);
+}
+
+function renderPassengerForms() {
+  const container = document.getElementById('passengerForms');
+  let html = '';
+  for (let i = 0; i < passengerCount; i++) {
+    html += `<div class="passenger-form" id="passengerForm${i}">
+      <div class="passenger-form-header"><h4>Passenger ${i + 1} ${i === 0 ? '(Primary)' : ''}</h4></div>
+      <div class="passenger-fields">
+        <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" placeholder="Full Name" class="p-name"></div>
+        <div class="input-wrapper"><i class="fas fa-birthday-cake"></i><input type="number" placeholder="Age" min="1" max="125" class="p-age"></div>
+        <div class="input-wrapper"><i class="fas fa-venus-mars"></i><select class="p-gender"><option value="">Gender</option><option value="M">Male</option><option value="F">Female</option><option value="O">Other</option></select></div>
+        <div class="input-wrapper"><i class="fas fa-couch"></i><select class="p-berth"><option value="">No Preference</option><option value="LB">Lower Berth</option><option value="UB">Upper Berth</option><option value="SL">Side Lower</option><option value="SU">Side Upper</option></select></div>
+      </div>
+    </div>`;
+  }
+  container.innerHTML = html;
+}
+
+function selectPayment(type) {
+  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('active'));
+  event.target.closest('.payment-option').classList.add('active');
+  ['upi', 'card', 'wallet', 'netbanking'].forEach(t => {
+    const el = document.getElementById(t + 'Detail');
+    if (el) el.style.display = t === type ? 'block' : 'none';
+  });
+}
+
+function formatCardNumber(input) {
+  let v = input.value.replace(/\D/g, '').substring(0, 16);
+  input.value = v.replace(/(.{4})/g, '$1 ').trim();
+}
+
+function formatExpiry(input) {
+  let v = input.value.replace(/\D/g, '').substring(0, 4);
+  if (v.length >= 2) v = v.substring(0, 2) + '/' + v.substring(2);
+  input.value = v;
+}
+
+async function processPayment() {
+  const nameEl = document.querySelector('.p-name');
+  if (nameEl && !nameEl.value.trim()) { showToast('Please fill in passenger details', 'error'); return; }
+  const mobile = document.getElementById('mobileNumber');
+  if (mobile && !mobile.value.trim()) { showToast('Please enter mobile number', 'error'); return; }
+  const btn = document.querySelector('.btn-pay');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  showLoading('Processing payment...');
+  const passengers = [];
+  document.querySelectorAll('.passenger-form').forEach(form => {
+    passengers.push({
+      name: form.querySelector('.p-name')?.value || 'Passenger',
+      age: form.querySelector('.p-age')?.value || '25',
+      gender: form.querySelector('.p-gender')?.value || 'M',
+      seat: selectedSeats[passengers.length] || 'TBD'
+    });
+  });
+  const classInfoPay = currentTrain.classes?.[currentClass] || { fare: 450 };
+  const base = classInfoPay.fare * passengers.length;
+  const res = 40 * passengers.length;
+  const gst = Math.round(base * 0.05);
+  const food = 155 * passengers.length;
+  const total = base + res + gst + food;
+  await new Promise(r => setTimeout(r, 2000));
+  hideLoading();
+  showLoading('Confirming booking...');
+  const result = await createBooking({
+    train: { number: currentTrain.number, name: currentTrain.name },
+    from: currentTrain.from, to: currentTrain.to,
+    date: bookingDate, classType: currentClass,
+    depart: currentTrain.depart || '00:00',
+    passengers, fare: total,
+    paymentMethod: document.querySelector('.payment-option.active span')?.textContent || 'UPI'
+  });
+  hideLoading();
+  if (!result.success) {
+    btn.disabled = false;
+    btn.innerHTML = `<i class="fas fa-lock"></i> Pay ${formatCurrency(total)}`;
+    showToast(result.error || 'Booking failed', 'error');
+    return;
+  }
+  const booking = result.booking;
+  lastBooking = booking;
+  document.getElementById('passengerSection').style.display = 'none';
+  document.getElementById('confirmationSection').style.display = 'block';
+  document.getElementById('pnrNumber').textContent = booking.pnr;
+  document.querySelectorAll('.progress-step')[0].classList.add('done');
+  document.querySelectorAll('.progress-step')[0].classList.remove('active');
+  document.querySelectorAll('.progress-step')[1].classList.add('done');
+  document.querySelectorAll('.progress-step')[1].classList.remove('active');
+  document.querySelectorAll('.progress-step')[2].classList.add('active');
+  document.getElementById('bookingSummary').innerHTML = `
+    <div style="margin-bottom:10px;"><strong>${booking.train.name} (${booking.train.number})</strong><br>
+    <span style="color:var(--text-secondary);font-size:12px;">${booking.from} → ${booking.to}</span><br>
+    <span style="color:var(--text-secondary);font-size:12px;">Date: ${formatDate(booking.date)}</span></div>
+    <table style="width:100%;font-size:12px;">
+      <tr><th style="text-align:left;padding:4px 0;">Passenger</th><th>Seat</th><th>Status</th></tr>
+      ${booking.passengers.map(p => `<tr><td style="padding:4px 0;">${p.name}</td><td style="text-align:center;">${booking.classType}/CNF</td><td style="text-align:center;"><span style="color:var(--success);font-weight:700;">CONFIRMED</span></td></tr>`).join('')}
+    </table>
+    <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;text-align:right;"><strong>Total Paid: ${formatCurrency(booking.fare)}</strong></div>
+    <div style="font-size:10px;color:var(--text-muted);margin-top:5px;">Payment via: ${booking.paymentMethod} | Booking saved to your account</div>`;
+  showToast('Booking Confirmed! PNR: ' + booking.pnr, 'success');
 }
   </script>
 </body>
