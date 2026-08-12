@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="assets/new_ui.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaReady&render=explicit" async defer></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
@@ -79,11 +77,6 @@
   <script src="common.js"></script>
   <script src="api.js"></script>
   <script>
-let loginWidgetId = -1, regWidgetId = -1, recaptchaReady = false;
-function onRecaptchaReady() {
-  recaptchaReady = true;
-  loginWidgetId = grecaptcha.render('loginRecaptcha', { sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', theme: 'light' });
-}
 document.addEventListener('DOMContentLoaded', () => {
   if (isLoggedIn()) { window.location.href = '/'; return; }
 });
@@ -92,9 +85,6 @@ function switchTab(tab) {
   event.target.classList.add('active');
   document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
-  if (tab === 'register' && regWidgetId === -1 && recaptchaReady) {
-    regWidgetId = grecaptcha.render('regRecaptcha', { sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', theme: 'light' });
-  }
 }
 async function doLogin() {
   const username = document.getElementById('loginEmail').value.trim();
