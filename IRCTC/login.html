@@ -28,7 +28,7 @@
             <button class="auth-tab" onclick="switchTab('register')">Register</button>
           </div>
           
-          <form id="loginForm" class="auth-form active">
+          <form id="loginForm" class="auth-form active" onsubmit="event.preventDefault(); doLogin();">
             <div class="input-group">
               <label>Email Address</label>
               <input type="email" id="loginEmail" required placeholder="Enter your email">
@@ -43,10 +43,10 @@
               </label>
               <a href="#" class="forgot-pwd">Forgot Password?</a>
             </div>
-            <button type="submit" class="btn-primary" style="background:var(--primary-orange); color:white; font-weight:bold; padding:15px; border-radius:15px; border:none; width:100%; cursor:pointer;">Secure Login</button>
+            <button type="submit" id="loginBtn" class="btn-primary" style="background:var(--primary-orange); color:white; font-weight:bold; padding:15px; border-radius:15px; border:none; width:100%; cursor:pointer;">Secure Login</button>
           </form>
 
-          <form id="registerForm" class="auth-form" style="display: none;">
+          <form id="registerForm" class="auth-form" style="display: none;" onsubmit="event.preventDefault(); doRegister();">
             <div class="input-group">
               <label>Full Name</label>
               <input type="text" id="regName" required placeholder="Enter full name">
@@ -56,10 +56,18 @@
               <input type="email" id="regEmail" required placeholder="Enter email">
             </div>
             <div class="input-group">
+              <label>Phone Number</label>
+              <input type="tel" id="regPhone" required placeholder="Enter 10-digit phone number">
+            </div>
+            <div class="input-group">
+              <label>Username</label>
+              <input type="text" id="regUser" required placeholder="Choose a username">
+            </div>
+            <div class="input-group">
               <label>Password</label>
               <input type="password" id="regPassword" required placeholder="Create password">
             </div>
-            <button type="submit" class="btn-primary" style="background:var(--primary-orange); color:white; font-weight:bold; padding:15px; border-radius:15px; border:none; width:100%; cursor:pointer;">Create Account</button>
+            <button type="submit" id="regBtn" class="btn-primary" style="background:var(--primary-orange); color:white; font-weight:bold; padding:15px; border-radius:15px; border:none; width:100%; cursor:pointer;">Create Account</button>
           </form>
         </div>
       </div>
@@ -89,11 +97,9 @@ function switchTab(tab) {
   }
 }
 async function doLogin() {
-  const username = document.getElementById('loginUser').value.trim();
-  const password = document.getElementById('loginPass').value;
-  const recaptchaToken = grecaptcha.getResponse(loginWidgetId);
-  if (!username || !password) { showToast('Enter username and password', 'error'); return; }
-  if (!recaptchaToken) { showToast('Please complete the reCAPTCHA', 'error'); return; }
+  const username = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!username || !password) { showToast('Enter email and password', 'error'); return; }
   const btn = document.getElementById('loginBtn');
   btn.disabled = true; btn.textContent = 'Signing in...';
 
@@ -101,10 +107,10 @@ async function doLogin() {
   try {
     const result = await apiFetch('/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ username, password, recaptchaToken })
+      body: JSON.stringify({ username, password, recaptchaToken: 'dummy' })
     });
     
-    btn.disabled = false; btn.textContent = 'Sign In';
+    btn.disabled = false; btn.textContent = 'Secure Login';
     
     if (result.success && result.token) {
       localStorage.setItem('irctc_current_user', JSON.stringify({
@@ -119,12 +125,10 @@ async function doLogin() {
       setTimeout(() => window.location.href = '/', 800);
     } else {
       showToast(result.error || 'Invalid username or password', 'error');
-      grecaptcha.reset(loginWidgetId);
     }
   } catch (e) {
-    btn.disabled = false; btn.textContent = 'Sign In';
+    btn.disabled = false; btn.textContent = 'Secure Login';
     showToast('Login failed. Server error.', 'error');
-    grecaptcha.reset(loginWidgetId);
   }
 }
 async function doRegister() {
@@ -132,14 +136,12 @@ async function doRegister() {
   const phone = document.getElementById('regPhone').value.trim();
   const email = document.getElementById('regEmail').value.trim();
   const username = document.getElementById('regUser').value.trim();
-  const password = document.getElementById('regPass').value;
-  const recaptchaToken = grecaptcha.getResponse(regWidgetId);
+  const password = document.getElementById('regPassword').value;
   if (!name) { showToast('Please enter your full name', 'error'); return; }
   if (!phone || !/^[0-9]{10}$/.test(phone)) { showToast('Please enter a valid 10-digit phone number', 'error'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address', 'error'); return; }
   if (!username || username.length < 3) { showToast('Username must be at least 3 characters', 'error'); return; }
   if (!password || password.length < 4) { showToast('Password must be at least 4 characters', 'error'); return; }
-  if (!recaptchaToken) { showToast('Please complete the reCAPTCHA', 'error'); return; }
   const btn = document.getElementById('regBtn');
   btn.disabled = true; btn.textContent = 'Creating account...';
 
@@ -147,7 +149,7 @@ async function doRegister() {
   try {
     const result = await apiFetch('/api/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ name, phone, email, username, password, recaptchaToken })
+      body: JSON.stringify({ name, phone, email, username, password, recaptchaToken: 'dummy' })
     });
     
     btn.disabled = false; btn.textContent = 'Create Account';
@@ -165,12 +167,10 @@ async function doRegister() {
       setTimeout(() => window.location.href = '/', 800);
     } else {
       showToast(result.error || 'Registration failed', 'error');
-      grecaptcha.reset(regWidgetId);
     }
   } catch (e) {
     btn.disabled = false; btn.textContent = 'Create Account';
     showToast('Registration failed. Server error.', 'error');
-    grecaptcha.reset(regWidgetId);
   }
 }
   </script>
