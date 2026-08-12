@@ -1065,3 +1065,25 @@ body.fade-out {
     100% { opacity: 0; transform: translateY(-10px); }
 }
 
+
+/* FIX CHECKOUT INPUTS */
+#checkoutPane .input-wrapper {
+    background: var(--bg-input) !important;
+    border: 1.5px solid var(--border) !important;
+    padding: 0 12px !important;
+    box-shadow: none !important;
+    height: 42px !important;
+    border-radius: var(--radius-sm) !important;
+    flex: 1 !important;
+}
+#checkoutPane .input-wrapper input, #checkoutPane .input-wrapper select {
+    padding: 0 !important;
+}
+#checkoutPane .input-wrapper svg, #checkoutPane .input-wrapper i {
+    display: inline-block !important;
+    margin-right: 8px;
+}
+#checkoutPane .payment-option {
+    padding: 12px !important;
+}
+

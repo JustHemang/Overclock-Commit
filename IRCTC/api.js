@@ -7,6 +7,12 @@ async function apiFetch(url, opts = {}) {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
     const res = await fetch(url, { ...opts, headers: { ...headers, ...opts.headers } });
+    if (res.status === 401 && !url.includes('/auth/login')) {
+      localStorage.removeItem('irctc_current_user');
+      localStorage.removeItem('irctc_token');
+      window.location.href = '/login';
+      return { success: false, error: 'Session expired. Please login again.' };
+    }
     return await res.json();
   } catch (e) { console.warn('API error:', e.message); return { success: false }; }
 }
