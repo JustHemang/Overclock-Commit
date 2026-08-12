@@ -931,3 +931,7 @@ body {
     color: var(--dark-blue) !important;
 }
 
+
+
+/* REMOVE BLUE BAR FROM SECONDARY PAGES */
+.page-hero, .bookings-hero, .auth-hero { background: transparent !important; }
