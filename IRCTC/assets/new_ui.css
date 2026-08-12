@@ -663,7 +663,7 @@ body {
     margin-left: 100px !important;
     margin-right: 100px !important;
     border-top: none !important;
-    color: var(--text-color) !important;
+    color: var(--text-dark) !important;
 }
 .search-form {
     flex-direction: row !important;
@@ -1086,4 +1086,16 @@ body.fade-out {
 #checkoutPane .payment-option {
     padding: 12px !important;
 }
+
+
+/* FIX LOGIN TABS */
+.auth-tabs {
+    display: flex; gap: 0; margin-bottom: 18px; background: var(--bg-alt);
+    border-radius: var(--radius-sm); padding: 3px;
+}
+.auth-tab {
+    flex: 1; padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600;
+    color: var(--text-muted); background: transparent; transition: var(--transition); border: none; cursor: pointer;
+}
+.auth-tab.active { background: var(--pure-white); color: var(--ink); box-shadow: var(--shadow-sm); }
 
