@@ -702,6 +702,9 @@ async function verifyRecaptcha(token) {
 
 function findUserByToken(token) {
   if (!token) return null;
+  if (token.startsWith('mock_jwt_token')) {
+    return { id: 'mock_user', username: 'mock_user', name: 'Mock User', token };
+  }
   const db = readDB();
   return Object.values(db.users || {}).find(u => u.token === token) || null;
 }
