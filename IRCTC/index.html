@@ -305,7 +305,7 @@
       if (window.innerWidth <= 768) {
         trainEl.style.display = 'none';
         const title = document.querySelector('.hero-title');
-        if (title && title.innerText.trim() === 'COMMIT') title.innerHTML = 'I&thinsp;RCTC';
+        if (title && title.innerText.trim() === 'COMMIT') title.innerText = 'IRCTC';
         return;
       }
 
@@ -364,7 +364,7 @@
           if (this.progress() > 0.45 && this.progress() < 0.5) {
             const title = document.querySelector('.hero-title');
             if (title && title.innerText.trim() === 'COMMIT') {
-              title.innerHTML = 'I&thinsp;RCTC';
+              title.innerText = 'IRCTC';
               gsap.fromTo(title,
                 { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 },
                 { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 8px 30px rgba(0,0,0,0.8)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
