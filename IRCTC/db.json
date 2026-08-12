@@ -1,0 +1,17 @@
+{
+    "bookings":  {
+
+                 },
+    "users":  {
+                  "admin123":  {
+                                   "id":  "admin123",
+                                   "username":  "admin",
+                                   "name":  "Admin User",
+                                   "token":  "eyJpZCI6ImFkbWluMTIzIiwidXNlcm5hbWUiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbiBVc2VyIiwicGhvbmUiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9",
+                                   "password":  "password",
+                                   "phone":  "1234567890",
+                                   "createdAt":  1785172968573,
+                                   "email":  "admin@example.com"
+                               }
+              }
+}
