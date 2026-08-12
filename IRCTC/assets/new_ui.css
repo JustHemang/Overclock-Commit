@@ -9,7 +9,7 @@
 }
 
 :root {
-    --bg-pattern: url('pattern.jpg');
+    --bg-pattern: url('seamless-pattern.png'), url('pattern.jpg');
     --primary-orange: #ea6b40;
     --primary-orange-hover: #d1562c;
     --dark-blue: #1c273c;
@@ -32,9 +32,9 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--off-white);
     background-image: var(--bg-pattern);
-    background-size: 100vw auto; /* Scales to full width, repeats downwards if needed */
-    background-repeat: repeat;
-    background-attachment: scroll;
+    background-size: 100vw auto, 100vw auto;
+    background-repeat: repeat, repeat;
+    background-attachment: scroll, scroll;
     min-height: 100vh;
     color: var(--text-dark);
     overflow-x: hidden; /* Prevent horizontal scrollbars from flying elements */
