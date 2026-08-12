@@ -543,8 +543,8 @@
   <main class="main">
     <div class="page-container-new">
       <div class="page-card" style="text-align: center;">
-        <h1 class="page-title">PNR STATUS</h1>
-        <p class="page-subtitle">Check your booking status in real-time</p>
+        <h1 class="page-title" data-i18n="pnrStatus">PNR STATUS</h1>
+        <p class="page-subtitle" data-i18n="pnrSub">Check your booking status in real-time</p>
         
         <div class="pnr-search-card" style="box-shadow: none; border: none; background: transparent; padding: 0;">
           <div class="card-icon">
@@ -555,8 +555,8 @@
               <path d="M13 11v2" />
             </svg>
           </div>
-          <h2>Enter PNR Number</h2>
-          <p>Enter your 10-digit PNR number to check current booking status</p>
+          <h2 data-i18n="enterPnr">Enter PNR Number</h2>
+          <p class="input-hint" data-i18n="pnrDesc">Enter your 10-digit PNR number to check booking status</p>
           <div class="input-wrapper" style="margin: 0 auto 20px; max-width: 300px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="4" y1="9" x2="20" y2="9" />
@@ -567,7 +567,7 @@
             <input type="text" id="pnrInput" placeholder="Enter 10-digit PNR number" maxlength="13" autocomplete="off" inputmode="numeric" oninput="formatPNRInput(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();checkPNR();}" style="background:transparent; border:none; color:var(--dark-blue); font-weight:bold;">
           </div>
           <button class="search-btn" id="checkPnrBtn" onclick="checkPNR()" style="background:var(--primary-orange); border-radius:15px; border:none; color:white; padding:15px 30px; font-weight:bold; cursor:pointer;">
-            Check Status
+            <span data-i18n="checkStatus">Check Status</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />

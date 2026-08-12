@@ -143,6 +143,9 @@ function selectLang(lang) {
   const overlay = document.getElementById('welcomeOverlay');
   if (overlay) overlay.classList.add('hidden');
   applyLanguage();
+  if (typeof window.runTrainAnimation === 'function') {
+    window.runTrainAnimation();
+  }
 }
 
 

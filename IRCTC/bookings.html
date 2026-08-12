@@ -560,20 +560,20 @@
   <div class="mobile-nav" id="mobileNav"></div>
   <div class="bookings-hero">
     <div class="container">
-      <h1><i class="fas fa-ticket"></i> My Bookings</h1>
-      <p class="page-subtitle">View and manage all your train bookings</p>
+      <h1><i class="fas fa-ticket"></i> <span data-i18n="myBookingsTitle">My Bookings</span></h1>
+      <p class="page-subtitle" data-i18n="bookingsSub">View and manage all your train bookings</p>
       <div class="bookings-tabs">
         <button class="filter-btn active" data-tab="upcoming" onclick="switchTab('upcoming', this)">
-          <i class="fas fa-calendar-alt"></i> Upcoming
+          <i class="fas fa-calendar-alt"></i> <span data-i18n="upcoming">Upcoming</span>
         </button>
         <button class="filter-btn" data-tab="cancelled" onclick="switchTab('cancelled', this)">
-          <i class="fas fa-times-circle"></i> Cancelled
+          <i class="fas fa-times-circle"></i> <span data-i18n="cancelled">Cancelled</span>
         </button>
         <button class="filter-btn" data-tab="past" onclick="switchTab('past', this)">
-          <i class="fas fa-history"></i> Past
+          <i class="fas fa-history"></i> <span data-i18n="past">Past</span>
         </button>
         <button class="filter-btn" data-tab="all" onclick="switchTab('all', this)">
-          <i class="fas fa-list"></i> All
+          <i class="fas fa-list"></i> <span data-i18n="all">All</span>
         </button>
       </div>
     </div>
@@ -786,17 +786,14 @@ function renderBookings() {
     container.innerHTML = `
       <div class="empty-state">
         <i class="fas ${isCancelled ? 'fa-times-circle' : isPast ? 'fa-history' : isUpcoming ? 'fa-calendar-check' : 'fa-ticket'}"></i>
-        <h3>${isUpcoming ? 'No Upcoming Bookings' : isCancelled ? 'No Cancelled Bookings' : isPast ? 'No Past Bookings' : 'No Bookings Found'}</h3>
-        <p>${isUpcoming
-          ? 'You have no upcoming train journeys. Search and book your next trip!'
-          : isCancelled
-            ? 'You have no cancelled bookings.'
-            : isPast
-              ? 'Your completed journeys will appear here.'
-              : 'You haven\'t made any bookings yet. Search for trains and book your first ticket!'
-        }</p>
+        <h3 data-i18n="${isUpcoming ? 'noUpcoming' : isCancelled ? 'noCancelled' : isPast ? 'noPast' : 'noBookings'}">
+            ${isUpcoming ? t('noUpcoming') : isCancelled ? t('noCancelled') : isPast ? t('noPast') : t('noBookings')}
+        </h3>
+        <p data-i18n="${isUpcoming ? 'noUpcomingDesc' : isCancelled ? 'noCancelledDesc' : isPast ? 'noPastDesc' : 'noBookingsDesc'}">
+            ${isUpcoming ? t('noUpcomingDesc') : isCancelled ? t('noCancelledDesc') : isPast ? t('noPastDesc') : t('noBookingsDesc')}
+        </p>
         <a href="/" class="btn-search" style="display:inline-flex;margin-top:4px;">
-          <i class="fas fa-search"></i> Search Trains
+          <i class="fas fa-search"></i> <span data-i18n="searchBtn">${t('searchBtn')}</span>
         </a>
       </div>
     `;

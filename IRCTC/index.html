@@ -173,6 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('welcomeOverlay').classList.remove('hidden');
   } else {
     document.getElementById('welcomeOverlay').classList.add('hidden');
+    if (typeof window.runTrainAnimation === 'function') {
+      window.runTrainAnimation();
+    }
   }
   const departDate = document.getElementById('departDate');
   if (departDate) { departDate.value = getTomorrowDate(); departDate.min = getTodayDate(); }
@@ -262,9 +265,17 @@ function searchTrains() {
 }
 
 // === TRAIN FLY-BY + SPEED LINES ===
-(function() {
+window.runTrainAnimation = function() {
   const hero = document.querySelector('.hero');
-  if (!hero) return;
+  const trainEl = document.getElementById('animated-train');
+  if (!hero || !trainEl) return;
+  
+  if (window.innerWidth <= 768) {
+    trainEl.style.display = 'none';
+    const title = document.querySelector('.hero-title');
+    if (title && title.innerText === 'COMMIT') title.innerText = 'IRCTC';
+    return;
+  }
 
   // Wind container — fixed to viewport
   const windContainer = document.createElement('div');
@@ -339,7 +350,7 @@ function searchTrains() {
       gsap.to(windContainer, { opacity: 0, duration: 0.6, delay: 0.5, onComplete: () => windContainer.remove() });
     }
   });
-})();
+};
 
 // Scroll Animations
 gsap.registerPlugin(ScrollTrigger);

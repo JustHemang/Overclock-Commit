@@ -33,7 +33,7 @@
   <main class="main">
     <section class="page-hero">
       <div class="wrap">
-        <h1 class="page-title">LIVE TRACKING</h1>
+        <h1 class="page-title" data-i18n="liveTracking">LIVE TRACKING</h1>
       </div>
     </section>
     <div class="content-section">
@@ -41,7 +41,7 @@
         <div class="live-card">
           <div class="input-wrapper">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="trainNumber" placeholder="Enter train number" maxlength="5">
+            <input type="text" id="trainNumber" data-i18n="enterTrainNumber" placeholder="Enter train number" maxlength="5">
           </div>
           <button class="search-btn" onclick="trackTrain()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
@@ -54,13 +54,13 @@
           <div class="steps-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
             <div class="step-card" style="background:var(--off-white); border-radius:30px; padding:50px 35px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
               <div class="step-num" style="width:50px; height:50px; border-radius:50%; background:var(--dark-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; margin:0 auto 25px;">1</div>
-              <h3 style="font-family:'Inter',sans-serif; font-size:22px; font-weight:800; color:var(--dark-blue); margin-bottom:15px;">Enter Train Number</h3>
+              <h3 style="font-family:'Inter',sans-serif; font-size:22px; font-weight:800; color:var(--dark-blue); margin-bottom:15px;" data-i18n="enterTrainNumber">Enter Train Number</h3>
               <p style="font-size:16px; color:var(--text-muted); line-height:1.6;">Type any 5-digit Indian Railways train number into the search field above.</p>
             </div>
             <div class="step-card" style="background:var(--off-white); border-radius:30px; padding:50px 35px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
               <div class="step-num" style="width:50px; height:50px; border-radius:50%; background:var(--dark-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; margin:0 auto 25px;">2</div>
               <h3 style="font-family:'Inter',sans-serif; font-size:22px; font-weight:800; color:var(--dark-blue); margin-bottom:15px;">Get Live Status</h3>
-              <p style="font-size:16px; color:var(--text-muted); line-height:1.6;">View real-time position, speed, delay info, and current/next station details.</p>
+              <p style="font-size:16px; color:var(--text-muted); line-height:1.6;" data-i18n="trackingSub">View real-time position, speed, delay info, and current/next station details.</p>
             </div>
             <div class="step-card" style="background:var(--off-white); border-radius:30px; padding:50px 35px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
               <div class="step-num" style="width:50px; height:50px; border-radius:50%; background:var(--dark-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; margin:0 auto 25px;">3</div>
