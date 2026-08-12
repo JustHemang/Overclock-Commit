@@ -9,7 +9,7 @@
 }
 
 :root {
-    --bg-pattern: url('pattern.jpg');
+    --bg-pattern: url('seamless-pattern.png');
     --primary-orange: #ea6b40;
     --primary-orange-hover: #d1562c;
     --dark-blue: #1c273c;
