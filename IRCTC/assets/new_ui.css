@@ -9,7 +9,7 @@
 }
 
 :root {
-    --bg-pattern: url('pattern.jpg');
+    --bg-pattern: url('seamless-pattern.png');
     --primary-orange: #ea6b40;
     --primary-orange-hover: #d1562c;
     --dark-blue: #1c273c;
@@ -32,7 +32,7 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--off-white);
     background-image: var(--bg-pattern);
-    background-size: 100vw auto; /* Scales to full width, repeats downwards if needed */
+    background-size: 800px; /* Use a fixed tile size instead of cover so it doesn't stretch on long pages */
     background-repeat: repeat;
     background-attachment: scroll;
     min-height: 100vh;
