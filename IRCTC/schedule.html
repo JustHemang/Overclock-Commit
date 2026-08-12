@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Live Tracking - IRCTC</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/new_ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    .stops-list { display:flex; flex-direction:column; gap:2px; }
+    .stop-row { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:6px; font-size:12px; transition:background 0.2s; }
+    .stop-row:hover { background:var(--bg-alt); }
+    .stop-row.current { background:rgba(242,102,45,0.08); border:1px solid rgba(242,102,45,0.2); }
+    .stop-dot { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; flex-shrink:0; background:var(--bg-alt); color:var(--text-muted); border:2px solid var(--border); }
+    .stop-dot.active { background:var(--amber); color:#fff; border-color:var(--amber); }
+    .stop-dot.done { background:var(--success); color:#fff; border-color:var(--success); }
+    .stop-info { flex:1; min-width:0; }
+    .stop-name { font-weight:600; color:var(--text-body); font-size:12px; }
+    .stop-meta { font-size:10px; color:var(--text-muted); margin-top:1px; }
+    .stop-status { flex-shrink:0; }
+    .stop-badge { display:inline-block; padding:2px 6px; border-radius:4px; font-size:9px; font-weight:700; text-transform:uppercase; }
+    .stop-badge.current { background:var(--amber); color:#fff; }
+    .stop-badge.done { background:var(--success); color:#fff; }
+    .stop-badge.late { background:var(--danger-bg); color:var(--danger); }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <header class="header" id="mainHeader"></header>
+  <div class="mobile-nav" id="mobileNav"></div>
+  <main class="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <h1 class="mono">LIVE TRACKING</h1>
+        <p>Real-time train status powered by RailRadar</p>
+      </div>
+    </section>
+    <div class="content-section">
+      <div class="wrap">
+        <div class="live-card">
+          <div class="input-wrapper">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="trainNumber" placeholder="Enter train number" maxlength="5">
+          </div>
+          <button class="search-btn" onclick="trackTrain()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            Track
+          </button>
+        </div>
+        <div id="trackingResult"></div>
+        <div class="schedule-hero">
+          <h2>How it Works</h2>
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <h3>Enter Train Number</h3>
+              <p>Type any 5-digit Indian Railways train number into the search field above.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <h3>Get Live Status</h3>
+              <p>View real-time position, speed, delay info, and current/next station details.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <h3>View Full Route</h3>
+              <p>Click "View Route" to see the complete schedule with arrival, departure, and distance for every stop.</p>
+            </div>
+          </div>
+        </div>
+        <div class="popular-trains-section">
+          <h2>Popular Trains</h2>
+          <div class="popular-trains-grid" id="trackTrains"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer" id="mainFooter"></footer>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="api.js"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('trainNumber').addEventListener('keydown', e => { if (e.key === 'Enter') trackTrain(); });
+  loadPopularTrains();
+  animatePageIn();
+
+  const params = new URLSearchParams(window.location.search);
+  const urlTrain = params.get('train') || params.get('number');
+  if (urlTrain) {
+    document.getElementById('trainNumber').value = urlTrain;
+    trackTrain();
+  }
+});
+async function trackTrain() {
+  const num = document.getElementById('trainNumber').value.trim();
+  if (!num || num.length < 3) { showToast('Enter a valid train number', 'error'); return; }
+  const container = document.getElementById('trackingResult');
+  container.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Fetching live status for train ${num}...</p></div>`;
+  
+  const result = await apiFetch(`/api/trains/live/${num}`);
+  if (!result || !result.data) {
+    container.innerHTML = `<div class="empty-state">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      <h3>Train ${num} status not available</h3>
+      <p>Please check the train number and try again</p>
+    </div>`;
+    return;
+  }
+  const d = result.data;
+  const train = d.train || {};
+  const delay = d.delay || 0;
+  const delayClass = delay === 0 ? 'on-time' : delay > 30 ? 'late' : 'minor-delay';
+  const stops = d.stops || [];
+  
+  let departedCount = 0;
+  stops.forEach(s => {
+    if (s.status === 'departed' || s.status === 'arrived') departedCount++;
+  });
+  const progress = d.progressPercent !== undefined ? d.progressPercent : (stops.length > 1 ? Math.round((departedCount / (stops.length - 1)) * 100) : 0);
+
+  const stationsHTML = stops.length > 0 ? `
+    <div class="route-stops">
+      <h4 style="margin:20px 0 10px;font-size:13px;color:var(--text-body);display:flex;justify-content:space-between;align-items:center;">
+        <span>Route Breakdown (${stops.length} halts)</span>
+        <span style="font-size:10px;color:var(--text-muted);font-weight:normal;">Distance Covered: ${d.distanceCovered || 0} / ${d.totalDistance || 0} km</span>
+      </h4>
+      <div class="stops-list">
+        ${stops.map((s, i) => {
+          const isDeparted = s.status === 'departed' || s.status === 'arrived';
+          const isCurrent = d.currentStation && (d.currentStation.includes(s.code) || d.currentStation.includes(s.name));
+          const dotClass = isCurrent ? 'active' : isDeparted ? 'done' : '';
+          return `<div class="stop-row ${isCurrent ? 'current' : ''}">
+            <div class="stop-dot ${dotClass}">${isDeparted ? '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : i + 1}</div>
+            <div class="stop-info">
+              <div class="stop-name">${s.name || s.code} <span style="font-size:10px;color:var(--text-muted);font-weight:normal;">(PF ${s.platform || '--'})</span></div>
+              <div class="stop-meta">${s.code} &bull; Arr: ${s.arrival || '--'} &bull; Dep: ${s.departure || '--'}</div>
+            </div>
+            <div class="stop-status">${isCurrent ? '<span class="stop-badge current">NOW</span>' : isDeparted ? '<span class="stop-badge done">DEPARTED</span>' : s.delay > 0 ? '<span class="stop-badge late">+' + s.delay + 'm</span>' : ''}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>` : '';
+
+  container.innerHTML = `
+    <div class="tracking-card">
+      <div class="tracking-header">
+        <div>
+          <h3>${train.name || 'Train ' + num}</h3>
+          <p>Train #${train.number || num}</p>
+        </div>
+        <div class="tracking-delay ${delayClass}">
+          ${delay === 0
+            ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> On Time'
+            : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${delay} min late`}
+        </div>
+      </div>
+      <div class="tracking-body">
+        <div class="tracking-stations">
+          <div class="tracking-station">
+            <div class="tracking-dot active"></div>
+            <div class="tracking-info">
+              <span class="tracking-label">Current Station</span>
+              <strong>${d.currentStation || 'Station'}</strong>
+            </div>
+          </div>
+          <div class="tracking-line">
+            <div class="tracking-line-fill" style="width:${progress}%"></div>
+          </div>
+          <div class="tracking-station">
+            <div class="tracking-dot"></div>
+            <div class="tracking-info">
+              <span class="tracking-label">Next Station</span>
+              <strong>${d.nextStation || 'Destination'}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="tracking-stats">
+          <div class="tracking-stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 6v6l4 2"/></svg>
+            <div><span>Current Speed</span><strong>${d.speed || 0} km/h</strong></div>
+          </div>
+          <div class="tracking-stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div><span>Live Status</span><strong>${d.status || 'Running'}</strong></div>
+          </div>
+          <div class="tracking-stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <div><span>Last Updated</span><strong>${d.lastUpdate ? new Date(d.lastUpdate).toLocaleTimeString() : 'Just Now'}</strong></div>
+          </div>
+        </div>
+        ${stationsHTML}
+      </div>
+      <div class="tracking-footer">
+        <button class="btn-search" onclick="trackTrain()" style="width:auto;padding:8px 16px;font-size:11px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Refresh Status
+        </button>
+        <button class="btn-search" onclick="viewSchedule('${train.number || num}')" style="width:auto;padding:8px 16px;font-size:11px;background:var(--bg-alt);color:var(--text-body);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Full Route Schedule
+        </button>
+      </div>
+    </div>`;
+  addTrainAnimations();
+}
+async function viewSchedule(num) {
+  const container = document.getElementById('trackingResult');
+  container.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Loading schedule for ${num}...</p></div>`;
+  const result = await apiFetch(`/api/trains/schedule/${num}`);
+  if (!result || !result.data || !result.data.route) {
+    container.innerHTML = `<div class="empty-state">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <h3>Schedule not found</h3>
+    </div>`;
+    return;
+  }
+  const route = result.data.route;
+  container.innerHTML = `
+    <div class="tracking-card">
+      <div class="tracking-header">
+        <div>
+          <h3>Full Schedule: ${result.data.name || num}</h3>
+          <p>Total Halts: ${route.length} stops &bull; Total Distance: ${result.data.totalDistance || 0} km</p>
+        </div>
+        <button class="btn-search" onclick="trackTrain()" style="width:auto;padding:7px 14px;font-size:11px;background:var(--bg-alt);color:var(--text-body);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Live Tracking
+        </button>
+      </div>
+      <div class="tracking-body">
+        <table class="schedule-table">
+          <thead><tr><th>#</th><th>Station Name</th><th>Code</th><th>Arrival</th><th>Departure</th><th>Distance</th><th>Day</th></tr></thead>
+          <tbody>
+            ${route.map((s, i) => `<tr>
+              <td>${i + 1}</td>
+              <td><strong>${s.name}</strong></td>
+              <td>${s.code}</td>
+              <td>${s.arrival}</td>
+              <td>${s.departure}</td>
+              <td>${s.distance} km</td>
+              <td>Day ${s.day}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+function addTrainAnimations() {
+  if (typeof gsap === 'undefined') return;
+  const card = document.querySelector('.tracking-card');
+  if (card) {
+    gsap.fromTo(card, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+  }
+}
+async function loadPopularTrains() {
+  const container = document.getElementById('trackTrains');
+  if (!container) return;
+  const result = await apiFetch('/api/trains/popular');
+  const trains = result?.trains || [];
+  if (trains.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">Loading popular trains...</p>';
+    return;
+  }
+  container.innerHTML = trains.slice(0, 10).map(t => {
+    const firstStop = t.route?.[0];
+    const lastStop = t.route?.[t.route.length - 1];
+    return `
+    <div class="popular-train-card" onclick="document.getElementById('trainNumber').value='${t.number}';trackTrain();window.scrollTo({top:150,behavior:'smooth'});">
+      <div class="train-card-header">
+        <div>
+          <div class="train-name">${t.name}</div>
+          <div class="train-number">${t.number}</div>
+        </div>
+        <span class="train-type-badge badge-${(t.type || 'express').replace(/_/g, ' ').replace(/ /g, '-')}">${(t.type || 'express').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
+      </div>
+      <div class="train-card-body">
+        <div class="train-route">
+          <div class="route-station"><div class="code">${firstStop?.code || '-'}</div><div class="time">${firstStop?.departure || '-'}</div></div>
+          <div class="route-arrow"><span class="duration">${t.totalStops || 0} stops</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+          <div class="route-station"><div class="code">${lastStop?.code || '-'}</div><div class="time">${lastStop?.arrival || '-'}</div></div>
+        </div>
+      </div>
+      <div class="train-card-footer">
+        <span style="font-size:10px;color:var(--primary);font-weight:600;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          Click to Track
+        </span>
+      </div>
+    </div>`;
+  }).join('');
+  addTrainAnimations();
+}
+  </script>
+</body>
+</html>

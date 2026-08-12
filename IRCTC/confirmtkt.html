@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://www.confirmtkt.com/favicon.ico" />
+    <meta name="theme-color" content="#fff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Train Ticket booking Online with confirmation prediction, get confirm train ticket with train seat availability,train fare,tatkal quota and vikalp trains,alternates" />
+    <link rel="canonical" href="https://www.confirmtkt.com" />
+    <title>
+      Confirm Ticket - Train Ticket booking Online | Train seat availability
+    </title>
+    <meta
+      name="keywords"
+      content="Confirm Ticket, irctc tickets,Train tickets,train seat" />
+
+    <link rel="preconnect" href="https://cdn.confirmtkt.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.confirmtkt.com" />
+
+    <link
+      rel="preload"
+      href="https://cdn.confirmtkt.com/fonts/ixisans/ixi_regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin />
+    <link
+      rel="preload"
+      href="https://cdn.confirmtkt.com/fonts/ixisans/ixi_medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin />
+    <link
+      rel="preload"
+      href="https://cdn.confirmtkt.com/fonts/ixisans/ixi_bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin />
+
+    <style>
+      @font-face {
+        font-family: 'ixi-sans';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src:
+          url('https://cdn.confirmtkt.com/fonts/ixisans/ixi_regular.woff2')
+            format('woff2'),
+          url('https://cdn.confirmtkt.com/fonts/ixisans/ixi_regular.woff')
+            format('woff');
+      }
+
+      @font-face {
+        font-family: 'ixi-sans';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src:
+          url('https://cdn.confirmtkt.com/fonts/ixisans/ixi_medium.woff2')
+            format('woff2'),
+          url('https://cdn.confirmtkt.com/fonts/ixisans/ixi_medium.woff')
+            format('woff');
+      }
+
+      @font-face {
+        font-family: 'ixi-sans';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src:
+          url('https://cdn.confirmtkt.com/fonts/ixisans/ixi_bold.woff2')
+            format('woff2'),
+          url('https://cdn.confirmtkt.com/fonts/ixisans/ixi_bold.woff')
+            format('woff');
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #splash-screen {
+        font-family: 'ixi-sans', sans-serif;
+        position: fixed;
+        background: #42a047;
+        width: 100%;
+        height: 100vh;
+        color: #fff;
+        padding-top: clamp(20%, 30%, 300px);
+        text-align: center;
+      }
+
+      .splash-content {
+        font-weight: 500;
+      }
+
+      .description {
+        position: fixed;
+        bottom: 80px;
+        font-size: 16px;
+        text-align: center;
+        left: 0;
+        right: 0;
+      }
+
+      .loader {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+        border: 5px solid #fff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loader-new {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+        stroke: #42a047;
+        animation: spin 1s linear infinite;
+        transform-origin: center;
+      }
+    </style>
+    <script type="module" crossorigin src="/rbooking/assets/index-D63howO8.js"></script>
+    <link rel="modulepreload" crossorigin href="/rbooking/assets/vendor-B6v2m5F2.js">
+    <link rel="modulepreload" crossorigin href="/rbooking/assets/vendor-firebase-DJ3C7CmS.js">
+    <link rel="modulepreload" crossorigin href="/rbooking/assets/vendor-react-B7ZalFAx.js">
+    <link rel="modulepreload" crossorigin href="/rbooking/assets/vendor-iui-B1CXmJms.js">
+    <link rel="modulepreload" crossorigin href="/rbooking/assets/vendor-redux-B7iAPQTn.js">
+    <link rel="stylesheet" crossorigin href="/rbooking/assets/index-EPbyqng8.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="app">
+      <div id="splash-screen">
+        <div class="splash-content">
+          <span class="loader"></span>
+          <div style="font-size: 40px; letter-spacing: 1px; margin: 0">
+            ConfirmTkt
+          </div>
+          <div style="font-size: 16px">IRCTC TICKET BOOKING</div>
+        </div>
+        <div class="description">
+          <div>POWERED BY</div>
+          <div style="font-size: 14px">ConfirmTkt Prediction & Alternates</div>
+          <div style="font-size: 14px">Get Confirm Ticket</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      try {
+        // different loader for pwa app environment
+        const isAppEnvironment =
+          window.webkit?.messageHandlers || window.HTMLOUT;
+
+        if (isAppEnvironment) {
+          const splashScreen = document.getElementById('splash-screen');
+          splashScreen.style.background = '#fff';
+          splashScreen.style.paddingTop = '0px';
+          splashScreen.style.justifyContent = 'center';
+          splashScreen.innerHTML = `
+              <div style="
+                  position: relative;
+                  display: flex;
+                  justify-content: center;
+                  color: #fff;
+                  height: 100vh;
+                  align-items: center;">
+                <div>
+                  <svg
+                    class="-rotate-90"
+                    data-testid="circularProgress"
+                    style="width: 40px; height: 40px">
+                    <circle
+                      cx="20"
+                      cy="20"
+                      fill="transparent"
+                      r="17"
+                      stroke="rgb(200 202 208 / 1)"
+                      class=""
+                      stroke-width="3"
+                      data-testid="track"
+                    ></circle>
+                    <circle
+                      class="loader-new"
+                      cx="20"
+                      cy="20"
+                      fill="transparent"
+                      r="17"
+                      stroke-width="3"
+                      stroke-dasharray="106.81415022205297"
+                      stroke-dashoffset="80.111"
+                      stroke-linecap="round"
+                      data-testid="progress"
+                    ></circle>
+                  </svg>
+                  <div style="color: #000; font-size: 18px; margin-top: 10px">
+                    Please Wait...
+                  </div>
+                </div>
+              </div>`;
+        }
+      } catch (error) {
+        console.log('Error in splash screen detection:', error);
+      }
+    </script>
+    <script>
+      window.addEventListener('vite:preloadError', (event) => {
+        window.location.reload();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Login - IRCTC</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/new_ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaReady&render=explicit" async defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <header class="header" id="mainHeader"></header>
+  <div class="mobile-nav" id="mobileNav"></div>
+  <main class="main">
+    <div class="page-container-new">
+      <div class="page-card" style="max-width: 600px; text-align: center;">
+        <h1 class="page-title">LOGIN</h1>
+        <p class="page-subtitle">Access your IRCTC account</p>
+        <div class="auth-card" style="box-shadow: none; border: none; background: transparent;">
+          <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">Login</button>
+            <button class="auth-tab" data-tab="register">Register</button>
+          </div>
+          
+          <form id="loginForm" class="auth-form active">
+            <div class="input-group">
+              <label>Email Address</label>
+              <input type="email" id="loginEmail" required placeholder="Enter your email">
+            </div>
+            <div class="input-group">
+              <label>Password</label>
+              <input type="password" id="loginPassword" required placeholder="Enter password">
+            </div>
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox"> Remember me
+              </label>
+              <a href="#" class="forgot-pwd">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn-primary" style="background:var(--primary-orange); color:white; font-weight:bold; padding:15px; border-radius:15px; border:none; width:100%; cursor:pointer;">Secure Login</button>
+          </form>
+
+          <form id="registerForm" class="auth-form">
+            <div class="input-group">
+              <label>Full Name</label>
+              <input type="text" id="regName" required placeholder="Enter full name">
+            </div>
+            <div class="input-group">
+              <label>Email Address</label>
+              <input type="email" id="regEmail" required placeholder="Enter email">
+            </div>
+            <div class="input-group">
+              <label>Password</label>
+              <input type="password" id="regPassword" required placeholder="Create password">
+            </div>
+            <button type="submit" class="btn-primary" style="background:var(--primary-orange); color:white; font-weight:bold; padding:15px; border-radius:15px; border:none; width:100%; cursor:pointer;">Create Account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer" id="mainFooter"></footer>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="api.js"></script>
+  <script>
+let loginWidgetId = -1, regWidgetId = -1, recaptchaReady = false;
+function onRecaptchaReady() {
+  recaptchaReady = true;
+  loginWidgetId = grecaptcha.render('loginRecaptcha', { sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', theme: 'light' });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  if (isLoggedIn()) { window.location.href = '/'; return; }
+});
+function switchTab(tab) {
+  document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'flex' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? 'flex' : 'none';
+  if (tab === 'register' && regWidgetId === -1 && recaptchaReady) {
+    regWidgetId = grecaptcha.render('regRecaptcha', { sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', theme: 'light' });
+  }
+}
+async function doLogin() {
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const recaptchaToken = grecaptcha.getResponse(loginWidgetId);
+  if (!username || !password) { showToast('Enter username and password', 'error'); return; }
+  if (!recaptchaToken) { showToast('Please complete the reCAPTCHA', 'error'); return; }
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password, recaptchaToken })
+  });
+  const result = await res.json();
+  btn.disabled = false; btn.textContent = 'Sign In';
+  if (!result.success) {
+    showToast(result.error || 'Login failed', 'error');
+    grecaptcha.reset(loginWidgetId);
+    return;
+  }
+  localStorage.setItem('irctc_current_user', JSON.stringify(result.user));
+  localStorage.setItem('irctc_token', result.token);
+  showToast('Login successful!', 'success');
+  setTimeout(() => window.location.href = '/', 800);
+}
+async function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const username = document.getElementById('regUser').value.trim();
+  const password = document.getElementById('regPass').value;
+  const recaptchaToken = grecaptcha.getResponse(regWidgetId);
+  if (!name) { showToast('Please enter your full name', 'error'); return; }
+  if (!phone || !/^[0-9]{10}$/.test(phone)) { showToast('Please enter a valid 10-digit phone number', 'error'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address', 'error'); return; }
+  if (!username || username.length < 3) { showToast('Username must be at least 3 characters', 'error'); return; }
+  if (!password || password.length < 4) { showToast('Password must be at least 4 characters', 'error'); return; }
+  if (!recaptchaToken) { showToast('Please complete the reCAPTCHA', 'error'); return; }
+  const btn = document.getElementById('regBtn');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+  const res = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, phone, email, username, password, recaptchaToken })
+  });
+  const result = await res.json();
+  btn.disabled = false; btn.textContent = 'Create Account';
+  if (!result.success) {
+    showToast(result.error || 'Registration failed', 'error');
+    grecaptcha.reset(regWidgetId);
+    return;
+  }
+  localStorage.setItem('irctc_current_user', JSON.stringify(result.user));
+  localStorage.setItem('irctc_token', result.token);
+  showToast('Account created!', 'success');
+  setTimeout(() => window.location.href = '/', 800);
+}
+  </script>
+</body>
+</html>

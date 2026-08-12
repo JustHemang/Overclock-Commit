@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>My Bookings - IRCTC</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/new_ui.css">
+  <link rel="stylesheet" href="assets/new_ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .bookings-hero {
+      background: var(--primary);
+      padding: 32px 0 28px;
+      margin-top: var(--header-h);
+      text-align: center;
+    }
+    .bookings-hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .bookings-hero p {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+    }
+    .bookings-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .bookings-tabs .filter-btn {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .bookings-tabs .filter-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .bookings-tabs .filter-btn.active {
+      background: #fff;
+      color: var(--primary);
+      border-color: #fff;
+    }
+    .bookings-page-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 20px 48px;
+    }
+    .bookings-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .bookings-list { display: flex; flex-direction: column; gap: 12px; }
+    .booking-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .booking-card:hover { box-shadow: var(--shadow-md); }
+    .bc-header {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .bc-train-info h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-body);
+      margin-bottom: 2px;
+    }
+    .bc-train-info span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .bc-train-info span strong { color: var(--text-secondary); font-weight: 600; }
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .status-badge.confirmed { background: var(--success-bg); color: var(--success); }
+    .status-badge.cancelled { background: var(--danger-bg); color: var(--danger); }
+    .status-badge.postponed { background: var(--warning-bg); color: var(--warning); }
+    .status-badge.partially-cancelled { background: rgba(255,107,0,0.1); color: var(--accent); }
+    .bc-body { padding: 16px 18px; }
+    .bc-route {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .bc-route-station { text-align: center; min-width: 60px; }
+    .bc-route-station .code {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-body);
+      display: block;
+    }
+    .bc-route-station .name {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: block;
+    }
+    .bc-route-arrow {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    .bc-route-arrow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      right: 10px;
+      height: 2px;
+      background: var(--border);
+      transform: translateY(-50%);
+    }
+    .bc-route-arrow i {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-card);
+      padding: 0 6px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    .bc-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .bc-detail-item {
+      text-align: center;
+      padding: 8px 6px;
+      background: var(--bg-alt);
+      border-radius: var(--radius-sm);
+    }
+    .bc-detail-item .label {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .bc-detail-item .value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-body);
+      display: block;
+    }
+    .bc-passengers {
+      padding: 10px 14px;
+      background: var(--bg-alt);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      border: 1px solid var(--border-light);
+    }
+    .bc-passengers-title {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .bc-passenger-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .bc-passenger-tag {
+      padding: 3px 8px;
+      border-radius: 50px;
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(0,0,117,0.05);
+      color: var(--text-secondary);
+    }
+    .bc-footer {
+      padding: 10px 18px;
+      background: var(--bg-alt);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-light);
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .bc-payment {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .bc-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .bc-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 10px;
+      font-weight: 600;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .bc-action-btn i { font-size: 10px; }
+    .bc-action-btn.download {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    .bc-action-btn.download:hover {
+      background: var(--success);
+      color: #fff;
+    }
+    .bc-action-btn.cancel {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+    .bc-action-btn.cancel:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+    .bc-action-btn.postpone {
+      background: rgba(255,107,0,0.08);
+      color: var(--accent);
+    }
+    .bc-action-btn.postpone:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .bc-action-btn.edit {
+      background: rgba(0,0,117,0.06);
+      color: var(--primary);
+    }
+    .bc-action-btn.edit:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+    }
+    .empty-state i {
+      font-size: 48px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: block;
+      opacity: 0.5;
+    }
+    .empty-state h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-body);
+      margin-bottom: 6px;
+    }
+    .empty-state p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .empty-state .btn-search {
+      display: inline-flex;
+    }
+    /* Loading skeleton */
+    .skeleton-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 18px;
+      overflow: hidden;
+    }
+    .skeleton-line {
+      height: 12px;
+      background: linear-gradient(90deg, var(--bg-alt) 25%, var(--border-light) 50%, var(--bg-alt) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .skeleton-line.w50 { width: 50%; }
+    .skeleton-line.w30 { width: 30%; }
+    .skeleton-line.w70 { width: 70%; }
+    .skeleton-line.h20 { height: 20px; }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 480px;
+      max-height: 85vh;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,117,0.2);
+      animation: slideUp 0.3s ease;
+    }
+    .modal-header {
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-body);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-header h3 i { color: var(--primary); }
+    .modal-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .modal-close:hover { color: var(--danger); border-color: var(--danger); }
+    .modal-body { padding: 18px 22px; }
+    .modal-footer {
+      padding: 14px 22px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .modal-btn {
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .modal-btn.confirm {
+      background: var(--primary);
+      color: #fff;
+    }
+    .modal-btn.confirm:hover { background: var(--primary-dark); }
+    .modal-btn.confirm.danger {
+      background: var(--danger);
+    }
+    .modal-btn.confirm.danger:hover { background: #b91c1c; }
+    .modal-btn.cancel-btn {
+      background: var(--bg-alt);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .modal-btn.cancel-btn:hover { color: var(--text-body); border-color: var(--text-body); }
+    .modal-info-box {
+      padding: 12px 14px;
+      background: var(--bg-alt);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .modal-info-box strong { color: var(--text-body); }
+    .passenger-checkbox-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .passenger-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-alt);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .passenger-checkbox:hover { border-color: var(--primary); }
+    .passenger-checkbox.checked { border-color: var(--primary); background: rgba(0,0,117,0.04); }
+    .passenger-checkbox input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .passenger-checkbox .pc-info { flex: 1; }
+    .passenger-checkbox .pc-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-body);
+    }
+    .passenger-checkbox .pc-detail {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .refund-summary {
+      padding: 12px 14px;
+      background: var(--success-bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(5,150,105,0.15);
+      margin-top: 10px;
+    }
+    .refund-summary .label { font-size: 10px; color: var(--text-muted); font-weight: 600; }
+    .refund-summary .amount {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--success);
+    }
+    .refund-summary .note {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .form-field {
+      margin-bottom: 12px;
+    }
+    .form-field label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .form-field .input-wrapper { height: 40px; }
+    .form-field select {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--bg-input);
+      font-size: 12px;
+      color: var(--text-body);
+      font-family: var(--font);
+      transition: var(--transition);
+    }
+    .form-field select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,0,117,0.08);
+    }
+    .edit-passenger-card {
+      padding: 12px;
+      background: var(--bg-alt);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      margin-bottom: 10px;
+    }
+    .edit-passenger-card h4 {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-body);
+      margin-bottom: 8px;
+    }
+    .edit-passenger-fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .checkbox-all {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(220,38,38,0.05);
+      border-radius: var(--radius-sm);
+      border: 1px dashed rgba(220,38,38,0.2);
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: var(--transition);
+    }
+    .checkbox-all:hover { border-color: var(--danger); }
+    .checkbox-all.checked { border-style: solid; border-color: var(--danger); background: var(--danger-bg); }
+    .checkbox-all input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--danger);
+      cursor: pointer;
+    }
+    .checkbox-all .label-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--danger);
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 600px) {
+      .bookings-hero h1 { font-size: 22px; }
+      .bc-route-station .code { font-size: 15px; }
+      .bc-details { grid-template-columns: repeat(2, 1fr); }
+      .bc-actions { width: 100%; }
+      .bc-action-btn { flex: 1; justify-content: center; }
+      .edit-passenger-fields { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <header class="header" id="mainHeader"></header>
+  <div class="mobile-nav" id="mobileNav"></div>
+  <div class="bookings-hero">
+    <div class="container">
+      <h1><i class="fas fa-ticket"></i> My Bookings</h1>
+      <p>View and manage all your train bookings</p>
+      <div class="bookings-tabs">
+        <button class="filter-btn active" data-tab="upcoming" onclick="switchTab('upcoming', this)">
+          <i class="fas fa-calendar-alt"></i> Upcoming
+        </button>
+        <button class="filter-btn" data-tab="cancelled" onclick="switchTab('cancelled', this)">
+          <i class="fas fa-times-circle"></i> Cancelled
+        </button>
+        <button class="filter-btn" data-tab="past" onclick="switchTab('past', this)">
+          <i class="fas fa-history"></i> Past
+        </button>
+        <button class="filter-btn" data-tab="all" onclick="switchTab('all', this)">
+          <i class="fas fa-list"></i> All
+        </button>
+      </div>
+    </div>
+  </div>
+  <main class="main">
+    <div class="bookings-page-body">
+      <div class="bookings-count" id="bookingsCount"></div>
+      <div id="bookingsContainer">
+        <div class="skeleton-card">
+          <div class="skeleton-line w50"></div>
+          <div class="skeleton-line w30"></div>
+          <div class="skeleton-line w70"></div>
+          <div class="skeleton-line"></div>
+        </div>
+        <div class="skeleton-card" style="margin-top:10px">
+          <div class="skeleton-line w70"></div>
+          <div class="skeleton-line w30"></div>
+          <div class="skeleton-line w50"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer" id="mainFooter"></footer>
+  <div class="toast-container" id="toastContainer"></div>
+  <div class="modal-overlay" id="cancelModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-times-circle"></i> Cancel Booking</h3>
+        <button class="modal-close" onclick="closeModal('cancelModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info-box">
+          PNR: <strong id="cancelPnr"></strong> &mdash;
+          <span id="cancelTrainInfo"></span>
+        </div>
+        <div class="checkbox-all" id="cancelAllWrap" onclick="toggleCancelAll()">
+          <input type="checkbox" id="cancelAllCheck">
+          <span class="label-text"><i class="fas fa-ban"></i> Cancel Entire Booking</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px;font-weight:600;">Or select individual passengers:</p>
+        <div class="passenger-checkbox-list" id="cancelPassengerList"></div>
+        <div class="refund-summary" id="refundSummary" style="display:none;">
+          <div class="label">Estimated Refund</div>
+          <div class="amount" id="refundAmount">0</div>
+          <div class="note">75% of fare refunded after cancellation charges</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel-btn" onclick="closeModal('cancelModal')">Close</button>
+        <button class="modal-btn confirm danger" id="cancelConfirmBtn" onclick="confirmCancel()">
+          <i class="fas fa-times-circle"></i> Confirm Cancellation
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="postponeModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-calendar-plus"></i> Reschedule Booking</h3>
+        <button class="modal-close" onclick="closeModal('postponeModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info-box">
+          PNR: <strong id="postponePnr"></strong> &mdash;
+          <span id="postponeTrainInfo"></span>
+        </div>
+        <div class="form-field">
+          <label>Current Journey Date</label>
+          <div class="input-wrapper">
+            <i class="fas fa-calendar"></i>
+            <input type="text" id="postponeCurrentDate" readonly style="border:none;background:none;outline:none;font-size:12px;color:var(--text-body);font-weight:600;">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>New Journey Date</label>
+          <div class="input-wrapper">
+            <i class="fas fa-calendar-day"></i>
+            <input type="date" id="postponeNewDate" style="border:none;background:none;outline:none;font-size:12px;color:var(--text-body);font-weight:600;width:100%;">
+          </div>
+        </div>
+        <div class="modal-info-box" style="margin-bottom:0;">
+          <i class="fas fa-info-circle"></i> Rescheduling fee: <strong>Free</strong> if done before chart preparation. A nominal charge may apply otherwise.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel-btn" onclick="closeModal('postponeModal')">Close</button>
+        <button class="modal-btn confirm" id="postponeConfirmBtn" onclick="confirmPostpone()">
+          <i class="fas fa-check"></i> Confirm Reschedule
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-pen"></i> Edit Booking</h3>
+        <button class="modal-close" onclick="closeModal('editModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info-box">
+          PNR: <strong id="editPnr"></strong> &mdash;
+          <span id="editTrainInfo"></span>
+        </div>
+        <div class="form-field">
+          <label>Travel Class</label>
+          <select id="editClassSelect">
+            <option value="1A">1A - First AC</option>
+            <option value="2A">2A - AC 2-Tier</option>
+            <option value="3A">3A - AC 3-Tier</option>
+            <option value="SL">SL - Sleeper</option>
+            <option value="CC">CC - Chair Car</option>
+            <option value="EC">EC - Executive Chair</option>
+            <option value="GEN">GEN - General</option>
+          </select>
+        </div>
+        <div id="editPassengerList"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel-btn" onclick="closeModal('editModal')">Close</button>
+        <button class="modal-btn confirm" id="editConfirmBtn" onclick="confirmEdit()">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="api.js"></script>
+  <script>
+let activeTab = 'upcoming';
+let allBookings = [];
+let upcomingBookings = [];
+let pastBookings = [];
+let cancelledBookings = [];
+let currentBookingId = null;
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!requireLogin()) return;
+  await loadBookings();
+});
+async function loadBookings() {
+  const container = document.getElementById('bookingsContainer');
+  container.innerHTML = `
+    <div class="skeleton-card"><div class="skeleton-line w50"></div><div class="skeleton-line w30"></div><div class="skeleton-line w70"></div><div class="skeleton-line"></div></div>
+    <div class="skeleton-card" style="margin-top:10px"><div class="skeleton-line w70"></div><div class="skeleton-line w30"></div><div class="skeleton-line w50"></div></div>
+  `;
+  const result = await getMyBookings();
+  if (result && result.success && result.bookings) {
+    allBookings = result.bookings;
+  } else {
+    allBookings = [];
+  }
+  const overrides = JSON.parse(localStorage.getItem('irctc_bookings_override') || '{}');
+  Object.keys(overrides).forEach(id => {
+    const idx = allBookings.findIndex(b => b.id === id);
+    if (idx >= 0) {
+      allBookings[idx] = { ...allBookings[idx], ...overrides[id] };
+    } else {
+      allBookings.push(overrides[id]);
+    }
+  });
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  upcomingBookings = allBookings.filter(b => {
+    if (b.status === 'cancelled' || b.status === 'partially-cancelled') return false;
+    try {
+      const d = new Date(b.date);
+      d.setHours(0, 0, 0, 0);
+      return d >= today;
+    } catch { return true; }
+  });
+  cancelledBookings = allBookings.filter(b => {
+    return b.status === 'cancelled' || b.status === 'partially-cancelled';
+  });
+  pastBookings = allBookings.filter(b => {
+    if (b.status === 'cancelled' || b.status === 'partially-cancelled') return false;
+    try {
+      const d = new Date(b.date);
+      d.setHours(0, 0, 0, 0);
+      return d < today;
+    } catch { return false; }
+  });
+  renderBookings();
+}
+function switchTab(tab, btn) {
+  activeTab = tab;
+  document.querySelectorAll('.bookings-tabs .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBookings();
+}
+function getFilteredBookings() {
+  switch (activeTab) {
+    case 'upcoming': return upcomingBookings;
+    case 'cancelled': return cancelledBookings;
+    case 'past': return pastBookings;
+    case 'all': return allBookings;
+    default: return allBookings;
+  }
+}
+function renderBookings() {
+  const container = document.getElementById('bookingsContainer');
+  const countEl = document.getElementById('bookingsCount');
+  const filtered = getFilteredBookings();
+  countEl.textContent = filtered.length > 0
+    ? `${filtered.length} booking${filtered.length !== 1 ? 's' : ''} found`
+    : '';
+  if (filtered.length === 0) {
+    const isUpcoming = activeTab === 'upcoming';
+    const isPast = activeTab === 'past';
+    const isCancelled = activeTab === 'cancelled';
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas ${isCancelled ? 'fa-times-circle' : isPast ? 'fa-history' : isUpcoming ? 'fa-calendar-check' : 'fa-ticket'}"></i>
+        <h3>${isUpcoming ? 'No Upcoming Bookings' : isCancelled ? 'No Cancelled Bookings' : isPast ? 'No Past Bookings' : 'No Bookings Found'}</h3>
+        <p>${isUpcoming
+          ? 'You have no upcoming train journeys. Search and book your next trip!'
+          : isCancelled
+            ? 'You have no cancelled bookings.'
+            : isPast
+              ? 'Your completed journeys will appear here.'
+              : 'You haven\'t made any bookings yet. Search for trains and book your first ticket!'
+        }</p>
+        <a href="/" class="btn-search" style="display:inline-flex;margin-top:4px;">
+          <i class="fas fa-search"></i> Search Trains
+        </a>
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML = '<div class="bookings-list">' + filtered.map(b => renderBookingCard(b)).join('') + '</div>';
+  animatePageIn();
+}
+function renderBookingCard(b) {
+  const statusClass = b.status === 'confirmed' ? 'confirmed'
+    : b.status === 'cancelled' ? 'cancelled'
+    : b.status === 'postponed' ? 'postponed'
+    : 'partially-cancelled';
+  const statusLabel = (b.status || 'confirmed').replace(/-/g, ' ').toUpperCase();
+  const isActive = b.status === 'confirmed' || b.status === 'postponed';
+  const fromName = getStationName(b.from);
+  const toName = getStationName(b.to);
+  return `
+    <div class="booking-card">
+      <div class="bc-header">
+        <div class="bc-train-info">
+          <h3>${b.train?.name || 'Train'}</h3>
+          <span>${b.train?.number || ''} &bull; PNR: <strong>${b.pnr || 'N/A'}</strong></span>
+        </div>
+        <span class="status-badge ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="bc-body">
+        <div class="bc-route">
+          <div class="bc-route-station">
+            <span class="code">${b.from}</span>
+            <span class="name">${fromName}</span>
+          </div>
+          <div class="bc-route-arrow">
+            <i class="fas fa-train"></i>
+          </div>
+          <div class="bc-route-station">
+            <span class="code">${b.to}</span>
+            <span class="name">${toName}</span>
+          </div>
+        </div>
+        <div class="bc-details">
+          <div class="bc-detail-item">
+            <span class="label">Date</span>
+            <span class="value">${formatDateShort(b.date)}</span>
+          </div>
+          <div class="bc-detail-item">
+            <span class="label">Class</span>
+            <span class="value">${b.classType || 'N/A'}</span>
+          </div>
+          <div class="bc-detail-item">
+            <span class="label">Passengers</span>
+            <span class="value">${b.passengers ? b.passengers.length : 0}</span>
+          </div>
+          <div class="bc-detail-item">
+            <span class="label">Total Fare</span>
+            <span class="value">${formatCurrency(b.fare || 0)}</span>
+          </div>
+        </div>
+        ${b.passengers && b.passengers.length > 0 ? `
+          <div class="bc-passengers">
+            <div class="bc-passengers-title">Passengers</div>
+            <div class="bc-passenger-tags">
+              ${b.passengers.map(p => `
+                <span class="bc-passenger-tag">
+                  <i class="fas fa-user" style="font-size:8px;margin-right:2px;"></i>${p.name}${p.age ? ', ' + p.age : ''}${p.gender ? ' (' + p.gender[0] + ')' : ''}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+      <div class="bc-footer">
+        <span class="bc-payment">
+          <i class="fas fa-credit-card"></i>
+          Paid via ${b.paymentMethod || 'UPI'}
+        </span>
+        <div class="bc-actions">
+          <button class="bc-action-btn download" onclick="downloadTicket('${b.id}')">
+            <i class="fas fa-download"></i> Ticket
+          </button>
+          ${isActive ? `
+            <button class="bc-action-btn edit" onclick="openEditModal('${b.id}')">
+              <i class="fas fa-pen"></i> Edit
+            </button>
+            <button class="bc-action-btn postpone" onclick="openPostponeModal('${b.id}')">
+              <i class="fas fa-calendar-plus"></i> Postpone
+            </button>
+            <button class="bc-action-btn cancel" onclick="openCancelModal('${b.id}')">
+              <i class="fas fa-times-circle"></i> Cancel
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+function findBooking(id) {
+  return allBookings.find(b => b.id === id);
+}
+/* ==================== CANCEL ==================== */
+function openCancelModal(id) {
+  const b = findBooking(id);
+  if (!b) return;
+  currentBookingId = id;
+  document.getElementById('cancelPnr').textContent = b.pnr;
+  document.getElementById('cancelTrainInfo').textContent = `${b.train?.name || ''} (${b.train?.number || ''})`;
+  document.getElementById('cancelAllCheck').checked = false;
+  document.getElementById('cancelAllWrap').classList.remove('checked');
+  document.getElementById('refundSummary').style.display = 'none';
+  const list = document.getElementById('cancelPassengerList');
+  if (b.passengers && b.passengers.length > 0) {
+    list.innerHTML = b.passengers.map((p, i) => `
+      <label class="passenger-checkbox" id="cancelPC${i}" onclick="toggleCancelPassenger(${i})">
+        <input type="checkbox" id="cancelPassengerCheck${i}">
+        <div class="pc-info">
+          <div class="pc-name">${p.name}</div>
+          <div class="pc-detail">${p.age || ''} yrs &bull; ${p.gender || 'N/A'}${p.seat ? ' &bull; Seat ' + p.seat : ''}</div>
+        </div>
+      </label>
+    `).join('');
+  } else {
+    list.innerHTML = '<p style="font-size:11px;color:var(--text-muted);">No passenger details available.</p>';
+  }
+  openModal('cancelModal');
+}
+function toggleCancelAll() {
+  const check = document.getElementById('cancelAllCheck');
+  check.checked = !check.checked;
+  document.getElementById('cancelAllWrap').classList.toggle('checked', check.checked);
+  updateCancelRefund();
+  const b = findBooking(currentBookingId);
+  if (!b) return;
+  if (b.passengers) {
+    b.passengers.forEach((_, i) => {
+      document.getElementById(`cancelPassengerCheck${i}`).checked = check.checked;
+      document.getElementById(`cancelPC${i}`).classList.toggle('checked', check.checked);
+    });
+  }
+}
+function toggleCancelPassenger(i) {
+  const check = document.getElementById(`cancelPassengerCheck${i}`);
+  check.checked = !check.checked;
+  document.getElementById(`cancelPC${i}`).classList.toggle('checked', check.checked);
+  updateCancelRefund();
+  const b = findBooking(currentBookingId);
+  if (!b || !b.passengers) return;
+  const allChecked = b.passengers.every((_, j) => document.getElementById(`cancelPassengerCheck${j}`).checked);
+  document.getElementById('cancelAllCheck').checked = allChecked;
+  document.getElementById('cancelAllWrap').classList.toggle('checked', allChecked);
+}
+function updateCancelRefund() {
+  const b = findBooking(currentBookingId);
+  if (!b) return;
+  const total = b.passengers ? b.passengers.length : 0;
+  let selected = 0;
+  if (b.passengers) {
+    b.passengers.forEach((_, i) => {
+      if (document.getElementById(`cancelPassengerCheck${i}`).checked) selected++;
+    });
+  }
+  const summary = document.getElementById('refundSummary');
+  if (selected > 0) {
+    const refundPerPassenger = (b.fare || 0) / total * 0.75;
+    const refund = Math.round(refundPerPassenger * selected);
+    document.getElementById('refundAmount').textContent = formatCurrency(refund);
+    summary.style.display = 'block';
+  } else {
+    summary.style.display = 'none';
+  }
+}
+async function confirmCancel() {
+  const b = findBooking(currentBookingId);
+  if (!b) return;
+  const total = b.passengers ? b.passengers.length : 0;
+  let selected = [];
+  if (b.passengers) {
+    b.passengers.forEach((p, i) => {
+      if (document.getElementById(`cancelPassengerCheck${i}`).checked) selected.push(i);
+    });
+  }
+  if (selected.length === 0) {
+    showToast('Please select at least one passenger to cancel', 'error');
+    return;
+  }
+  const departTime = b.depart || '00:00';
+  const departDateTime = new Date(b.date + 'T' + departTime + ':00');
+  const now = new Date();
+  const hoursUntilDepart = (departDateTime - now) / (1000 * 60 * 60);
+  if (hoursUntilDepart <= 6 && hoursUntilDepart > -24) {
+    showToast('Chart has been generated. This train is departing within 6 hours. No refund will be provided. Please contact the Railway Booking Counter at the station.', 'error');
+    closeModal('cancelModal');
+    return;
+  }
+  const btn = document.getElementById('cancelConfirmBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  try {
+    const result = await apiFetch(`/api/bookings/${b.id}/cancel`, {
+      method: 'POST',
+      body: JSON.stringify({
+        passengerIndices: selected
+      })
+    });
+    if (result && result.success) {
+      showToast('Booking cancelled successfully. Refund will be processed.', 'success');
+      closeModal('cancelModal');
+      await loadBookings();
+    } else {
+      applyLocalCancel(b, selected, total);
+    }
+  } catch (e) {
+    applyLocalCancel(b, selected, total);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-times-circle"></i> Confirm Cancellation';
+  }
+}
+function applyLocalCancel(b, selected, total) {
+  if (selected.length === total) {
+    b.status = 'cancelled';
+    b.cancelledAt = Date.now();
+  } else {
+    if (b.passengers) {
+      b.passengers = b.passengers.filter((_, i) => !selected.includes(i));
+    }
+    b.status = b.passengers && b.passengers.length === 0 ? 'cancelled' : 'partially-cancelled';
+  }
+  const overrides = JSON.parse(localStorage.getItem('irctc_bookings_override') || '{}');
+  overrides[b.id] = JSON.parse(JSON.stringify(b));
+  localStorage.setItem('irctc_bookings_override', JSON.stringify(overrides));
+  showToast(selected.length === total ? 'Booking cancelled. Refund will be processed.' : 'Selected passengers cancelled. Partial refund will be processed.', 'success');
+  closeModal('cancelModal');
+  loadBookings();
+}
+/* ==================== POSTPONE ==================== */
+function openPostponeModal(id) {
+  const b = findBooking(id);
+  if (!b) return;
+  currentBookingId = id;
+  document.getElementById('postponePnr').textContent = b.pnr;
+  document.getElementById('postponeTrainInfo').textContent = `${b.train?.name || ''} (${b.train?.number || ''})`;
+  document.getElementById('postponeCurrentDate').value = formatDate(b.date);
+  const dateInput = document.getElementById('postponeNewDate');
+  const today = getTodayDate();
+  dateInput.min = today;
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 1);
+  dateInput.min = minDate.toISOString().split('T')[0];
+  dateInput.value = '';
+  openModal('postponeModal');
+}
+async function confirmPostpone() {
+  const b = findBooking(currentBookingId);
+  if (!b) return;
+  const newDate = document.getElementById('postponeNewDate').value;
+  if (!newDate) {
+    showToast('Please select a new travel date', 'error');
+    return;
+  }
+  const btn = document.getElementById('postponeConfirmBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  try {
+    const result = await apiFetch(`/api/bookings/${b.id}/postpone`, {
+      method: 'POST',
+      body: JSON.stringify({ newDate, currentDate: b.date })
+    });
+    if (result && result.success) {
+      showToast('Booking rescheduled successfully!', 'success');
+      closeModal('postponeModal');
+      await loadBookings();
+    } else {
+      b.date = newDate;
+      b.status = 'postponed';
+      showToast('Booking rescheduled to ' + formatDateShort(newDate), 'success');
+      closeModal('postponeModal');
+      await loadBookings();
+    }
+  } catch (e) {
+    b.date = newDate;
+    showToast('Booking rescheduled to ' + formatDateShort(newDate), 'success');
+    closeModal('postponeModal');
+    await loadBookings();
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-check"></i> Confirm Reschedule';
+  }
+}
+/* ==================== EDIT ==================== */
+function openEditModal(id) {
+  const b = findBooking(id);
+  if (!b) return;
+  currentBookingId = id;
+  document.getElementById('editPnr').textContent = b.pnr;
+  document.getElementById('editTrainInfo').textContent = `${b.train?.name || ''} (${b.train?.number || ''})`;
+  const classSelect = document.getElementById('editClassSelect');
+  if (b.classType) {
+    const opt = Array.from(classSelect.options).find(o => o.value === b.classType);
+    if (opt) classSelect.value = b.classType;
+  }
+  const list = document.getElementById('editPassengerList');
+  if (b.passengers && b.passengers.length > 0) {
+    list.innerHTML = b.passengers.map((p, i) => `
+      <div class="edit-passenger-card">
+        <h4>Passenger ${i + 1}</h4>
+        <div class="edit-passenger-fields">
+          <div class="form-field">
+            <label>Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user"></i>
+              <input type="text" id="editPName${i}" value="${p.name || ''}" placeholder="Full Name">
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Age</label>
+            <div class="input-wrapper">
+              <i class="fas fa-birthday-cake"></i>
+              <input type="number" id="editPAge${i}" value="${p.age || ''}" min="1" max="125" placeholder="Age">
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Gender</label>
+            <select id="editPGender${i}">
+              <option value="Male" ${p.gender === 'Male' ? 'selected' : ''}>Male</option>
+              <option value="Female" ${p.gender === 'Female' ? 'selected' : ''}>Female</option>
+              <option value="Other" ${p.gender === 'Other' ? 'selected' : ''}>Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Berth</label>
+            <select id="editPBerth${i}">
+              <option value="" ${!p.berthPreference ? 'selected' : ''}>No Preference</option>
+              <option value="Lower" ${p.berthPreference === 'Lower' ? 'selected' : ''}>Lower</option>
+              <option value="Middle" ${p.berthPreference === 'Middle' ? 'selected' : ''}>Middle</option>
+              <option value="Upper" ${p.berthPreference === 'Upper' ? 'selected' : ''}>Upper</option>
+              <option value="Side Lower" ${p.berthPreference === 'Side Lower' ? 'selected' : ''}>Side Lower</option>
+              <option value="Side Upper" ${p.berthPreference === 'Side Upper' ? 'selected' : ''}>Side Upper</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } else {
+    list.innerHTML = '<p style="font-size:11px;color:var(--text-muted);">No passenger details available to edit.</p>';
+  }
+  openModal('editModal');
+}
+async function confirmEdit() {
+  const b = findBooking(currentBookingId);
+  if (!b) return;
+  const newClass = document.getElementById('editClassSelect').value;
+  const updatedPassengers = [];
+  if (b.passengers) {
+    b.passengers.forEach((p, i) => {
+      updatedPassengers.push({
+        ...p,
+        name: document.getElementById(`editPName${i}`)?.value || p.name,
+        age: parseInt(document.getElementById(`editPAge${i}`)?.value) || p.age,
+        gender: document.getElementById(`editPGender${i}`)?.value || p.gender,
+        berthPreference: document.getElementById(`editPBerth${i}`)?.value || p.berthPreference || ''
+      });
+    });
+  }
+  const btn = document.getElementById('editConfirmBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  try {
+    const result = await apiFetch(`/api/bookings/${b.id}/edit`, {
+      method: 'PUT',
+      body: JSON.stringify({ classType: newClass, passengers: updatedPassengers })
+    });
+    if (result && result.success) {
+      showToast('Booking updated successfully!', 'success');
+    } else {
+      b.classType = newClass;
+      b.passengers = updatedPassengers;
+      showToast('Booking updated successfully!', 'success');
+    }
+  } catch (e) {
+    b.classType = newClass;
+    b.passengers = updatedPassengers;
+    showToast('Booking updated successfully!', 'success');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+    closeModal('editModal');
+    await loadBookings();
+  }
+}
+/* ==================== DOWNLOAD TICKET ==================== */
+function downloadTicket(id) {
+  const b = findBooking(id);
+  if (!b) return;
+  openTicketWindow(b);
+}
+/* ==================== MODAL HELPERS ==================== */
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.active').forEach(m => {
+      m.classList.remove('active');
+    });
+    document.body.style.overflow = '';
+  }
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Search Results - IRCTC</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/new_ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <header class="header" id="mainHeader"></header>
+  <div class="mobile-nav" id="mobileNav"></div>
+  <main class="main">
+    <div class="page-container-new">
+      <div class="page-card">
+        <a href="/" class="back-btn" style="color:var(--dark-blue); font-weight:bold; text-decoration:none; margin-bottom: 20px; display:inline-block; font-size: 16px;"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <h1 class="page-title" id="resultsTitle">Search Results</h1>
+        <p class="page-subtitle" id="resultsDate"></p>
+        
+        <div class="filter-bar" style="margin-bottom: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="filter-btn active" data-filter="all" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: var(--dark-blue); color: white;">All</button>
+          <button class="filter-btn" data-filter="vande bharat" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: white; color: var(--dark-blue);">Vande Bharat</button>
+          <button class="filter-btn" data-filter="rajdhani" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: white; color: var(--dark-blue);">Rajdhani</button>
+          <button class="filter-btn" data-filter="shatabdi" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: white; color: var(--dark-blue);">Shatabdi</button>
+          <button class="filter-btn" data-filter="duronto" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: white; color: var(--dark-blue);">Duronto</button>
+          <button class="filter-btn" data-filter="superfast" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: white; color: var(--dark-blue);">Superfast</button>
+          <button class="filter-btn" data-filter="express" style="padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; font-weight: bold; background: white; color: var(--dark-blue);">Express</button>
+        </div>
+
+        <div class="results-list" id="resultsList" style="display: flex; flex-direction: column; gap: 15px;"></div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer" id="mainFooter"></footer>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="api.js"></script>
+  <script>
+let searchFrom = '';
+let searchTo = '';
+let searchDate = '';
+let allResults = [];
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  searchFrom = params.get('from') || 'NDLS';
+  searchTo = params.get('to') || 'BCT';
+  searchDate = params.get('date') || getTomorrowDate();
+  const fromStation = getStation(searchFrom);
+  const toStation = getStation(searchTo);
+  document.getElementById('resultsTitle').innerHTML = `${fromStation ? fromStation.name : searchFrom} → ${toStation ? toStation.name : searchTo}`;
+  document.getElementById('resultsDate').textContent = formatDate(searchDate);
+  document.getElementById('resultsList').innerHTML = `
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Searching trains...</p>
+    </div>`;
+  const result = await searchTrainsBetween(searchFrom, searchTo);
+  allResults = result.trains || [];
+  if (result.source === 'none' || allResults.length === 0) {
+    document.getElementById('resultsList').innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-train"></i>
+        <h3>No trains found for this route</h3>
+        <p>Try different stations or <a href="/">search again</a></p>
+      </div>`;
+    return;
+  }
+  renderResults(allResults);
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      const filtered = filter === 'all' ? allResults : allResults.filter(t => t.type === filter);
+      renderResults(filtered);
+    });
+  });
+});
+function renderResults(trains) {
+  const container = document.getElementById('resultsList');
+  if (trains.length === 0) {
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-filter"></i><h3>No trains match this filter</h3></div>';
+    return;
+  }
+  container.innerHTML = trains.map((t, i) => {
+    if (!t || !t.number) return '';
+    const rawType = (t.type || 'express').replace(/_/g, ' ');
+    const badgeClass = 'badge-' + rawType.replace(/ /g, '-');
+    const displayType = rawType.replace(/\b\w/g, c => c.toUpperCase());
+    const classes = t.classes || {};
+    const classKeys = Object.keys(classes);
+    const defaultClass = classKeys[0] || 'SL';
+    return `
+    <div class="result-card" data-type="${t.type || 'express'}">
+      <div class="result-main">
+        <div class="result-train">
+          <div class="result-train-name">${t.name || 'Train ' + t.number}</div>
+          <div class="result-train-num">${t.number} | ${(t.days || []).join(', ') || 'Daily'}</div>
+          <span class="train-type-badge ${badgeClass}" style="margin-top:4px;display:inline-block;">${displayType}</span>
+        </div>
+        <div class="result-route">
+          <div class="route-station"><div class="code">${searchFrom}</div><div class="time">${t.depart}</div></div>
+          <div class="route-arrow"><span class="duration">${t.duration || '--:--'}</span><i class="fas fa-long-arrow-alt-right"></i></div>
+          <div class="route-station"><div class="code">${searchTo}</div><div class="time">${t.arrive}</div></div>
+        </div>
+        <div class="result-availability">
+          ${classKeys.length > 0 ? classKeys.map(cls => {
+            const info = classes[cls];
+            const seats = info.seats ?? info.available ?? 50;
+            const fare = info.fare ?? info.price ?? 500;
+            const avail = seats > 20 ? 'available' : seats > 0 ? 'waitlist' : 'na';
+            const seatsText = seats > 20 ? seats + ' Avl' : seats > 0 ? 'WL ' + seats : 'WL 45';
+            const selected = cls === defaultClass ? ' selected' : '';
+            return `<div class="avail-class${selected}" onclick="selectClass(this, '${t.number}', '${cls}')">
+              <div class="cls-name">${cls}</div>
+              <div class="cls-seats ${avail}">${seatsText}</div>
+              <div class="cls-fare">${formatCurrency(fare)}</div>
+            </div>`;
+          }).join('') : '<div class="avail-class selected"><div class="cls-name">GEN</div><div class="cls-seats available">Available</div><div class="cls-fare">₹150</div></div>'}
+        </div>
+        <button class="result-book-btn" onclick="bookTrain('${t.number}')">Book Now</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function selectClass(el, trainNum, cls) {
+  el.closest('.result-card').querySelectorAll('.avail-class').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function bookTrain(trainNum) {
+  if (!requireLogin()) return;
+  const train = allResults.find(t => t.number === trainNum);
+  if (!train) return;
+  const departDateTime = new Date(searchDate + 'T' + (train.depart || '00:00') + ':00');
+  const now = new Date();
+  const hoursUntilDepart = (departDateTime - now) / (1000 * 60 * 60);
+  if (hoursUntilDepart <= 6 && hoursUntilDepart >= -24) {
+    showToast('This train is departing within 6 hours. Please book your ticket from the Railway Booking Counter at the station you wish to board from.', 'error');
+    return;
+  }
+  const selectedClassEl = document.querySelector(`.result-card[data-type] .avail-class.selected`);
+  const selectedClass = selectedClassEl ? selectedClassEl.querySelector('.cls-name').textContent : Object.keys(train.classes || {})[0] || 'SL';
+  const classInfo = train.classes?.[selectedClass] || {};
+  const totalSeats = classInfo.total || classInfo.seats || 72;
+  const passengerCount = 1;
+  const randomSeats = [];
+  while (randomSeats.length < passengerCount) {
+    const s = Math.floor(Math.random() * totalSeats) + 1;
+    if (!randomSeats.includes(s)) randomSeats.push(s);
+  }
+  localStorage.setItem('irctc_selected_seats', JSON.stringify(randomSeats));
+  localStorage.setItem('irctc_passenger_count', passengerCount);
+  const normalizedTrain = {
+    number: train.number,
+    name: train.name,
+    from: train.from || searchFrom,
+    to: train.to || searchTo,
+    depart: train.depart,
+    arrive: train.arrive,
+    duration: train.duration,
+    type: train.type,
+    classes: train.classes
+  };
+  localStorage.setItem('irctc_selected_train', JSON.stringify(normalizedTrain));
+  localStorage.setItem('irctc_selected_class', selectedClass);
+  window.location.href = `/checkout?date=${searchDate}`;
+}
+  </script>
+</body>
+</html>
