@@ -243,6 +243,15 @@ body {
     text-shadow: 2px 4px 12px rgba(0,0,0,0.3);
 }
 
+.hero-logo {
+    height: 180px;
+    width: auto;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 8px 30px rgba(0,0,0,0.8));
+    transform-origin: left center;
+}
+
 .subtitle-pill {
     background-color: var(--off-white);
     padding: 16px 40px; /* Increased padding slightly for larger text */
@@ -475,6 +484,9 @@ body {
     .hero-title {
         font-size: 100px;
     }
+    .hero-logo {
+        height: 100px;
+    }
     .subtitle-pill h2 {
         font-size: 20px;
     }
@@ -486,6 +498,9 @@ body {
     }
     .hero-title {
         font-size: 60px;
+    }
+    .hero-logo {
+        height: 60px;
     }
     .nav-right {
         display: none;
@@ -991,6 +1006,9 @@ body {
     .hero-title {
         font-size: 50px !important;
         line-height: 1.1 !important;
+    }
+    .hero-logo {
+        height: 50px !important;
     }
     
     .page-title {

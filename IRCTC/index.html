@@ -63,6 +63,7 @@
       <h1 class="hero-title"
         style="font-family: 'Brigends Expanded', sans-serif; font-size: 180px; color: var(--off-white); line-height: 1; margin-bottom: 10px; text-shadow: 0px 8px 30px rgba(0,0,0,0.8);">
         COMMIT</h1>
+      <img id="hero-logo" src="Artboard 1.png" alt="IRCTC" class="hero-logo" style="display: none;">
       <div class="subtitle-pill"
         style="background-color: var(--off-white); padding: 16px 40px; border-radius: 100px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
         <h2
@@ -297,6 +298,15 @@
       }, 600);
     }
 
+    window.swapHeroToLogo = function () {
+      const title = document.querySelector('.hero-title');
+      const logo = document.getElementById('hero-logo');
+      if (!title || !logo) return;
+      if (title.innerText.trim() === 'COMMIT') title.innerText = '';
+      title.style.display = 'none';
+      logo.style.display = 'block';
+    };
+
     window.runTrainAnimation = function () {
       const hero = document.querySelector('.hero');
       const trainEl = document.getElementById('animated-train');
@@ -304,8 +314,7 @@
 
       if (window.innerWidth <= 768) {
         trainEl.style.display = 'none';
-        const title = document.querySelector('.hero-title');
-        if (title && title.innerText.trim() === 'COMMIT') title.innerText = 'IRCTC';
+        window.swapHeroToLogo();
         return;
       }
 
@@ -364,11 +373,15 @@
           if (this.progress() > 0.45 && this.progress() < 0.5) {
             const title = document.querySelector('.hero-title');
             if (title && title.innerText.trim() === 'COMMIT') {
-              title.innerText = 'IRCTC';
-              gsap.fromTo(title,
-                { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 },
-                { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 8px 30px rgba(0,0,0,0.8)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
-              );
+              title.style.display = 'none';
+              const logo = document.getElementById('hero-logo');
+              if (logo) {
+                logo.style.display = 'block';
+                gsap.fromTo(logo,
+                  { scale: 1.5, opacity: 0, filter: 'blur(15px)', x: 50 },
+                  { scale: 1, opacity: 1, filter: 'blur(0px)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
+                );
+              }
             }
           }
         },

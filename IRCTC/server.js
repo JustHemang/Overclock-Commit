@@ -55,7 +55,7 @@ const TTL = {
 
 
 const RR_BASE = 'https://api.railradar.in/v1';
-const RR_KEY = 'rg_a2d791500ca9484bb28a08d5ca0d5b6e';
+const RR_KEY = 'rg_105aa658cb1b4e20a79a404fa48e0acc';
 let rrRequestLog = [];
 
 function rrRateCheck() {
@@ -1260,4 +1260,5 @@ app.listen(PORT, () => {
     console.log('');
   });
 });
+
 
