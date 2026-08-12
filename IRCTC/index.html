@@ -290,33 +290,32 @@ window.runTrainAnimation = function() {
     const trainRect = trainEl.getBoundingClientRect();
     const trainLeft = trainRect.left;
 
-    // Spawn 4 streaks per frame behind the train
-    for (let i = 0; i < 4; i++) {
+    // Spawn 2 streaks per frame behind the train for a smoother look
+    for (let i = 0; i < 2; i++) {
       const line = document.createElement('div');
       const yPos = trainRect.top + (Math.random() * trainRect.height * 0.8) + (trainRect.height * 0.1);
-      const width = 100 + Math.random() * 250;
-      const height = 2 + Math.random() * 4;
+      const width = 150 + Math.random() * 300;
+      const height = 1 + Math.random() * 2;
       line.style.cssText = `
         position:fixed;
-        left:${trainLeft - 50}px;
+        left:${trainLeft - 100}px;
         top:${yPos}px;
         width:${width}px;
         height:${height}px;
-        background:linear-gradient(270deg, rgba(255,255,255,1) 0%, rgba(234,107,64,0.8) 40%, transparent 100%);
+        background:linear-gradient(270deg, rgba(255,255,255,0.8) 0%, rgba(234,107,64,0.4) 50%, transparent 100%);
         border-radius:10px;
-        filter:blur(1px) drop-shadow(0 0 8px rgba(255,255,255,0.8));
+        filter:blur(2px);
         pointer-events:none;
         z-index:99998;
       `;
       windContainer.appendChild(line);
 
-      // Streak flies left (behind the train)
+      // Streak flies left smoothly
       gsap.to(line, {
-        x: -(500 + Math.random() * 500),
-        scaleX: 2,
+        x: -(600 + Math.random() * 400),
         opacity: 0,
-        duration: 0.2 + Math.random() * 0.2,
-        ease: 'power2.out',
+        duration: 0.4 + Math.random() * 0.3,
+        ease: 'power1.out',
         onComplete: () => line.remove()
       });
     }
@@ -327,10 +326,10 @@ window.runTrainAnimation = function() {
   // 1. Train Movement
   masterTl.to('#animated-train', {
     left: '150vw',
-    duration: 1.4,
-    ease: 'power3.inOut',
+    duration: 1.8,
+    ease: 'power2.inOut',
     onStart: function() {
-      spawnInterval = setInterval(spawnSpeedLines, 20); // More particles, faster
+      spawnInterval = setInterval(spawnSpeedLines, 30); // Smoother particle rate
     },
     onUpdate: function() {
       if (this.progress() > 0.45 && this.progress() < 0.5) {
@@ -338,8 +337,8 @@ window.runTrainAnimation = function() {
         if (title && title.innerText === 'COMMIT') {
           title.innerText = 'IRCTC';
           gsap.fromTo(title, 
-            { scale: 1.5, opacity: 0, filter: 'blur(15px)', textShadow: '0 0 60px rgba(234,107,64,1)', x: 50 }, 
-            { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 0 0px rgba(234,107,64,0)', x: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' }
+            { scale: 1.2, opacity: 0, filter: 'blur(8px)', textShadow: '0 0 40px rgba(234,107,64,0.6)', x: 30 }, 
+            { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 0 0px rgba(234,107,64,0)', x: 0, duration: 1.5, ease: 'back.out(1.5)' }
           );
         }
       }
@@ -348,36 +347,24 @@ window.runTrainAnimation = function() {
       clearInterval(spawnInterval);
       const trainEl = document.getElementById('animated-train');
       if (trainEl) trainEl.style.display = 'none';
-      gsap.to(windContainer, { opacity: 0, duration: 0.8, onComplete: () => windContainer.remove() });
+      gsap.to(windContainer, { opacity: 0, duration: 1.0, onComplete: () => windContainer.remove() });
     }
   }, "start");
 
-  // 2. Train Stretch & Blur (peaks in the middle)
+  // 2. Train Stretch & Blur (peaks in the middle smoothly)
   masterTl.to('#animated-train', {
-    scaleX: 1.4,
-    skewX: -12,
-    filter: 'blur(4px) drop-shadow(0 20px 40px rgba(234,107,64,0.6)) brightness(1.3)',
-    duration: 0.7,
-    ease: 'power2.in'
+    scaleX: 1.15,
+    filter: 'blur(2px) drop-shadow(0 20px 40px rgba(234,107,64,0.4)) brightness(1.1)',
+    duration: 0.9,
+    ease: 'power1.in'
   }, "start");
   
   masterTl.to('#animated-train', {
     scaleX: 1,
-    skewX: 0,
     filter: 'blur(0px) drop-shadow(0 20px 30px rgba(0,0,0,0.5)) brightness(1)',
-    duration: 0.7,
-    ease: 'power2.out'
-  }, "start+=0.7");
-
-  // 3. Screen Shake / Rumble
-  masterTl.to('.hero', {
-    y: 8,
-    x: -4,
-    yoyo: true,
-    repeat: 15,
-    duration: 0.04,
-    ease: 'none'
-  }, "start+=0.4");
+    duration: 0.9,
+    ease: 'power1.out'
+  }, "start+=0.9");
 };
 
 // Scroll Animations
