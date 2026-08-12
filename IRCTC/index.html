@@ -262,7 +262,7 @@ function searchTrains() {
     hideLoading();
     document.body.classList.add('fade-out');
     setTimeout(() => {
-      window.location.href = `/search?from=${fromCode}&to=${toCode}&date=${dateVal}`;
+      window.location.href = `search.html?from=${fromCode}&to=${toCode}&date=${dateVal}`;
     }, 300);
   }, 600);
 }

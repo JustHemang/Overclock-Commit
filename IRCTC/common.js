@@ -223,7 +223,7 @@ function logout() {
   localStorage.removeItem('irctc_token');
   localStorage.removeItem('irctc_users');
   updateAuthUI();
-  window.location.href = '/';
+  window.location.href = 'index.html';
 }
 
 function isLoggedIn() {
@@ -237,10 +237,10 @@ function updateAuthUI() {
     if (user) {
       const displayName = (user.name || user.username || 'User').substring(0, 12);
       btn.innerHTML = `${THEME_SVGS.userCheck} <span>${displayName}</span>`;
-      btn.onclick = () => { window.location.href = '/profile'; };
+      btn.onclick = () => { window.location.href = 'profile.html'; };
     } else {
       btn.innerHTML = `${THEME_SVGS.user} <span>Login</span>`;
-      btn.onclick = () => { window.location.href = '/login'; };
+      btn.onclick = () => { window.location.href = 'login.html'; };
     }
   });
 }
@@ -393,7 +393,7 @@ function renderHeader() {
                     </div>
                     <div class="nav-actions">
                         <button class="icon-btn" onclick="toggleLang()" title="Switch Language" style="font-size:12px;font-weight:700;min-width:32px;">${currentLang === 'hi' ? 'Eng' : '\u0939\u093f'}</button>
-                        <button class="login-btn btn-login" id="loginBtn" onclick="window.location.href='/login'">${THEME_SVGS.user} Login</button>
+                        <button class="login-btn btn-login" id="loginBtn" onclick="window.location.href='login.html'">${THEME_SVGS.user} Login</button>
                     </div>
                 </div>
             </div>
