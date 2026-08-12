@@ -746,7 +746,7 @@ app.post('/api/auth/login', async (req, res) => {
   if (!captchaOk) return res.status(400).json({ success: false, error: 'reCAPTCHA verification failed' });
 
   const db = readDB();
-  let user = Object.values(db.users || {}).find(u => u.username === username);
+  let user = Object.values(db.users || {}).find(u => u.username === username || u.email === username);
   
   if (!user || user.password !== password) {
     return res.status(401).json({ success: false, error: 'Invalid username or password' });
@@ -1260,3 +1260,4 @@ app.listen(PORT, () => {
     console.log('');
   });
 });
+
