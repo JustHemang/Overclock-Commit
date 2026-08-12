@@ -724,6 +724,16 @@ function injectYouTubeMusic() {
     const audio = new Audio('assets/ambient.mp3');
     audio.loop = true;
     audio.volume = 0.1;
+    
+    // Start from middle
+    audio.addEventListener('loadedmetadata', () => {
+        if (audio.duration && isFinite(audio.duration)) {
+            audio.currentTime = audio.duration / 2;
+        } else {
+            audio.currentTime = 60;
+        }
+    });
+
     if (!musicState) {
         audio.play().catch(e => console.log('Autoplay blocked'));
     }

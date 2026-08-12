@@ -23,8 +23,118 @@
         <h1 class="page-title">CHECKOUT</h1>
         <p class="page-subtitle">Complete your train booking</p>
         <div class="checkout-container" id="checkoutContent" style="box-shadow: none; border: none; background: transparent; text-align: left; margin-top: 30px;">
-          <div class="loading-state">
-            <div class="spinner"></div>
+          <div class="progress-bar" style="display:flex; justify-content:center; gap:10px; margin-bottom:20px;">
+  <div class="progress-step active" style="padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);">1. Details</div>
+  <div class="progress-step" style="padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);">2. Payment</div>
+  <div class="progress-step" style="padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border);">3. Done</div>
+</div>
+
+<div id="passengerSection">
+  <div class="bento-grid" style="grid-template-columns: 1.5fr 1fr; align-items: start; text-align: left;">
+    
+    <div class="bento-cell" style="padding: 25px;">
+      <h3 style="margin-bottom:15px; font-size:16px;">Passenger Details</h3>
+      <div id="passengerForms"></div>
+      
+      <h3 style="margin-top:25px; margin-bottom:15px; font-size:16px;">Contact Details</h3>
+      <div class="input-wrapper" style="max-width:300px;">
+        <i class="fas fa-phone"></i>
+        <input type="text" id="mobileNumber" placeholder="Mobile Number" required>
+      </div>
+      
+      <h3 style="margin-top:25px; margin-bottom:15px; font-size:16px;">Payment Method</h3>
+      <div class="payment-options">
+        <div class="payment-option active" onclick="selectPayment('upi')"><span>UPI</span></div>
+        <div class="payment-option" onclick="selectPayment('card')"><span>Card</span></div>
+        <div class="payment-option" onclick="selectPayment('wallet')"><span>Wallet</span></div>
+        <div class="payment-option" onclick="selectPayment('netbanking')"><span>Net Banking</span></div>
+      </div>
+      
+      <!-- Payment Details Containers -->
+      <div id="upiDetail" style="margin-bottom:15px;">
+        <div class="input-wrapper"><i class="fas fa-at"></i><input type="text" placeholder="Enter UPI ID (e.g. user@upi)"></div>
+      </div>
+      <div id="cardDetail" style="display:none; margin-bottom:15px;">
+        <div class="input-wrapper" style="margin-bottom:8px;"><i class="fas fa-credit-card"></i><input type="text" placeholder="Card Number" oninput="formatCardNumber(this)" maxlength="19"></div>
+        <div style="display:flex; gap:10px;">
+          <div class="input-wrapper"><i class="fas fa-calendar"></i><input type="text" placeholder="MM/YY" oninput="formatExpiry(this)" maxlength="5"></div>
+          <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" placeholder="CVV" maxlength="3"></div>
+        </div>
+      </div>
+      <div id="walletDetail" style="display:none; margin-bottom:15px;">
+        <p style="font-size:12px; color:var(--text-secondary);">Select wallet securely on the next screen.</p>
+      </div>
+      <div id="netbankingDetail" style="display:none; margin-bottom:15px;">
+        <p style="font-size:12px; color:var(--text-secondary);">Select your bank securely on the next screen.</p>
+      </div>
+      
+      <button class="btn-pay btn-primary" onclick="processPayment()" style="width:100%; margin-top:20px; font-size: 16px;">
+        <i class="fas fa-lock"></i> Pay <span id="checkoutTotal"></span>
+      </button>
+    </div>
+    
+    <div class="bento-cell" style="background:var(--card-bg-alt); padding: 25px;">
+      <h3 style="margin-bottom:15px; font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">Journey Summary</h3>
+      <div style="margin-bottom:20px;">
+        <div style="font-weight:700; color:var(--ink); font-size:16px;" id="summaryTrainName"></div>
+        <div style="color:var(--text-secondary); font-size:13px; margin-top:4px;">Class: <strong id="summaryClass"></strong> | Date: <strong id="summaryDate"></strong></div>
+      </div>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; background:rgba(0,0,0,0.03); padding:15px; border-radius:12px;">
+        <div style="text-align:left;">
+          <div style="font-size:20px; font-weight:800;" id="summaryFromTime"></div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:4px;" id="summaryFrom"></div>
+        </div>
+        <div style="text-align:center; font-size:11px; color:var(--text-muted);">
+          <div><i class="fas fa-long-arrow-alt-right" style="color:var(--primary); font-size:18px;"></i></div>
+          <div id="summaryDuration"></div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:20px; font-weight:800;" id="summaryToTime"></div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:4px;" id="summaryTo"></div>
+        </div>
+      </div>
+      
+      <h3 style="margin-bottom:12px; font-size:14px; border-bottom:1px solid var(--border); padding-bottom:8px;">Fare Breakdown</h3>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+        <span style="color:var(--text-secondary);">Base Fare</span><span id="summaryBaseFare"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+        <span style="color:var(--text-secondary);">Reservation Chg</span><span id="summaryReserve"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+        <span style="color:var(--text-secondary);">GST</span><span id="summaryGst"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:13px;">
+        <span style="color:var(--text-secondary);">Catering</span><span id="summaryCatering"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-weight:900; font-size:18px; border-top:1px dashed var(--border); padding-top:15px; color:var(--ink);">
+        <span>Total Fare</span><span id="summaryTotal"></span>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div id="confirmationSection" style="display:none; text-align:center; padding: 40px 20px;">
+  <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--success); color: white; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px; box-shadow: 0 10px 20px rgba(0, 190, 120, 0.2);">
+    <i class="fas fa-check"></i>
+  </div>
+  <h2 style="font-size: 28px; margin-bottom: 10px;">Booking Confirmed!</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 30px;">Your tickets have been successfully booked.</p>
+  
+  <div style="background: var(--card-bg-alt); max-width: 450px; margin: 0 auto 30px; padding: 25px; border-radius: 12px; border: 1px solid var(--border); text-align: left;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <p style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">PNR Number</p>
+      <div id="pnrNumber" style="font-size: 32px; font-weight: 900; color: var(--ink); letter-spacing: 2px;"></div>
+    </div>
+    <div id="bookingSummary"></div>
+  </div>
+  
+  <button onclick="window.location.href='bookings.html'" class="btn-primary" style="padding: 12px 30px; font-size:16px;">
+    <i class="fas fa-ticket-alt"></i> View My Bookings
+  </button>
+</div>
             <p>Loading booking details...</p>
           </div>
         </div>
@@ -197,3 +307,4 @@ async function processPayment() {
   </script>
 </body>
 </html>
+
