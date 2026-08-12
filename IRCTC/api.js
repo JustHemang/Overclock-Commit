@@ -44,11 +44,33 @@ async function getLiveTrainStatus(trainNumber) {
 }
 
 async function createBooking(bookingData) {
-  return await apiFetch('/api/bookings', { method: 'POST', body: JSON.stringify(bookingData) });
+  const result = await apiFetch('/api/bookings', { method: 'POST', body: JSON.stringify(bookingData) });
+  // Also save to localStorage so bookings survive Render redeploys
+  if (result && result.success && result.booking) {
+    try {
+      const saved = JSON.parse(localStorage.getItem('irctc_bookings') || '[]');
+      saved.push(result.booking);
+      localStorage.setItem('irctc_bookings', JSON.stringify(saved));
+    } catch(e) {}
+  }
+  return result;
 }
 
 async function getMyBookings() {
-  return await apiFetch('/api/bookings');
+  const serverResult = await apiFetch('/api/bookings');
+  const serverBookings = (serverResult && serverResult.success) ? (serverResult.bookings || []) : [];
+  // Merge with localStorage bookings (survives Render redeploys)
+  let localBookings = [];
+  try { localBookings = JSON.parse(localStorage.getItem('irctc_bookings') || '[]'); } catch(e) {}
+  // Deduplicate by PNR
+  const pnrSet = new Set(serverBookings.map(b => b.pnr));
+  const merged = [...serverBookings];
+  for (const lb of localBookings) {
+    if (!pnrSet.has(lb.pnr)) merged.push(lb);
+  }
+  // Sync merged list back to localStorage
+  try { localStorage.setItem('irctc_bookings', JSON.stringify(merged)); } catch(e) {}
+  return { success: true, bookings: merged };
 }
 
 async function lookupTrains(query) {
