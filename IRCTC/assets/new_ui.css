@@ -32,9 +32,9 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--off-white);
     background-image: var(--bg-pattern);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-size: 800px; /* Use a fixed tile size instead of cover so it doesn't stretch on long pages */
+    background-repeat: repeat;
+    background-attachment: scroll;
     min-height: 100vh;
     color: var(--text-dark);
     overflow-x: hidden; /* Prevent horizontal scrollbars from flying elements */
