@@ -272,30 +272,30 @@ body {
     background-color: var(--off-white);
     width: 100%;
     max-width: 1100px;
-    border-radius: 30px;
-    padding: 50px 50px 35px 50px;
+    border-radius: 25px;
+    padding: 35px 35px 25px 35px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.25);
     position: relative;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
 .search-tabs {
     position: absolute;
-    top: -75px; /* Moved up more */
-    left: 80px; /* Align with new padding */
+    top: -50px;
+    left: 35px;
     display: flex;
 }
 
 .search-tab {
     background-color: var(--pure-white);
-    padding: 25px 50px; /* Made bigger */
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    padding: 14px 30px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     font-weight: 700;
-    font-size: 22px; /* Increased font size */
+    font-size: 15px;
     color: var(--dark-blue);
     box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
 }
@@ -323,11 +323,11 @@ body {
 .input-icon {
     background-color: var(--dark-blue);
     color: var(--pure-white);
-    width: 80px; /* Increased width */
+    width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 28px; /* Increased icon size */
+    font-size: 18px;
 }
 
 .input-icon.orange {
@@ -335,7 +335,7 @@ body {
 }
 
 .input-content {
-    padding: 20px 25px; /* Increased padding */
+    padding: 10px 15px;
     flex: 1;
 }
 
@@ -345,18 +345,18 @@ body {
 
 .input-content label {
     display: block;
-    font-size: 14px; /* Increased */
+    font-size: 10px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
 }
 
 .input-content input, .input-content select {
     width: 100%;
     border: none;
-    font-size: 20px; /* Increased */
+    font-size: 14px;
     font-weight: 700;
     color: var(--dark-blue);
     outline: none;
