@@ -996,3 +996,77 @@ body {
     border-color: var(--dark-blue) !important;
 }
 
+/* =========================================================
+   MOBILE RESPONSIVENESS
+========================================================= */
+@media (max-width: 768px) {
+    /* Hero Section */
+    .hero {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 50px !important;
+        line-height: 1.1 !important;
+    }
+    
+    .page-title {
+        font-size: 40px !important;
+    }
+    
+    /* Search Box */
+    .search-container {
+        padding: 30px 20px 20px 20px !important;
+        border-radius: 20px !important;
+        margin-top: 10px !important;
+    }
+    
+    .search-form {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .search-form .input-group, 
+    .search-form.row-2 .input-group.quota-group {
+        max-width: 100% !important;
+    }
+    
+    .search-btn {
+        width: 100% !important;
+    }
+
+    .search-options {
+        margin-right: 0 !important;
+        align-self: flex-start !important;
+        margin-bottom: 10px;
+    }
+    
+    /* Secondary Pages */
+    .bookings-page-body, .page-card {
+        padding: 30px 20px !important;
+        border-radius: 20px !important;
+    }
+    
+    .bookings-hero h1, .auth-hero h1, .pnr-hero h1 {
+        font-size: 40px !important;
+    }
+    
+    /* General Grid Layouts */
+    .features-grid, .qa-grid, .stats-grid, .bento-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Header Nav */
+    .nav-right-container {
+        display: none !important; /* Hide desktop nav on mobile if needed, or rely on hamburger */
+    }
+    
+    /* Show hamburger menu icon if it's there, or just keep it simple */
+    .mobile-menu-btn {
+        display: flex !important;
+    }
+}

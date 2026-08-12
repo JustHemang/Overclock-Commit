@@ -60,9 +60,9 @@
                             <i class="fa-solid fa-crosshairs"></i>
                         </div>
                         <div class="input-content" style="position:relative;">
-                            <label>FROM</label>
+                            <label data-i18n="from">FROM</label>
                             <input type="hidden" id="fromStationCode" value="">
-                            <input type="text" id="fromStation" placeholder="Station or city" autocomplete="off" oninput="document.getElementById('fromStationCode').value=''; showStationSuggestions(this, 'from')" onkeydown="handleStationKeydown(this, 'from', event)">
+                            <input type="text" id="fromStation" data-i18n="stationOrCity" placeholder="Station or city" autocomplete="off" oninput="document.getElementById('fromStationCode').value=''; showStationSuggestions(this, 'from')" onkeydown="handleStationKeydown(this, 'from', event)">
                             <div id="fromSuggestions" class="suggestions-dropdown"></div>
                         </div>
                     </div>
@@ -72,9 +72,9 @@
                             <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div class="input-content orange-bg" style="position:relative;">
-                            <label style="color: rgba(255,255,255,0.8)">TO</label>
+                            <label style="color: rgba(255,255,255,0.8)" data-i18n="to">TO</label>
                             <input type="hidden" id="toStationCode" value="">
-                            <input type="text" id="toStation" placeholder="Station or city" autocomplete="off" oninput="document.getElementById('toStationCode').value=''; showStationSuggestions(this, 'to')" onkeydown="handleStationKeydown(this, 'to', event)" style="color: white;">
+                            <input type="text" id="toStation" data-i18n="stationOrCity" placeholder="Station or city" autocomplete="off" oninput="document.getElementById('toStationCode').value=''; showStationSuggestions(this, 'to')" onkeydown="handleStationKeydown(this, 'to', event)" style="color: white;">
                             <div id="toSuggestions" class="suggestions-dropdown"></div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <i class="fa-regular fa-floppy-disk"></i>
                         </div>
                         <div class="input-content">
-                            <label>DEPARTURE</label>
+                            <label data-i18n="departure">DEPARTURE</label>
                             <input type="date" id="departDate" value="2026-08-13">
                         </div>
                     </div>
@@ -96,11 +96,11 @@
                             <i class="fa-solid fa-user-group"></i>
                         </div>
                         <div class="input-content">
-                            <label>QUOTA</label>
+                            <label data-i18n="quota">QUOTA</label>
                             <select id="quota">
-                                <option value="GN">General</option>
-                                <option value="TQ">Tatkal</option>
-                                <option value="LD">Ladies</option>
+                                <option value="GN" data-i18n-opt="general">General</option>
+                                <option value="TQ" data-i18n-opt="tatkal">Tatkal</option>
+                                <option value="LD" data-i18n-opt="ladies">Ladies</option>
                             </select>
                         </div>
                     </div>
@@ -109,12 +109,12 @@
                         <label class="checkbox-container">
                             <input type="checkbox" id="oneWay" checked>
                             <span class="checkmark"></span>
-                            One Way
+                            <span data-i18n="oneWay">One Way</span>
                         </label>
                     </div>
 
                     <button type="submit" class="search-btn" style="flex: 3; height: 60px; background-color: var(--primary-orange); border-radius: 15px; color: white; font-weight: bold; font-size: 18px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fa-solid fa-magnifying-glass"></i> Search Trains
+                        <i class="fa-solid fa-magnifying-glass"></i> <span data-i18n="searchTrains">Search Trains</span>
                     </button>
                 </div>
             </form>
@@ -169,7 +169,7 @@
   setTimeout(flapTick, 1200);
 })();
 document.addEventListener('DOMContentLoaded', () => {
-  if (true) {
+  if (!sessionStorage.getItem('welcomeShown')) {
     document.getElementById('welcomeOverlay').classList.remove('hidden');
   } else {
     document.getElementById('welcomeOverlay').classList.add('hidden');
@@ -309,22 +309,25 @@ function searchTrains() {
     }
   }
 
-  const masterTl = gsap.timeline({ delay: 1.2 });
+  const masterTl = gsap.timeline({ delay: 1.0 });
 
   masterTl.to('#animated-train', {
     left: '150vw',
-    duration: 1.0,
-    ease: 'power3.inOut',
+    duration: 1.2,
+    ease: 'power4.inOut',
     onStart: function() {
       // Start spawning speed lines as train moves
-      spawnInterval = setInterval(spawnSpeedLines, 40);
+      spawnInterval = setInterval(spawnSpeedLines, 30);
     },
     onUpdate: function() {
-      if (this.progress() > 0.4) {
+      if (this.progress() > 0.45) {
         const title = document.querySelector('.hero-title');
         if (title && title.innerText === 'COMMIT') {
           title.innerText = 'IRCTC';
-          gsap.fromTo(title, { scale: 1.1, opacity: 0.7 }, { scale: 1, opacity: 1, duration: 0.4 });
+          gsap.fromTo(title, 
+            { scale: 1.4, opacity: 0, filter: 'blur(10px)', textShadow: '0 0 40px rgba(234,107,64,0.8)' }, 
+            { scale: 1, opacity: 1, filter: 'blur(0px)', textShadow: '0 0 0px rgba(234,107,64,0)', duration: 1.2, ease: 'elastic.out(1, 0.3)' }
+          );
         }
       }
     },

@@ -139,32 +139,13 @@ function applyLanguage() {
 function selectLang(lang) {
   currentLang = lang;
   localStorage.setItem('irctc_lang', lang);
+  sessionStorage.setItem('welcomeShown', 'true');
   const overlay = document.getElementById('welcomeOverlay');
   if (overlay) overlay.classList.add('hidden');
   applyLanguage();
 }
 
 
-function initTheme() {
-  const saved = localStorage.getItem('irctc_theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  updateThemeIcon();
-}
-
-function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('irctc_theme', next);
-  updateThemeIcon();
-}
-
-function updateThemeIcon() {
-  const theme = document.documentElement.getAttribute('data-theme');
-  const btn = document.querySelector('#themeToggle');
-  if (!btn) return;
-  btn.innerHTML = theme === 'dark' ? THEME_SVGS.sun : THEME_SVGS.moon;
-}
 
 function toggleLang() {
   selectLang(currentLang === 'en' ? 'hi' : 'en');
@@ -409,7 +390,6 @@ function renderHeader() {
                     </div>
                     <div class="nav-actions">
                         <button class="icon-btn" onclick="toggleLang()" title="Switch Language" style="font-size:12px;font-weight:700;min-width:32px;">${currentLang === 'hi' ? 'Eng' : '\u0939\u093f'}</button>
-                        <button class="icon-btn" id="themeToggle" onclick="toggleTheme()">${THEME_SVGS.moon}</button>
                         <button class="login-btn btn-login" id="loginBtn" onclick="window.location.href='/login'">${THEME_SVGS.user} Login</button>
                     </div>
                 </div>
@@ -705,7 +685,6 @@ function openTicketWindow(booking) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
   renderHeader();
   renderFooter();
   updateAuthUI();
