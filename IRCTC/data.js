@@ -356,3 +356,4 @@ const AI_RESPONSES = {
   'kolkata': '**Kolkata & Darjeeling Food Tour (5 Days):**\n\n**Day 1-2:** Kolkata Food Trail - K.C. Das, 6 Ballygunge Place\n**Day 3-5:** Darjeeling - Toy Train, Tiger Hill, Tea Estate\n\n**Train:** 12313 Sealdah Rajdhani\n**Budget:** Rs. 20,000 - Rs. 25,000 per person',
   'coorg': '**Bangalore to Coorg Weekend (2N/3D):**\n\n**Day 1:** Night bus/train to Coorg\n**Day 2:** Raja\'s Seat, Dubare Elephant Camp, Coffee plantation\n**Day 3:** Talakaveri, Return\n\n**Budget:** Rs. 5,000 - Rs. 8,000 per person'
 };
+

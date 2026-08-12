@@ -15,7 +15,7 @@ function requireLogin() {
   const user = getCurrentUser();
   if (!user) {
     showToast('Please login to continue', 'error');
-    setTimeout(() => window.location.href = 'login.html', 1000);
+    setTimeout(() => window.location.href = '/login', 1000);
     return false;
   }
   return true;
@@ -54,4 +54,5 @@ async function getPNRStatus(pnr) {
   if (result && result.success && result.data) return result.data;
   return null;
 }
+
 

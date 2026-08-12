@@ -113,7 +113,7 @@ async function doLogin() {
     localStorage.setItem('irctc_current_user', JSON.stringify({ name: user.name, username: user.username, email: user.email, phone: user.phone }));
     localStorage.setItem('irctc_token', 'mock_jwt_token_' + Date.now());
     showToast('Login successful!', 'success');
-    setTimeout(() => window.location.href = 'index.html', 800);
+    setTimeout(() => window.location.href = '/', 800);
   }, 500);
 }
 async function doRegister() {
@@ -151,9 +151,10 @@ async function doRegister() {
     localStorage.setItem('irctc_current_user', JSON.stringify({ name, username, email, phone }));
     localStorage.setItem('irctc_token', 'mock_jwt_token_' + Date.now());
     showToast('Account created!', 'success');
-    setTimeout(() => window.location.href = 'index.html', 800);
+    setTimeout(() => window.location.href = '/', 800);
   }, 500);
 }
   </script>
 </body>
 </html>
+

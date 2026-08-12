@@ -223,7 +223,7 @@ function logout() {
   localStorage.removeItem('irctc_token');
   localStorage.removeItem('irctc_users');
   updateAuthUI();
-  window.location.href = 'index.html';
+  window.location.href = '/';
 }
 
 function isLoggedIn() {
@@ -237,10 +237,10 @@ function updateAuthUI() {
     if (user) {
       const displayName = (user.name || user.username || 'User').substring(0, 12);
       btn.innerHTML = `${THEME_SVGS.userCheck} <span>${displayName}</span>`;
-      btn.onclick = () => { window.location.href = 'profile.html'; };
+      btn.onclick = () => { window.location.href = '/profile'; };
     } else {
       btn.innerHTML = `${THEME_SVGS.user} <span>Login</span>`;
-      btn.onclick = () => { window.location.href = 'login.html'; };
+      btn.onclick = () => { window.location.href = '/login'; };
     }
   });
 }
@@ -326,7 +326,7 @@ function animatePageIn() {
 
 function getPageName() {
   const path = window.location.pathname;
-  const file = path.split('/').pop() || 'index.html';
+  const file = path.split('/').pop() || '/';
   return file.replace('.html', '');
 }
 
@@ -358,10 +358,10 @@ const THEME_SVGS = {
 function renderHeader() {
   const page = getPageName();
   const navItems = [
-    { id: 'index', label: 'Trains', i18n: 'train', icon: 'train', href: 'index.html' },
-    { id: 'schedule', label: 'Tracking', i18n: 'tracking', icon: 'satellite', href: 'schedule.html' },
-    { id: 'pnr', label: 'PNR Status', i18n: 'pnrStatus', icon: 'list', href: 'pnr.html' },
-    { id: 'bookings', label: 'Bookings', i18n: 'myBookings', icon: 'list', href: 'bookings.html' },
+    { id: 'index', label: 'Trains', i18n: 'train', icon: 'train', href: '/' },
+    { id: 'schedule', label: 'Tracking', i18n: 'tracking', icon: 'satellite', href: '/tracking' },
+    { id: 'pnr', label: 'PNR Status', i18n: 'pnrStatus', icon: 'list', href: '/pnr' },
+    { id: 'bookings', label: 'Bookings', i18n: 'myBookings', icon: 'list', href: '/bookings' },
   ];
 
   const navHTML = navItems.map(item =>
@@ -393,7 +393,7 @@ function renderHeader() {
                     </div>
                     <div class="nav-actions">
                         <button class="icon-btn" onclick="toggleLang()" title="Switch Language" style="font-size:12px;font-weight:700;min-width:32px;">${currentLang === 'hi' ? 'Eng' : '\u0939\u093f'}</button>
-                        <button class="login-btn btn-login" id="loginBtn" onclick="window.location.href='login.html'">${THEME_SVGS.user} Login</button>
+                        <button class="login-btn btn-login" id="loginBtn" onclick="window.location.href='/login'">${THEME_SVGS.user} Login</button>
                     </div>
                 </div>
             </div>
@@ -779,3 +779,4 @@ function injectYouTubeMusic() {
 }
 
 document.addEventListener('DOMContentLoaded', injectYouTubeMusic);
+
