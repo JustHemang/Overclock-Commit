@@ -1099,3 +1099,23 @@ body.fade-out {
 }
 .auth-tab.active { background: var(--pure-white); color: var(--ink); box-shadow: var(--shadow-sm); }
 
+
+/* BETTER LOGIN TABS */
+.auth-tabs {
+    display: flex; gap: 10px; margin-bottom: 30px; background: #f0f2f5;
+    border-radius: 12px; padding: 5px; width: 100%; justify-content: space-between;
+}
+.auth-tab {
+    flex: 1; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 700;
+    color: var(--text-muted); background: transparent; transition: var(--transition); border: none; cursor: pointer; text-align: center;
+}
+.auth-tab.active { background: var(--pure-white); color: var(--dark-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+/* BETTER FORM OPTIONS */
+.form-options {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-size: 14px;
+}
+.remember-me { display: flex; align-items: center; gap: 8px; color: var(--text-dark); cursor: pointer; font-weight: 500; }
+.remember-me input { cursor: pointer; width: 16px; height: 16px; }
+.forgot-pwd { color: var(--primary-orange); font-weight: 600; text-decoration: none; }
+.forgot-pwd:hover { text-decoration: underline; }
+
