@@ -791,12 +791,13 @@ function injectYouTubeMusic() {
     };
     
     document.body.addEventListener('click', () => {
-        if (localStorage.getItem('irctc_music_muted') !== 'true' && window.ytMusicPlayer && window.ytMusicPlayer.getPlayerState) {
-            if (window.ytMusicPlayer.getPlayerState() !== 1) {
+        if (localStorage.getItem('irctc_music_muted') !== 'true' && window.ytMusicPlayer && typeof window.ytMusicPlayer.getPlayerState === 'function') {
+            const state = window.ytMusicPlayer.getPlayerState();
+            if (state !== 1 && state !== 3) { // 1=playing, 3=buffering
                 window.ytMusicPlayer.playVideo();
             }
         }
-    }, { once: true });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', injectYouTubeMusic);
