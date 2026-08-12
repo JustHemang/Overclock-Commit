@@ -716,3 +716,87 @@ document.addEventListener('click', (e) => {
         }, 300);
     }
 });
+
+// === YOUTUBE BACKGROUND MUSIC ===
+function injectYouTubeMusic() {
+    const musicState = localStorage.getItem('irctc_music_muted') === 'true';
+    
+    const playerDiv = document.createElement('div');
+    playerDiv.id = 'yt-music-player';
+    playerDiv.style.display = 'none';
+    document.body.appendChild(playerDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'icon-btn';
+    btn.id = 'musicToggleBtn';
+    btn.title = musicState ? 'Unmute Music' : 'Mute Music';
+    btn.innerHTML = musicState ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-low"></i>';
+    btn.style.fontSize = '14px';
+    btn.style.marginRight = '10px';
+    
+    const interval = setInterval(() => {
+        const navActions = document.querySelector('.nav-actions');
+        if (navActions) {
+            navActions.insertBefore(btn, navActions.firstChild);
+            clearInterval(interval);
+        }
+    }, 100);
+
+    window.onYouTubeIframeAPIReady = function() {
+        window.ytMusicPlayer = new YT.Player('yt-music-player', {
+            height: '0',
+            width: '0',
+            videoId: 'Ef0tk0q-ITo',
+            playerVars: {
+                'autoplay': musicState ? 0 : 1, 
+                'controls': 0, 
+                'loop': 1,
+                'playlist': 'Ef0tk0q-ITo'
+            },
+            events: {
+                'onReady': (event) => {
+                    event.target.setVolume(10); // Very lightly
+                    if (!musicState) {
+                        event.target.playVideo();
+                    }
+                }
+            }
+        });
+    };
+
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    if (firstScriptTag) firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    else document.body.appendChild(tag);
+
+    btn.onclick = () => {
+        const isMuted = localStorage.getItem('irctc_music_muted') === 'true';
+        if (isMuted) {
+            localStorage.setItem('irctc_music_muted', 'false');
+            btn.innerHTML = '<i class="fa-solid fa-volume-low"></i>';
+            btn.title = 'Mute Music';
+            if(window.ytMusicPlayer && window.ytMusicPlayer.playVideo) {
+                window.ytMusicPlayer.setVolume(10);
+                window.ytMusicPlayer.playVideo();
+            }
+        } else {
+            localStorage.setItem('irctc_music_muted', 'true');
+            btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            btn.title = 'Unmute Music';
+            if(window.ytMusicPlayer && window.ytMusicPlayer.pauseVideo) {
+                window.ytMusicPlayer.pauseVideo();
+            }
+        }
+    };
+    
+    document.body.addEventListener('click', () => {
+        if (localStorage.getItem('irctc_music_muted') !== 'true' && window.ytMusicPlayer && window.ytMusicPlayer.getPlayerState) {
+            if (window.ytMusicPlayer.getPlayerState() !== 1) {
+                window.ytMusicPlayer.playVideo();
+            }
+        }
+    }, { once: true });
+}
+
+document.addEventListener('DOMContentLoaded', injectYouTubeMusic);
