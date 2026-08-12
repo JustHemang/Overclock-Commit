@@ -44,7 +44,7 @@ const LANG_STRINGS = {
     searchBtn: 'Search Trains',
     
     liveTracking: 'LIVE TRACKING',
-    trackingSub: 'Real-time train status powered by RailRadar',
+    trackingSub: 'Real-time train status and live updates',
     enterTrainNumber: 'Enter train number',
     checkStatus: 'Check Status',
     
@@ -104,7 +104,7 @@ const LANG_STRINGS = {
     noBookingsDesc: 'आपने अभी तक कोई बुकिंग नहीं की है। ट्रेन खोजें और अपना पहला टिकट बुक करें!',
     searchBtn: 'ट्रेन खोजें',
     liveTracking: 'लाइव ट्रैकिंग',
-    trackingSub: 'RailRadar द्वारा रीयल-टाइम ट्रेन स्थिति',
+    trackingSub: 'रीयल-टाइम ट्रेन स्थिति और लाइव अपडेट',
     enterTrainNumber: 'ट्रेन नंबर दर्ज करें',
     checkStatus: 'स्थिति जांचें',
     pnrStatus: 'PNR स्थिति',
@@ -152,6 +152,10 @@ function selectLang(lang) {
 
 function toggleLang() {
   selectLang(currentLang === 'en' ? 'hi' : 'en');
+  // Update the language toggle button text
+  document.querySelectorAll('[onclick="toggleLang()"]').forEach(btn => {
+    btn.textContent = currentLang === 'hi' ? 'Eng' : '\u0939\u093f';
+  });
 }
 
 
