@@ -1,8 +1,8 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:F75C7E,100:8B5CF6&height=220&section=header&text=IRCTC&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Search%20•%20Book%20•%20Track%20•%20Manage&descAlignY=55&descSize=20" alt="header banner"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:1C273C,100:EA6B40&height=220&section=header&text=🚂%20COMMIT&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Search%20•%20Book%20•%20Track%20•%20Manage&descAlignY=55&descSize=20" alt="header banner"/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=8B5CF6&center=true&vCenter=true&width=650&lines=Search+trains+in+real-time;Track+your+journey+live;Book%2C+manage%2C+and+check+PNR+status;Built+by+Team+Commit" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=EA6B40&center=true&vCenter=true&width=650&lines=Search+trains+in+real-time;Track+your+journey+live;Book%2C+manage%2C+and+check+PNR+status;Built+by+Team+Commit" alt="Typing SVG" />
 
 <br/><br/>
 
@@ -15,18 +15,17 @@
 
 <br/>
 
-![Made by Team Commit](https://img.shields.io/badge/Made%20by-Team%20Commit-8B5CF6?style=for-the-badge&logo=github&logoColor=white)
-[![Hackathon](https://img.shields.io/badge/Built%20at-Overclock%20Delhi%202026-F75C7E?style=for-the-badge&logo=devpost&logoColor=white)](https://overclockdelhi.com/)
+![Made by Team Commit](https://img.shields.io/badge/Made%20by-Team%20Commit-1C273C?style=for-the-badge&logo=github&logoColor=white)
+[![Hackathon](https://img.shields.io/badge/Built%20at-Overclock%20Delhi%202026-EA6B40?style=for-the-badge&logo=devpost&logoColor=white)](https://overclockdelhi.com/)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 <br/>
 
-<a href="#features">Features</a> •
-<a href="#tech-stack">Tech Stack</a> •
-<a href="#getting-started">Getting Started</a> •
-<a href="#preview">Preview</a> •
-<a href="#team-commit">Team</a>
+<a href="#-features">Features</a> •
+<a href="#️-tech-stack">Tech Stack</a> •
+<a href="#-getting-started">Getting Started</a> •
+<a href="#-team-commit">Team</a>
 
 </div>
 
@@ -34,7 +33,7 @@
 
 ## 📖 About the Project
 
-**IRCTC** reimagines the Indian Railways ticketing experience with a fast, clean interface. Search trains between stations using real schedule data, book tickets end-to-end, check live PNR status, and follow your train's journey station-by-station — all wrapped in a smooth, animated UI with dark mode and Hindi/English support.
+**Commit** reimagines the Indian Railways ticketing experience with a fast, modern, and visually stunning interface. Search trains between stations using real-time data from the **RailRadar API**, book tickets end-to-end with seat selection and simulated payment, check live PNR status, and follow your train's journey station-by-station — all wrapped in a smooth, GSAP-animated UI with dark mode and Hindi/English support.
 
 > Built by **Team Commit** at *[Overclock Delhi 2026](https://overclockdelhi.com/)*
 
@@ -46,32 +45,32 @@
 <tr>
 <td width="50%" valign="top">
 
-### Train Search
-Search trains between any two stations using real, live schedule data.
+### 🔍 Train Search
+Search trains between any two Indian railway stations using real, live schedule data powered by the RailRadar API.
 
-### Ticket Booking
-Full booking flow — passenger details, seat selection, and a simulated payment step.
+### 🎫 Ticket Booking
+Full booking flow — passenger details, seat selection, and a simulated payment step with PDF ticket download.
 
-### PNR Status Check
-Instantly check the status of any PNR.
+### 📋 PNR Status Check
+Instantly check the status of any PNR number with detailed passenger and journey information.
 
-### Live Train Tracking
-Real-time, station-by-station progress as your train moves along its route.
+### 📍 Live Train Tracking
+Real-time, station-by-station progress as your train moves along its route with delay information and speed stats.
 
 </td>
 <td width="50%" valign="top">
 
-### Booking Management
-View, cancel, and edit passenger details on any existing booking.
+### 📂 Booking Management
+View, cancel, and manage passenger details on any existing booking from your profile dashboard.
 
-### Multi-language
-Instantly toggle the entire UI between English and Hindi.
+### 🌐 Multi-language
+Instantly toggle the entire UI between English and Hindi with a single click.
 
-### Dark Mode
-A carefully tuned dark theme for late-night booking sessions.
+### 🌙 Dark Mode
+A carefully tuned dark theme for late-night booking sessions that's easy on the eyes.
 
-### Smooth Animations
-GSAP-powered transitions, page reveals, and micro-interactions throughout.
+### ✨ Smooth Animations
+GSAP-powered transitions, a cinematic train animation on the homepage, page reveals, and micro-interactions throughout.
 
 </td>
 </tr>
@@ -87,6 +86,8 @@ GSAP-powered transitions, page reveals, and micro-interactions throughout.
 |:---:|:---:|
 | **Frontend** | Vanilla HTML / CSS / JavaScript + GSAP |
 | **Backend** | Node.js + Express |
+| **Train Data API** | [RailRadar API](https://railradar.in) |
+| **Deployment** | Render (Free Tier) |
 
 </div>
 
@@ -99,12 +100,12 @@ GSAP-powered transitions, page reveals, and micro-interactions throughout.
 - npm
 
 ### Installation
-<img src="https://waveify.onrender.com/api/terminal?commands=git+clone+https%3A%2F%2Fgithub.com%2FJustHemang%2FOverclock-Commit.git+%2Ccd+Overclock-Commit%2Cnpm+install%2Cnpm+start&theme=modern&speed=50&cursor=true&prompt=%24+&width=800&height=400&fontSize=14&showHeader=true&title=Development+Server&githubMode=false&autoScroll=true&glowEffect=true&scanLines=true" alt="Installation">
-```bash
+<img src="https://waveify.onrender.com/api/terminal?commands=git+clone+https%3A%2F%2Fgithub.com%2FJustHemang%2FOverclock-Commit.git+%2Ccd+Overclock-Commit%2FIRCTC%2Cnpm+install%2Cnpm+start&theme=modern&speed=50&cursor=true&prompt=%24+&width=800&height=400&fontSize=14&showHeader=true&title=Development+Server&githubMode=false&autoScroll=true&glowEffect=true&scanLines=true" alt="Installation">
 
+```bash
 # Clone the repository
 git clone https://github.com/JustHemang/Overclock-Commit.git
-cd Overclock-Commit
+cd Overclock-Commit/IRCTC
 
 # Install dependencies
 npm install
@@ -117,16 +118,6 @@ Then open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 <br/>
 
-## 📸 Preview
-
-<div align="center">
-<img src="https://user-images.githubusercontent.com/placeholder/demo-preview.gif" alt="App demo" width="85%" />
-
-<sub>*(Replace this with an actual screen recording or GIF of your app)*</sub>
-</div>
-
-<br/>
-
 <details>
 <summary><b>🗂️ Project Structure (click to expand)</b></summary>
 <br/>
@@ -134,37 +125,33 @@ Then open **[http://localhost:3000](http://localhost:3000)** in your browser.
 ```
 IRCTC/
 ├── assets/
-│   ├── fonts/
-│   ├── new_ui.css
-│   ├── train_overlay.png
-│   ├── vande-bharat.png
+│   ├── fonts/              # Custom web fonts
+│   ├── new_ui.css          # Modernised UI stylesheet
+│   ├── train_overlay.png   # Train animation asset
 │   └── ...
-├── fonts/
-├── node_modules/
+├── fonts/                  # Font files
 ├── .gitignore
-├── api.js               # API route handlers
-├── Artboard 1.png       # Hero logo
-├── bookings.html        # Bookings page
-├── common.js            # Shared frontend logic
-├── data.js              # Static/reference data
-├── db.json              # Local database
+├── api.js                  # API route handlers
+├── Artboard 1.png          # Hero logo
+├── bookings.html           # Bookings page
+├── common.js               # Shared frontend logic (header, footer, auth, toasts)
+├── data.js                 # Static/reference data (stations, train types)
+├── db.json                 # Local JSON database
 ├── favicon.png
-├── index.html           # Landing page
-├── login.html           # Login page
+├── index.html              # Landing page with train animation
+├── login.html              # Login & registration page
 ├── LICENSE
-├── package-lock.json
 ├── package.json
-├── pnr.html             # PNR status page
-├── profile.html         # User profile page
-├── README.md
-├── render.yaml          # Deployment config (Render)
-├── schedule.html        # Train schedule page
-├── search.html          # Train search page
-├── server.js            # App entry point
-├── styles.css           # Global styles
-├── trains-data.js       # Train dataset
-├── unnamed.png          # Page background
-└── vercel.json          # Deployment config (Vercel)
+├── pnr.html                # PNR status page
+├── profile.html            # User profile page
+├── render.yaml             # Render deployment config
+├── schedule.html           # Train tracking & schedule page
+├── search.html             # Train search results page
+├── server.js               # Express app entry point + all API routes
+├── styles.css              # Core global styles
+├── trains-data.js          # Local train dataset (fallback)
+├── unnamed.png             # Page background texture
+└── vercel.json             # Vercel deployment config
 ```
 
 </details>
@@ -197,7 +184,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 <br/>
 
 <div align="center">
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:8B5CF6,100:F75C7E&height=120&section=footer"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:EA6B40,100:1C273C&height=120&section=footer"/>
 
 ### Made with 🚂 by Team Commit
 
