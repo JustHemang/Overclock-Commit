@@ -99,7 +99,7 @@ GSAP-powered transitions, page reveals, and micro-interactions throughout.
 - npm
 
 ### Installation
-<img src="https://waveify.onrender.com/api/terminal?commands=git+clone+https%3A%2F%2Fgithub.com%2FJustHemang%2FOverclock-Commit.git+%2Ccd+Overclock-Commit%2Cnpm+install%2Ccp+.env.example+.env%2Cnode+server.js&theme=modern&speed=50&cursor=true&prompt=%24+&width=800&height=400&fontSize=14&showHeader=true&title=Development+Server&githubMode=false&autoScroll=true&glowEffect=true&scanLines=true" alt="Installation">
+<img src="https://waveify.onrender.com/api/terminal?commands=git+clone+https%3A%2F%2Fgithub.com%2FJustHemang%2FOverclock-Commit.git+%2Ccd+Overclock-Commit%2Cnpm+install%2Cnpm+start&theme=modern&speed=50&cursor=true&prompt=%24+&width=800&height=400&fontSize=14&showHeader=true&title=Development+Server&githubMode=false&autoScroll=true&glowEffect=true&scanLines=true" alt="Installation">
 ```bash
 
 # Clone the repository
@@ -109,11 +109,8 @@ cd Overclock-Commit
 # Install dependencies
 npm install
 
-# Configure environment variables
-cp .env.example .env
-
 # Start the server
-node server.js
+npm start
 ```
 
 Then open **[http://localhost:3000](http://localhost:3000)** in your browser.
@@ -136,29 +133,38 @@ Then open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ```
 IRCTC/
+├── assets/
+│   ├── fonts/
+│   ├── new_ui.css
+│   ├── train_overlay.png
+│   ├── vande-bharat.png
+│   └── ...
+├── fonts/
 ├── node_modules/
 ├── .gitignore
 ├── api.js               # API route handlers
+├── Artboard 1.png       # Hero logo
 ├── bookings.html        # Bookings page
-├── checkout.html        # Checkout / payment page
-├── common.js             # Shared frontend logic
-├── data.js               # Static/reference data
-├── db.json               # Local database
+├── common.js            # Shared frontend logic
+├── data.js              # Static/reference data
+├── db.json              # Local database
 ├── favicon.png
-├── index.html             # Landing page
-├── login.html             # Login page
+├── index.html           # Landing page
+├── login.html           # Login page
+├── LICENSE
 ├── package-lock.json
 ├── package.json
-├── pnr.html               # PNR status page
-├── profile.html           # User profile page
+├── pnr.html             # PNR status page
+├── profile.html         # User profile page
 ├── README.md
-├── render.yaml            # Deployment config (Render)
-├── schedule.html          # Train schedule page
-├── search.html            # Train search page
-├── server.js              # App entry point
-├── styles.css             # Global styles
-├── trains-data.js         # Train dataset
-└── vande-bharat.png
+├── render.yaml          # Deployment config (Render)
+├── schedule.html        # Train schedule page
+├── search.html          # Train search page
+├── server.js            # App entry point
+├── styles.css           # Global styles
+├── trains-data.js       # Train dataset
+├── unnamed.png          # Page background
+└── vercel.json          # Deployment config (Vercel)
 ```
 
 </details>
