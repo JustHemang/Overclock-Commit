@@ -66,9 +66,9 @@ body {
 
 .logo-circle {
     background-color: var(--pure-white);
-    width: 68px; /* Matched to nav bar height */
+    width: 90px;
     height: 68px;
-    border-radius: 50%;
+    border-radius: 35px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,7 +78,7 @@ body {
 }
 
 .logo-circle img {
-    width: 45px;
+    width: 55px;
     height: auto;
     object-fit: contain;
 }
