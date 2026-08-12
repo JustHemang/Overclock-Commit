@@ -694,6 +694,12 @@ body {
     text-shadow: 2px 4px 12px rgba(0,0,0,0.3) !important;
     letter-spacing: 2px !important;
 }
+/* When page-title is inside a white card, use dark color */
+.page-card .page-title {
+    color: var(--dark-blue) !important;
+    text-shadow: none !important;
+    font-size: 48px !important;
+}
 
 /* Override PNR page inline styles */
 .pnr-hero h1 {
