@@ -9,7 +9,7 @@
 }
 
 :root {
-    --bg-pattern: url('mandala-bg.jpg');
+    --bg-pattern: url('../unnamed.png');
     --primary-orange: #ea6b40;
     --primary-orange-hover: #d1562c;
     --dark-blue: #1c273c;
